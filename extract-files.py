@@ -16,6 +16,7 @@ from extract_utils.main import (
 
 namespace_imports = [
     'device/xiaomi/klimt',
+    'hardware/xiaomi',
 ]
 
 
@@ -189,7 +190,6 @@ blob_fixups = {
         'vendor/lib64/libjc_keymint_transport.nxp.so',
     ): aidl_bump('android.hardware.security.keymint', 3, 4),
     (
-        'odm/bin/hw/mfp-daemon',
         'odm/bin/hw/vendor.xiaomi.hw.touchfeature-service',
         'odm/bin/test-nusensors',
         'odm/lib64/hw/displayfeature.default.so',
@@ -237,6 +237,12 @@ blob_fixups = {
         'vendor/lib64/vendor.xiaomi.hardware.camera.injection-client.so',
         'vendor/lib64/vendor.xiaomi.hardware.camera.injection-service.so',
     ): aidl_bump('android.hardware.camera.device', 1, 2),
+    # Keep the stock device-node/data-directory setup, with a single HAL owner.
+    'odm/etc/init/init.mfp-daemon.aidl.rc': blob_fixup()
+    .regex_replace(r'\Aservice mfp-daemon[^\n]*\n(?:[ \t]+[^\n]*\n|\n)*', '')
+    .regex_replace(r'\b(stop|start) mfp-daemon\b', r'\1 vendor.fingerprint-default'),
+    # libhardware looks for <class>.<inst>.default.so; the stock name matches no variant.
+    'odm/lib64/hw/fingerprint.goodix_fod.default.so': blob_fixup().fix_soname(),
     # The config references env_reverb but never declares the library, so
     # EffectFactory builds the identifier from a failed lookup.
     'vendor/etc/audio_effects_config.xml': blob_fixup()

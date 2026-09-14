@@ -1,0 +1,7 @@
+# The display feature node is announced as mi_display/disp_feature, which
+# ueventd only honours for subsystems listed here.
+subsystem mi_display
+    devname uevent_devpath
+    dirname /dev/mi_display
+
+/dev/mi_display/*         0666   root       graphics

@@ -43,6 +43,10 @@ TARGET_USES_VULKAN := true
 # Fastbootd
 $(call soong_config_set_bool,fastbootd,bypass_lock_state,true)
 
+# Fingerprint
+# The Goodix module uses Xiaomi's AIDL-era fingerprint_device layout.
+$(call soong_config_set,XIAOMI_BIOMETRICS_FINGERPRINT,IMPL_VER,V2)
+
 # Kernel
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_INIT_BOOT_HEADER_VERSION := 4

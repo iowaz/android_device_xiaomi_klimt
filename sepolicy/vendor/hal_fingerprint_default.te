@@ -17,3 +17,5 @@ allow hal_fingerprint_default sysfs_display_feature:dir { search };
 allow hal_fingerprint_default sysfs_display_feature:file { open read };
 allow hal_fingerprint_default sysfs_touch:dir { search };
 allow hal_fingerprint_default sysfs_touch:file { open read };
+allow hal_fingerprint_default xiaomi_touch_device:chr_file rw_file_perms;
+allow hal_fingerprint_default displayfeature_device:chr_file rw_file_perms;

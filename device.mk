@@ -87,6 +87,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/permissions/privapp-permissions-com.mediatek.ims.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-com.mediatek.ims.xml
 
+# Fingerprint
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint-service.xiaomi \
+    libudfpshandler
+
+PRODUCT_SOONG_NAMESPACES += hardware/xiaomi
+
 # IR
 PRODUCT_PACKAGES += \
     android.hardware.ir-service.example
@@ -132,7 +139,8 @@ PRODUCT_CHARACTERISTICS := nosdcard
 PRODUCT_COPY_FILES += \
     device/xiaomi/klimt/rootdir/etc/fstab.mt6991:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.mt6991 \
     device/xiaomi/klimt/rootdir/etc/fstab.mt6991:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.mt6991 \
-    device/xiaomi/klimt/rootdir/etc/init.recovery.mt6991.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6991.rc
+    device/xiaomi/klimt/rootdir/etc/init.recovery.mt6991.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6991.rc \
+    device/xiaomi/klimt/rootdir/etc/ueventd.odm.rc:$(TARGET_COPY_OUT_ODM)/etc/ueventd.rc
 
 PRODUCT_PACKAGES += \
     init.esim.sh \

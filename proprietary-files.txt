@@ -1750,7 +1750,7 @@ product/etc/felica/mfm.cfg
 product/etc/felica/mfs.cfg
 
 # Fingerprint
-odm/lib64/hw/fingerprint.goodix_fod.so
+odm/lib64/hw/fingerprint.goodix_fod.so:odm/lib64/hw/fingerprint.goodix_fod.default.so
 odm/lib64/libgf_hal.so
 system_ext/lib/vendor.xiaomi.hardware.fingerprintextension-V1-ndk.so;MODULE_SUFFIX=_system_ext
 system_ext/lib/vendor.xiaomi.hardware.fingerprintextension@1.0.so
@@ -2465,7 +2465,6 @@ odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/default_sensor/mt6991/I
 odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/default_sensor/mt6991/ISP_param.db;MAKE_COPY_RULE_ONLY;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/default_sensor/ISP_param.db
 odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/mt6991/ISP_info.db;MAKE_COPY_RULE_ONLY;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/ISP_info.db
 odm/bin/crossbuild/DataSet/SQLiteModule/db/port_select.db;MAKE_COPY_RULE_ONLY
-odm/bin/hw/mfp-daemon
 odm/bin/hw/mifaced
 odm/bin/hw/miteetuid
 odm/bin/hw/vendor.xiaomi.hw.touchfeature-service
@@ -2528,8 +2527,6 @@ odm/etc/touch/dynamicrate.json
 odm/etc/touch/gameturbotool-control.json
 odm/etc/touch/gameturbotool-fastinput.json
 odm/etc/touch/gameturbotool.json
-odm/etc/vintf/manifest/AHBF-V4-service.xml
-odm/etc/vintf/manifest/fod-aidl.xml
 odm/etc/vintf/manifest/lights-mtk-default.xml
 odm/etc/vintf/manifest/manifest_vendor.xiaomi.hardware.aidl.mtdservice.xml
 odm/etc/vintf/manifest/manifest_vendor.xiaomi.hardware.miteetui.xml

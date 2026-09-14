@@ -8,7 +8,7 @@
 # Without these they inherit init, which is both wrong and far too privileged.
 
 /odm/bin/hw/android\.hardware\.lights-service\.mediatek                    u:object_r:hal_light_default_exec:s0
-/odm/bin/hw/mfp-daemon                                                     u:object_r:hal_fingerprint_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint-service\.xiaomi u:object_r:hal_fingerprint_default_exec:s0
 /odm/bin/hw/vendor\.xiaomi\.hardware\.vibratorfeature\.service             u:object_r:hal_vibrator_default_exec:s0
 /vendor/bin/ffu                                                            u:object_r:ffu_exec:s0
 /vendor/bin/hw/android\.hardware\.bluetooth-service-mediatek               u:object_r:hal_bluetooth_default_exec:s0
@@ -62,6 +62,7 @@
 
 # Character devices that otherwise stay on the generic device type.
 /dev/sipa_cmd            u:object_r:sipa_device:s0
+/dev/mi_display/disp_feature u:object_r:displayfeature_device:s0
 /dev/xiaomi-touch        u:object_r:xiaomi_touch_device:s0
 /dev/xiaomi-touch-knock  u:object_r:xiaomi_touch_device:s0
 /dev/xiaomi-thp          u:object_r:xiaomi_touch_device:s0

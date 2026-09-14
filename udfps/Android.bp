@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0
+
+cc_library_shared {
+    name: "libudfpshandler",
+    vendor: true,
+    compile_multilib: "64",
+    defaults: ["xiaomi_hardware_biometrics_config_default"],
+    srcs: ["UdfpsHandler.cpp"],
+    shared_libs: ["libbase"],
+    static_libs: ["android.hardware.biometrics.fingerprint-V4-ndk"],
+    header_libs: ["//hardware/xiaomi:xiaomifingerprint_headers"],
+}
