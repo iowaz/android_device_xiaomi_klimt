@@ -187,7 +187,6 @@ blob_fixups = {
         'odm/lib64/libgoogleid.so',
         'odm/lib64/libmt_mitee.so',
         'vendor/bin/hw/android.hardware.security.keymint@3.0-service.mitee',
-        'vendor/lib64/libjc_keymint_transport.nxp.so',
     ): aidl_bump('android.hardware.security.keymint', 3, 4),
     (
         'odm/bin/hw/vendor.xiaomi.hw.touchfeature-service',
@@ -241,6 +240,9 @@ blob_fixups = {
     'odm/etc/init/init.mfp-daemon.aidl.rc': blob_fixup()
     .regex_replace(r'\Aservice mfp-daemon[^\n]*\n(?:[ \t]+[^\n]*\n|\n)*', '')
     .regex_replace(r'\b(stop|start) mfp-daemon\b', r'\1 vendor.fingerprint-default'),
+    # The stock StrongBox policy grants WAKE_ALARM, but not SYS_ADMIN/SYS_NICE.
+    'vendor/etc/init/android.hardware.security.keymint-service.strongbox.nxp.rc': blob_fixup()
+    .regex_replace('capabilities SYS_ADMIN SYS_NICE WAKE_ALARM', 'capabilities WAKE_ALARM'),
     # libhardware looks for <class>.<inst>.default.so; the stock name matches no variant.
     'odm/lib64/hw/fingerprint.goodix_fod.default.so': blob_fixup().fix_soname(),
     # The config references env_reverb but never declares the library, so
@@ -270,6 +272,41 @@ blob_fixups = {
     .regex_replace(r'\A(?:#[^\n]*\n)*', '<FeatureSet>\n')
     .regex_replace(r'\Z', '\n</FeatureSet>\n'),
 }
+
+# Keep the NXP service's C++ Keymaster/CBOR dependencies from the same ROM.
+# AIDL version bumps alone do not preserve the ABI of these C++ classes.
+strongbox_libraries = (
+    'lib_android_keymaster_keymint_utils',
+    'libcppbor',
+    'libcppcose_rkp',
+    'libkeymaster_messages',
+    'libkeymaster_portable',
+    'libsoft_attestation_cert',
+)
+strongbox_private_paths = tuple(
+    f'vendor/lib64/{name}_strongbox.so' for name in strongbox_libraries
+)
+strongbox_fixup = blob_fixup()
+for name in strongbox_libraries:
+    strongbox_fixup.replace_needed(f'{name}.so', f'{name}_strongbox.so')
+strongbox_fixup.replace_needed('libcrypto.so', 'libcrypto_vendor.so')
+
+# Apply both the private C++ dependencies and the KeyMint AIDL adaptation.
+for file in (
+    'vendor/bin/hw/android.hardware.security.keymint-service.strongbox.nxp',
+    'vendor/lib64/libjc_keymint.nxp.so',
+    'vendor/lib64/libjc_keymint_transport.nxp.so',
+    *strongbox_private_paths,
+):
+    fixup = blob_fixup()
+    fixup.merge(strongbox_fixup)
+    if file in strongbox_private_paths:
+        fixup.fix_soname()
+    if file not in strongbox_private_paths or file.endswith(
+        '/lib_android_keymaster_keymint_utils_strongbox.so'
+    ):
+        fixup.merge(aidl_bump('android.hardware.security.keymint', 3, 4))
+    blob_fixups[file] = fixup
 
 module = ExtractUtilsModule(
     'klimt',

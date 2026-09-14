@@ -1,0 +1,8 @@
+#
+# SPDX-FileCopyrightText: WitAqua
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# The NXP StrongBox KeyMint service talks to the applet through the
+# secure element HAL.
+hal_client_domain(hal_keymint_default, hal_secure_element)

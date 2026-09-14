@@ -2086,12 +2086,24 @@ vendor/etc/init/android.hardware.secure_element@1.2-service-mediatek.rc
 vendor/lib64/vendor.mediatek.hardware.mtkradioex.sim-V1-ndk.so
 
 # Security
+vendor/bin/hw/android.hardware.security.keymint-service.strongbox.nxp
 vendor/bin/hw/android.hardware.security.keymint@3.0-service.mitee
+vendor/etc/init/android.hardware.security.keymint-service.strongbox.nxp.rc
 vendor/etc/init/android.hardware.security.keymint.mitee@3.0-service.rc
+vendor/etc/permissions/android.hardware.hardware_keystore.jc-strongbox-keymint.nxp.xml
 vendor/etc/vintf/manifest/android.hardware.security.keymint-service.mitee.xml
+vendor/etc/vintf/manifest/android.hardware.security.keymint-service.strongbox.nxp.xml
 vendor/etc/vintf/manifest/android.hardware.security.secureclock-service.mitee.xml
 vendor/etc/vintf/manifest/android.hardware.security.sharedsecret-service.mitee.xml
+vendor/etc/vintf/manifest/android.hardware.security.sharedsecret-service.strongbox.nxp.xml
+vendor/lib64/lib_android_keymaster_keymint_utils.so:vendor/lib64/lib_android_keymaster_keymint_utils_strongbox.so
+vendor/lib64/libcppbor.so:vendor/lib64/libcppbor_strongbox.so
+vendor/lib64/libcppcose_rkp.so:vendor/lib64/libcppcose_rkp_strongbox.so
+vendor/lib64/libjc_keymint.nxp.so
 vendor/lib64/libjc_keymint_transport.nxp.so
+vendor/lib64/libkeymaster_messages.so:vendor/lib64/libkeymaster_messages_strongbox.so
+vendor/lib64/libkeymaster_portable.so:vendor/lib64/libkeymaster_portable_strongbox.so
+vendor/lib64/libsoft_attestation_cert.so:vendor/lib64/libsoft_attestation_cert_strongbox.so
 
 # Sensors
 vendor/lib64/hw/android.hardware.sensors@2.X-subhal-mediatek.so
