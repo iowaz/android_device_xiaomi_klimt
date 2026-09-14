@@ -1620,7 +1620,6 @@ system_ext/lib/vendor.mediatek.hardware.pq@2.8.so;MODULE_SUFFIX=_system_ext
 system_ext/lib/vendor.mediatek.hardware.pq@2.8.so.hbtf
 system_ext/lib/vendor.mediatek.hardware.pq@2.9.so;MODULE_SUFFIX=_system_ext
 system_ext/lib/vendor.mediatek.hardware.pq@2.9.so.hbtf
-system_ext/lib/vendor.xiaomi.hardware.displayfeature@1.0.so;MODULE_SUFFIX=_system_ext
 system_ext/lib64/vendor.mediatek.hardware.composer_ext-V1-ndk.so;MODULE_SUFFIX=_system_ext
 system_ext/lib64/vendor.mediatek.hardware.composer_ext@1.0.so;MODULE_SUFFIX=_system_ext
 system_ext/lib64/vendor.mediatek.hardware.mms@1.0.so
@@ -1641,7 +1640,6 @@ system_ext/lib64/vendor.mediatek.hardware.pq@2.6.so;MODULE_SUFFIX=_system_ext
 system_ext/lib64/vendor.mediatek.hardware.pq@2.7.so;MODULE_SUFFIX=_system_ext
 system_ext/lib64/vendor.mediatek.hardware.pq@2.8.so;MODULE_SUFFIX=_system_ext
 system_ext/lib64/vendor.mediatek.hardware.pq@2.9.so;MODULE_SUFFIX=_system_ext
-system_ext/lib64/vendor.xiaomi.hardware.displayfeature@1.0.so;MODULE_SUFFIX=_system_ext
 vendor/bin/hw/mt6991/android.hardware.graphics.allocator-V2-service-mediatek.mt6991;SYMLINK=vendor/bin/hw/android.hardware.graphics.allocator-V2-service-mediatek,vendor/bin/hw/android.hardware.graphics.allocator-V2-service-mediatek.mt6991
 vendor/bin/hw/android.hardware.graphics.composer@3.2-service
 vendor/bin/hw/android.hardware.graphics.composer@3.3-service
@@ -1706,7 +1704,6 @@ vendor/lib64/vendor.mediatek.hardware.pq@2.9.so
 vendor/lib64/vendor.mediatek.hardware.pq_aidl-V4-ndk.so
 vendor/lib64/vendor.mediatek.hardware.pq_aidl-V7-ndk.so
 vendor/lib64/vendor.xiaomi.hardware.display.mihwcextension-V1-ndk.so
-vendor/lib64/vendor.xiaomi.hardware.displayfeature@1.0.so
 vendor/lib64/vendor.xiaomi.hardware.displayfeature_aidl-V2-ndk.so
 
 # Display (Pixelworks)
@@ -1753,9 +1750,7 @@ product/etc/felica/mfs.cfg
 odm/lib64/hw/fingerprint.goodix_fod.so:odm/lib64/hw/fingerprint.goodix_fod.default.so
 odm/lib64/libgf_hal.so
 system_ext/lib/vendor.xiaomi.hardware.fingerprintextension-V1-ndk.so;MODULE_SUFFIX=_system_ext
-system_ext/lib/vendor.xiaomi.hardware.fingerprintextension@1.0.so
 system_ext/lib64/vendor.xiaomi.hardware.fingerprintextension-V1-ndk.so;MODULE_SUFFIX=_system_ext
-system_ext/lib64/vendor.xiaomi.hardware.fingerprintextension@1.0.so
 vendor/lib64/vendor.xiaomi.hardware.fingerprintextension-V1-ndk.so
 
 # Gatekeeper
@@ -4652,7 +4647,6 @@ vendor/lib64/vendor.xiaomi.hardware.camera.companion-impl.so
 vendor/lib64/vendor.xiaomi.hardware.cld_aidl-V1-ndk.so
 vendor/lib64/vendor.xiaomi.hardware.fbo-V1-ndk.so
 vendor/lib64/vendor.xiaomi.hardware.fx.tunnel-V1-ndk.so
-vendor/lib64/vendor.xiaomi.hardware.fx.tunnel@1.0.so
 vendor/lib64/vendor.xiaomi.hardware.mimd2-V1-ndk.so
 vendor/lib64/vendor.xiaomi.hardware.miperf2-V1-ndk.so
 vendor/lib64/vendor.xiaomi.hardware.misys.common-V3-ndk.so
