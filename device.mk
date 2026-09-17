@@ -68,6 +68,7 @@ PRODUCT_BOOT_JARS_EXTRA += \
     miui-framework-stub
 
 PRODUCT_PACKAGES += \
+    KlimtEuiccController \
     miui-framework-stub
 
 # fastbootd
@@ -143,7 +144,6 @@ PRODUCT_COPY_FILES += \
     device/xiaomi/klimt/rootdir/etc/ueventd.odm.rc:$(TARGET_COPY_OUT_ODM)/etc/ueventd.rc
 
 PRODUCT_PACKAGES += \
-    init.esim.sh \
     init.felica.sh \
     init.insmod.sh \
     init.pstore_blk.sh \

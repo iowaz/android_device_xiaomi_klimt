@@ -6,6 +6,8 @@
 
 package miui.util;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import android.os.SystemProperties;
 
 /**
@@ -13,6 +15,7 @@ import android.os.SystemProperties;
  * on this build ships those files.
  */
 public class FeatureParser {
+    @UnsupportedAppUsage
     public static String getString(String key) {
         if ("vendor".equals(key)) {
             return SystemProperties.get("ro.hardware", "").startsWith("mt")
@@ -23,18 +26,22 @@ public class FeatureParser {
         return null;
     }
 
+    @UnsupportedAppUsage
     public static Boolean getBoolean(String key, boolean defaultValue) {
         return defaultValue;
     }
 
+    @UnsupportedAppUsage
     public static Integer getInteger(String key, int defaultValue) {
         return defaultValue;
     }
 
+    @UnsupportedAppUsage
     public static String[] getStringArray(String key) {
         return null;
     }
 
+    @UnsupportedAppUsage
     public static int[] getIntArray(String key) {
         return null;
     }

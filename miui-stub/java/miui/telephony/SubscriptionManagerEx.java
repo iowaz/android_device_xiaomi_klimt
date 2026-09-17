@@ -6,16 +6,20 @@
 
 package miui.telephony;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import android.app.AppGlobals;
 import android.content.Context;
 
 public class SubscriptionManagerEx {
     private static final SubscriptionManagerEx sInstance = new SubscriptionManagerEx();
 
+    @UnsupportedAppUsage
     public static SubscriptionManagerEx getDefault() {
         return sInstance;
     }
 
+    @UnsupportedAppUsage
     public int setDisplayNameForSubscription(String displayName, int subId) {
         Context context = AppGlobals.getInitialApplication();
         if (context == null) {

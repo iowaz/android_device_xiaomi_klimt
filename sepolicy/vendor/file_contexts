@@ -49,7 +49,6 @@
 /vendor/bin/hw/vendor\.xiaomi\.hardware\.misys\.core-service               u:object_r:xiaomi_misys_core_exec:s0
 /vendor/bin/hw/vendor\.xiaomi\.hardware\.videoservice-service              u:object_r:xiaomi_videoservice_exec:s0
 /vendor/bin/hypsys_vendor                                                  u:object_r:xiaomi_misys_common_exec:s0
-/vendor/bin/init\.esim\.sh                                                 u:object_r:klimt_esim_exec:s0
 /vendor/bin/init\.felica\.sh                                               u:object_r:klimt_felica_exec:s0
 /vendor/bin/init\.pstore_blk\.sh                                           u:object_r:init_pstore_blk_sh_exec:s0
 /vendor/bin/md_rfs                                                         u:object_r:md_rfs_exec:s0
