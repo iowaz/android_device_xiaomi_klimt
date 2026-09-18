@@ -1,0 +1,11 @@
+// SPDX-FileCopyrightText: WitAqua
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+
+cc_library_static {
+    name: "libinit_klimt",
+    recovery_available: true,
+    srcs: ["init_klimt.cpp"],
+    include_dirs: ["system/core/init"],
+    static_libs: ["libbase"],
+}

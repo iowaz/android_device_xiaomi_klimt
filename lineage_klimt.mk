@@ -23,7 +23,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 PRODUCT_DEVICE := klimt
 PRODUCT_NAME := lineage_klimt
 PRODUCT_BRAND := Xiaomi
-PRODUCT_MODEL := Xiaomi 15T Pro
+PRODUCT_MODEL := 2506BPN68G
 PRODUCT_MANUFACTURER := Xiaomi
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi

@@ -47,6 +47,9 @@ $(call soong_config_set_bool,fastbootd,bypass_lock_state,true)
 # The Goodix module uses Xiaomi's AIDL-era fingerprint_device layout.
 $(call soong_config_set,XIAOMI_BIOMETRICS_FINGERPRINT,IMPL_VER,V2)
 
+# Init
+$(call soong_config_set,libinit,vendor_init_lib,//device/xiaomi/klimt:libinit_klimt)
+
 # Kernel
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_INIT_BOOT_HEADER_VERSION := 4
