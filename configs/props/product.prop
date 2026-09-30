@@ -150,11 +150,13 @@ ro.appsearch.feature.enable_isolated_storage=
 ro.brightness.thermal.sgm3840_wa2=1
 ro.brightness.thermal.sgm3840_wa2.date=20250801
 ro.com.android.dataroaming=false
+# MTK ImsService uses a non-empty value to select the ViLTE preview path.
 ro.com.google.gmsversion=16_202512
 ro.config.miui_activity_embedding_enable=true
 ro.config.miui_orientation_projection_enable=true
 ro.crypto.metadata_init_delete_all_keys.enabled=false
 ro.display.screen_type=1
+# The shipped eSIM LPA reads this hardware flag for dialog layout.
 ro.miui.notch=1
 ro.opa.eligible_device=true
 ro.setupwizard.rotation_locked=true
