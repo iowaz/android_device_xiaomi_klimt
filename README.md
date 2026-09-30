@@ -23,6 +23,9 @@
 
 ## Building
 
+This example targets WitAqua `17.0` / LineageOS `lineage-24.0` and uses the
+`github` remote from that ROM manifest.
+
 The kernel and proprietary repositories are not part of the ROM manifest, and
 `device/mediatek/sepolicy_vndr` has to exist before `lunch` can evaluate
 `BoardConfig.mk`, so sync them with a local manifest, e.g.
@@ -44,5 +47,15 @@ The kernel and proprietary repositories are not part of the ROM manifest, and
 </manifest>
 ```
 
-roomservice skips projects that are already in a manifest, so this does not
-conflict with `lineage.dependencies`.
+For an existing source tree, merge these entries into your local manifests by
+`path` rather than adding a second entry for a project already present (including
+entries in `roomservice.xml`). If an existing `hardware/xiaomi` entry still uses
+`lineage-23.2`, update its revision explicitly; roomservice does not change it.
+
+Save the manifest and run `repo sync` from the ROM source root before sourcing
+`build/envsetup.sh` and running `lunch`. roomservice sees the projects already
+listed in the local manifest and does not add them again from
+`lineage.dependencies`.
+
+This documents the required repository locations; it is not a verified complete
+build recipe. The kernel and proprietary blobs must also match the device tree.
