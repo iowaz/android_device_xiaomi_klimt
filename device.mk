@@ -104,6 +104,7 @@ PRODUCT_ENABLE_UFFD_GC := true
 
 # Keymint
 PRODUCT_PACKAGES += \
+    android.hardware.security.keymint-V3-ndk.vendor \
     libkeymaster4support.vendor \
     libkeymint_remote_prov_support.vendor \
     libkeymint_support.vendor
