@@ -20,3 +20,29 @@
 ## Device Picture
 
 ![Xiaomi 15T Pro](https://i02.appmifile.com/342_operator_sg/23/09/2025/ceb75db860c291fc55faf8fd52d93bb6.png)
+
+## Building
+
+The kernel and proprietary repositories are not part of the ROM manifest, and
+`device/mediatek/sepolicy_vndr` has to exist before `lunch` can evaluate
+`BoardConfig.mk`, so sync them with a local manifest, e.g.
+`.repo/local_manifests/klimt.xml`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="misakazip" fetch="https://github.com/misakazip-dev" />
+  <remote name="miru10" fetch="https://gitlab.miru10.net/misakazip" />
+
+  <project path="device/xiaomi/klimt" name="android_device_xiaomi_klimt" remote="misakazip" revision="17.0" />
+  <project path="kernel/xiaomi/klimt" name="android_kernel_xiaomi_klimt" remote="misakazip" revision="17.0" clone-depth="1" />
+  <project path="kernel/xiaomi/klimt-prebuilt" name="android_kernel_xiaomi_klimt-prebuilt" remote="misakazip" revision="17.0" clone-depth="1" />
+  <project path="vendor/xiaomi/klimt" name="android_vendor_xiaomi_klimt" remote="miru10" revision="17.0" clone-depth="1" />
+
+  <project path="device/mediatek/sepolicy_vndr" name="LineageOS/android_device_mediatek_sepolicy_vndr" remote="github" revision="lineage-24.0" />
+  <project path="hardware/xiaomi" name="LineageOS/android_hardware_xiaomi" remote="github" revision="lineage-24.0" />
+</manifest>
+```
+
+roomservice skips projects that are already in a manifest, so this does not
+conflict with `lineage.dependencies`.
