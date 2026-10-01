@@ -57,5 +57,27 @@ Save the manifest and run `repo sync` from the ROM source root before sourcing
 listed in the local manifest and does not add them again from
 `lineage.dependencies`.
 
-This documents the required repository locations; it is not a verified complete
-build recipe. The kernel and proprietary blobs must also match the device tree.
+### Proprietary files
+
+Do not use the published GitLab vendor tree as is. At `18ceea5` it predates the
+device tree: it lacks the NXP StrongBox stack and
+`fingerprint.goodix_fod.default.so`, and it still ships the HIDL
+`vendor.xiaomi.hardware.fingerprintextension@1.0` prebuilts. With
+`hardware/xiaomi` in `PRODUCT_SOONG_NAMESPACES`, Soong analysis then stops with
+`found in multiple namespaces(vendor/xiaomi/klimt and hardware/xiaomi)`.
+
+Regenerate it from the global `OS3.0.335.0.XOSMIXM` OTA instead (its vendor and odm
+identify as `OS3.0.335.0.XOSMI`, which matches `proprietary-files.txt`):
+
+```bash
+# Extract the payload and the erofs partitions somewhere outside the tree
+prebuilts/extract-tools/linux-x86/bin/ota_extractor --payload payload.bin     --output-dir images --partitions vendor,odm,vendor_dlkm,system,system_ext,product,mi_ext
+for p in vendor odm vendor_dlkm system system_ext product mi_ext; do
+    fsck.erofs --extract=dump/$p images/$p.img
+done
+cd device/xiaomi/klimt && ./extract-files.py /path/to/dump
+```
+
+The four `MobileFeliCa*` APKs come from the Japanese build
+(`klimt_jp OS3.0.302.0.WOSJPXM`) and must be placed in the dump under
+`mi_ext/product/app/<name>/` first; every other entry is in the global OTA.
