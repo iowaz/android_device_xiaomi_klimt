@@ -39,8 +39,9 @@
 
     <string name="config_displayLightSensorType" translatable="false">android.sensor.light</string>
     <string name="config_dozeComponent" translatable="false">com.android.dreams.alwaysondisplay/.AlwaysOnDisplay</string>
-    <!-- Centre punch hole, from the stock com.miui.systemui.overlay.devices.android RRO. -->
-    <string name="config_mainBuiltInDisplayCutout" translatable="false">M 0,0 H -33 V 132 H 33 V 0 H 0 Z</string>
+    <!-- Centre punch-hole safe region, from the OS3.0.335.0.XOSMIXM
+         com.miui.systemui.overlay.devices.android RRO. -->
+    <string name="config_mainBuiltInDisplayCutout" translatable="false">M 0,0 H -33 V 152 H 33 V 0 H 0 Z</string>
     <!-- The stock MediaTek RRO ships a generic 1080x2400 outline. Describe the
          1280x2772 panel with the stock 156px corner radius instead. -->
     <string name="config_mainDisplayShape" translatable="false">M156 0h968s156 0 156 156v2460s0 156 -156 156h-968s-156 0 -156 -156v-2460s0 -156 156 -156</string>
