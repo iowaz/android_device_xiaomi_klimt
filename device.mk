@@ -131,7 +131,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Permissions
 PRODUCT_PACKAGES += \
-    android.hardware.hardware_keystore.xml
+    android.hardware.hardware_keystore_V3.xml
 
 # Product characteristics
 PRODUCT_CHARACTERISTICS := nosdcard
