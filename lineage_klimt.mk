@@ -4,11 +4,15 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# WitAqua
-WITAQUA_MAINTAINER := Misaka (@misakazip)
-PROCESSOR_INFO := MediaTek Dimensity 9400+
-CAMERA_REAR_INFO := 50,50,12
-CAMERA_FRONT_INFO := 32
+# Evolution X
+WITH_GMS := true
+# Keep the stock klimt fingerprint below (libinit sets the matching klimt attestation IDs)
+TARGET_ENABLE_FP_OVERRIDE := false
+# No Columbus (back tap) sensor on klimt
+TARGET_SUPPORTS_QUICK_TAP := false
+# Boot animation size
+TARGET_SCREEN_WIDTH := 1280
+TARGET_SCREEN_HEIGHT := 2772
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
