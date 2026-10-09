@@ -23,8 +23,8 @@ import android.provider.Settings;
  * the touch panel's gesture modes, which the stock power HAL does not do.
  */
 public class TouchBridgeApp extends Application {
-    private static final String PROP_DOUBLE_TAP = "persist.sys.klimt.dt2w";
-    private static final String PROP_SCREEN_OFF_FOD = "persist.sys.klimt.fod_screen_off";
+    private static final String PROP_DOUBLE_TAP = "persist.sys.tap_gesture.dt2w";
+    private static final String PROP_SCREEN_OFF_FOD = "persist.sys.tap_gesture.fod_screen_off";
 
     @Override
     public void onCreate() {

@@ -30,8 +30,8 @@ constexpr char kDisplayPath[] = "/dev/mi_display/disp_feature";
 constexpr uint16_t kFodEnable = 10;
 constexpr uint16_t kDoubleTapMode = 14;
 // Written by KlimtTouchBridge from Settings.Secure.
-constexpr char kDoubleTapProp[] = "persist.sys.klimt.dt2w";
-constexpr char kScreenOffFodProp[] = "persist.sys.klimt.fod_screen_off";
+constexpr char kDoubleTapProp[] = "persist.sys.tap_gesture.dt2w";
+constexpr char kScreenOffFodProp[] = "persist.sys.tap_gesture.fod_screen_off";
 constexpr int kPressCommand = 1;
 constexpr int kNitCommand = 10;
 
