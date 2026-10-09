@@ -38,7 +38,10 @@
     <integer name="config_shortPressOnPowerBehavior">1</integer>
 
     <string name="config_displayLightSensorType" translatable="false">android.sensor.light</string>
-    <string name="config_dozeComponent" translatable="false">com.android.dreams.alwaysondisplay/.AlwaysOnDisplay</string>
+    <!-- The stock MediaTek AOD app is not part of this build. Without a doze
+         component the device goes straight to sleep and SystemUI never listens
+         for screen-off fingerprint touches. -->
+    <string name="config_dozeComponent" translatable="false">com.android.systemui/com.android.systemui.doze.DozeService</string>
     <!-- Centre punch-hole safe region, from the OS3.0.335.0.XOSMIXM
          com.miui.systemui.overlay.devices.android RRO. -->
     <string name="config_mainBuiltInDisplayCutout" translatable="false">M 0,0 H -33 V 152 H 33 V 0 H 0 Z</string>
