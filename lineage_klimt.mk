@@ -6,8 +6,9 @@
 
 # Evolution X
 WITH_GMS := true
-# Keep the stock klimt fingerprint below (libinit sets the matching klimt attestation IDs)
-TARGET_ENABLE_FP_OVERRIDE := false
+# Evolution X's Pixel fingerprint override, needed for Play Integrity with its keybox.
+# libinit still sets the klimt attestation IDs.
+TARGET_ENABLE_FP_OVERRIDE := true
 # No Columbus (back tap) sensor on klimt
 TARGET_SUPPORTS_QUICK_TAP := false
 # Boot animation size
@@ -34,5 +35,4 @@ PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="klimt_global-user 15 AP3A.240905.015.A2 OS3.0.335.0.XOSMIXM release-keys" \
-    BuildFingerprint=Xiaomi/klimt_global/klimt:15/AP3A.240905.015.A2/OS3.0.335.0.XOSMI:user/release-keys \
     DeviceProduct=klimt_global
