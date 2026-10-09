@@ -15,4 +15,7 @@
     <carrier_config cid="2514" name="povo">
         <boolean name="carrier_volte_available_bool" value="true" />
     </carrier_config>
+    <carrier_config cid="530" name="Vivo">
+        <boolean name="carrier_volte_available_bool" value="true" />
+    </carrier_config>
 </carrier_config_list>
