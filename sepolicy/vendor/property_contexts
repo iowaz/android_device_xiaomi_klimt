@@ -11,3 +11,8 @@ ro.vendor.idmgr.          u:object_r:vendor_idmgr_prop:s0
 persist.vendor.sys.idmgr. u:object_r:vendor_idmgr_prop:s0
 persist.vendor.sys.fp.          u:object_r:vendor_fingerprint_prop:s0
 persist.vendor.camera.skynet.   u:object_r:vendor_camera_skynet_prop:s0
+
+# Touch feature service state (labels as on stock)
+vendor.touchfeature.                  u:object_r:vendor_touchfeature_prop:s0
+persist.vendor.touchfeature.          u:object_r:vendor_touchfeature_prop:s0
+persist.vendor.hostprocess.           u:object_r:vendor_touch_hostprocess_prop:s0

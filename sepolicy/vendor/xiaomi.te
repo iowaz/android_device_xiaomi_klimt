@@ -321,3 +321,5 @@ allow mi_thermald self:capability chown;
 # The fingerprint HAL publishes its module and sensor info here.
 set_prop(hal_fingerprint_default, vendor_fingerprint_prop)
 allow hal_fingerprint_default fpsensor_socket:sock_file { create unlink setattr };
+set_prop(hal_touchfeature, vendor_touchfeature_prop)
+set_prop(hal_touchfeature, vendor_touch_hostprocess_prop)
