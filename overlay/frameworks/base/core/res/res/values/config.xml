@@ -77,9 +77,10 @@
          KlimtTouchBridge and libudfpshandler switch the panel's gesture mode. -->
     <bool name="config_supportDoubleTapWake">true</bool>
 
-    <!-- Screen-off fingerprint unlock: the panel reports finger-down through the
-         stock xiaomi.sensor.fod wake-up sensor. -->
+    <!-- Screen-off fingerprint unlock: sensors.xiaomi.v2 reports finger-down
+         from the panel's fod_press_status as a one-shot wake-up sensor. The
+         stock xiaomi.sensor.fod is special-trigger, which SystemUI rejects. -->
     <bool name="config_screen_off_udfps_enabled">true</bool>
     <bool name="config_screen_off_udfps_default_on">true</bool>
-    <string name="config_dozeUdfpsLongPressSensorType" translatable="false">xiaomi.sensor.fod</string>
+    <string name="config_dozeUdfpsLongPressSensorType" translatable="false">org.lineageos.sensor.udfps</string>
 </resources>

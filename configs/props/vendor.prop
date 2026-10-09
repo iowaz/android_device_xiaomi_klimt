@@ -167,6 +167,9 @@ ro.telephony.iwlan_operation_mode=AP-assisted
 ro.telephony.sim.count=2
 telephony.active_modems.max_count=2
 
+# Sensors
+ro.vendor.sensors.xiaomi.udfps=true
+
 # Touch (Xiaomi)
 ro.vendor.touchfeature.type=255
 
