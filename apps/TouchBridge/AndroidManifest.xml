@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: WitAqua
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.klimt.touchbridge"
+    android:sharedUserId="android.uid.system">
+
+    <application
+        android:name=".TouchBridgeApp"
+        android:label="Klimt Touch Bridge"
+        android:persistent="true"
+        android:directBootAware="true"
+        android:defaultToDeviceProtectedStorage="true" />
+</manifest>

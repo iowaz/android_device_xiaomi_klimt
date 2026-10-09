@@ -1,0 +1,16 @@
+//
+// SPDX-FileCopyrightText: WitAqua
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "KlimtTouchBridge",
+    srcs: ["src/**/*.java"],
+    certificate: "platform",
+    platform_apis: true,
+    privileged: true,
+    system_ext_specific: true,
+    optimize: {
+        enabled: false,
+    },
+}

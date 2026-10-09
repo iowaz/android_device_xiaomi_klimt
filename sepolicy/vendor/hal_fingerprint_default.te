@@ -20,3 +20,5 @@ allow hal_fingerprint_default sysfs_touch:file { open read };
 allow hal_fingerprint_default xiaomi_touch_device:chr_file rw_file_perms;
 allow hal_fingerprint_default displayfeature_device:chr_file rw_file_perms;
 hal_client_domain(hal_fingerprint_default, hal_power)
+# persist.sys.klimt.* (KlimtTouchBridge): double-tap and screen-off FOD touch modes
+get_prop(hal_fingerprint_default, system_prop)

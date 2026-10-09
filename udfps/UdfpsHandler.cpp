@@ -8,12 +8,16 @@
 
 #include <aidl/android/hardware/biometrics/fingerprint/AcquiredInfo.h>
 #include <android-base/logging.h>
+#include <android-base/properties.h>
 #include <android-base/unique_fd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+#include <sys/system_properties.h>
 
+#include <atomic>
 #include <cstddef>
 #include <cstdint>
+#include <thread>
 
 #include "UdfpsHandler.h"
 
@@ -24,6 +28,10 @@ namespace {
 constexpr char kTouchPath[] = "/dev/xiaomi-touch";
 constexpr char kDisplayPath[] = "/dev/mi_display/disp_feature";
 constexpr uint16_t kFodEnable = 10;
+constexpr uint16_t kDoubleTapMode = 14;
+// Written by KlimtTouchBridge from Settings.Secure.
+constexpr char kDoubleTapProp[] = "persist.sys.klimt.dt2w";
+constexpr char kScreenOffFodProp[] = "persist.sys.klimt.fod_screen_off";
 constexpr int kPressCommand = 1;
 constexpr int kNitCommand = 10;
 
@@ -73,6 +81,9 @@ class KlimtUdfpsHandler : public UdfpsHandler {
             PLOG(ERROR) << "Cannot select the primary touch panel";
             mTouchFd.reset();
         }
+        if (mTouchFd >= 0) {
+            std::thread([this] { watchSettings(); }).detach();
+        }
     }
 
     void onFingerDown(uint32_t, uint32_t, float, float) override {
@@ -101,7 +112,12 @@ class KlimtUdfpsHandler : public UdfpsHandler {
     void cancel() override {
         releaseFinger();
         setLocalHbm(kLocalHbmOffAuthStop);
-        setFodEnabled(false);
+        // With screen-off unlock the panel must keep reporting FOD presses while
+        // the screen is off, so leave FOD detection on.
+        setFodEnabled(mKeepFod.load());
+        // Re-assert the double tap mode in case the touch service reset it.
+        const int doubleTap = mDoubleTap.load();
+        if (doubleTap >= 0) setTouchMode(kDoubleTapMode, doubleTap);
     }
 
   private:
@@ -116,14 +132,37 @@ class KlimtUdfpsHandler : public UdfpsHandler {
         }
     }
 
-    void setFodEnabled(bool enabled) {
+    void setTouchMode(uint16_t mode, int value) {
         if (mTouchFd < 0) return;
         TouchRequest request{};
-        request.mode = kFodEnable;
+        request.mode = mode;
         request.count = 1;
-        request.values[0] = enabled;
+        request.values[0] = value;
         if (ioctl(mTouchFd.get(), kTouchMode, &request) < 0) {
-            PLOG(ERROR) << "Cannot change fingerprint touch mode";
+            PLOG(ERROR) << "Cannot set touch mode " << mode << " to " << value;
+        }
+    }
+
+    void setFodEnabled(bool enabled) { setTouchMode(kFodEnable, enabled); }
+
+    // Applies the settings mirrored by KlimtTouchBridge, then waits for any
+    // property change (the global serial) and checks again.
+    void watchSettings() {
+        uint32_t serial = 0;
+        while (true) {
+            const int doubleTap = android::base::GetBoolProperty(kDoubleTapProp, false);
+            if (doubleTap != mDoubleTap.exchange(doubleTap)) {
+                LOG(INFO) << "Double tap to wake: " << doubleTap;
+                setTouchMode(kDoubleTapMode, doubleTap);
+            }
+            const bool keepFod = android::base::GetBoolProperty(kScreenOffFodProp, false);
+            if (keepFod != mKeepFod.exchange(keepFod)) {
+                LOG(INFO) << "Screen-off FOD: " << keepFod;
+                setFodEnabled(keepFod);
+            }
+            uint32_t newSerial = 0;
+            __system_property_wait(nullptr, serial, &newSerial, nullptr);
+            serial = newSerial;
         }
     }
 
@@ -144,6 +183,8 @@ class KlimtUdfpsHandler : public UdfpsHandler {
     fingerprint_device_t* mDevice = nullptr;
     android::base::unique_fd mTouchFd;
     android::base::unique_fd mDisplayFd;
+    std::atomic<int> mDoubleTap{-1};
+    std::atomic<bool> mKeepFod{false};
 };
 
 UdfpsHandler* create() { return new KlimtUdfpsHandler(); }
