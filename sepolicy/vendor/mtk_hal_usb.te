@@ -1,0 +1,11 @@
+#
+# SPDX-FileCopyrightText: WitAqua
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# The stock AIDL USB and USB gadget services also manage the extcon state and
+# the UDC soft_connect node.
+allow mtk_hal_usb sysfs_extcon:dir search;
+allow mtk_hal_usb sysfs_extcon:file rw_file_perms;
+allow mtk_hal_usb sysfs_usb:dir r_dir_perms;
+allow mtk_hal_usb sysfs_usb:file rw_file_perms;
