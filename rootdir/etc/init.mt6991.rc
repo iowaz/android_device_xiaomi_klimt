@@ -895,6 +895,8 @@ on boot
     # micharge rc only hands input_suspend over at boot completion.
     chown system system /sys/class/power_supply/battery/input_suspend
     chmod 0660 /sys/class/power_supply/battery/input_suspend
+    chown system system /sys/class/power_supply/wireless/reverse_chg_mode
+    chmod 0660 /sys/class/power_supply/wireless/reverse_chg_mode
 
     write /proc/sys/vm/dirty_writeback_centisecs 300
     chmod 0660 /sys/power/autosleep

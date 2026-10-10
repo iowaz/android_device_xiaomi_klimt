@@ -152,6 +152,12 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.hardware_keystore_V3.xml
 
+# PowerShare (reverse wireless charging)
+PRODUCT_PACKAGES += \
+    vendor.lineage.powershare-service.default
+
+$(call soong_config_set,lineage_powershare,powershare_path,/sys/class/power_supply/wireless/reverse_chg_mode)
+
 # Product characteristics
 PRODUCT_CHARACTERISTICS := nosdcard
 
