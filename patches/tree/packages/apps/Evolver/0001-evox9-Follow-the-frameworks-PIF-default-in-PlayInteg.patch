@@ -1,0 +1,63 @@
+From 44331673773033222ae8564a9449ef911049a829 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Sat, 10 Oct 2026 12:09:24 -0300
+Subject: [PATCH] evox9: Follow the frameworks PIF default in PlayIntegrityFix
+
+Matches frameworks/base 3a2e4dd70 (PICKER_ORDER, PIF_DEFAULT_CODENAME, getDefaultPifCodename), which
+removed A_SERIES_ORDER and getPreferredASeriesCodename. File taken from upstream cnb 5a5cfae.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../miscellaneous/PlayIntegrityFix.kt          | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/src/org/evolution/settings/fragments/miscellaneous/PlayIntegrityFix.kt b/src/org/evolution/settings/fragments/miscellaneous/PlayIntegrityFix.kt
+index 70b0b6f..17b3caf 100644
+--- a/src/org/evolution/settings/fragments/miscellaneous/PlayIntegrityFix.kt
++++ b/src/org/evolution/settings/fragments/miscellaneous/PlayIntegrityFix.kt
+@@ -206,7 +206,7 @@ class PlayIntegrityFix : SettingsPreferenceFragment() {
+                 val profiles = withContext(Dispatchers.IO) {
+                     PixelDeviceRepository.getProfiles(requireContext(), true)
+                 }
+-                val defaultCodename = PixelDeviceRepository.getDefaultPhoneCodename(profiles)
++                val defaultCodename = PixelDeviceRepository.getDefaultPifCodename(profiles)
+                 val matched = withContext(Dispatchers.IO) {
+                     PixelDeviceRepository.getProfileByCodename(requireContext(), defaultCodename, false)
+                 } ?: return@launch
+@@ -428,25 +428,25 @@ class PlayIntegrityFix : SettingsPreferenceFragment() {
+                 }
+ 
+                 val currentDevice = android.os.SystemProperties.get(MATCH_DEVICE_PROP, "")
+-                val preferredASeries = PixelDeviceRepository.getPreferredASeriesCodename(profiles)
+                 val sortedProfiles = profiles.sortedWith(
+                     compareByDescending<PixelDeviceRepository.PixelProfile> {
+-                        it.device == currentDevice
+-                    }.thenByDescending {
+-                        PixelDeviceRepository.A_SERIES_ORDER.contains(it.codename)
++                        it.codename == PixelDeviceRepository.PIF_DEFAULT_CODENAME
+                     }.thenByDescending {
+-                        PixelDeviceRepository.GENERATION_ORDER.indexOf(it.codename)
+-                            .let { idx -> if (idx < 0) -1 else PixelDeviceRepository.GENERATION_ORDER.size - idx }
++                        it.device == currentDevice
++                    }.thenBy {
++                        PixelDeviceRepository.PICKER_ORDER.indexOf(it.codename)
++                            .let { idx -> if (idx < 0) Int.MAX_VALUE else idx }
+                     }
+                 )
+                 val modelNames = sortedProfiles.map {
+-                    if (PixelDeviceRepository.A_SERIES_ORDER.contains(it.codename)) {
++                    if (it.codename == PixelDeviceRepository.PIF_DEFAULT_CODENAME) {
+                         "${it.model} — ${getString(R.string.pif_recommended_suffix)}"
+                     } else {
+                         it.model
+                     }
+                 }.toTypedArray()
+-                val preselectedIndex = sortedProfiles.indexOfFirst { it.codename == preferredASeries }
++                val preselectedIndex = sortedProfiles
++                    .indexOfFirst { it.codename == PixelDeviceRepository.PIF_DEFAULT_CODENAME }
+                     .let { if (it < 0) 0 else it }
+ 
+                 AlertDialog.Builder(requireContext())
+-- 
+2.43.0
+

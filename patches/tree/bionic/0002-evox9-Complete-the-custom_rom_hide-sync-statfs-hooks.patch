@@ -1,0 +1,58 @@
+From f6c31056851ce66d2cee68b429d099ebf8f724cf Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Sat, 10 Oct 2026 12:09:24 -0300
+Subject: [PATCH 2/2] evox9: Complete the custom_rom_hide sync (statfs hooks)
+
+38a52a6 took only custom_rom_hide.cpp from upstream 3d41693. Add the rest of it: the
+custom_rom_hide_spoof_statfs() declaration and the statfs(path) block/spoof calls in sys_statfs.cpp.
+Tree now equals upstream 3d41693.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ libc/bionic/custom_rom_hide.h | 1 +
+ libc/bionic/sys_statfs.cpp    | 6 ++++++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/libc/bionic/custom_rom_hide.h b/libc/bionic/custom_rom_hide.h
+index e3ac3d0..6d116aa 100644
+--- a/libc/bionic/custom_rom_hide.h
++++ b/libc/bionic/custom_rom_hide.h
+@@ -34,6 +34,7 @@ bool custom_rom_hide_should_filter_dirent(int dirfd, const char* name);
+ 
+ void custom_rom_hide_spoof_stat(const char* path, struct stat* sb);
+ void custom_rom_hide_spoof_statx(const char* path, struct statx* sx);
++void custom_rom_hide_spoof_statfs(const char* path, struct statfs* sf);
+ void custom_rom_hide_spoof_fd_stat(int fd, struct stat* sb);
+ void custom_rom_hide_spoof_fd_statx(int fd, unsigned mask, struct statx* sx);
+ void custom_rom_hide_spoof_fd_statfs(int fd, struct statfs* sf);
+diff --git a/libc/bionic/sys_statfs.cpp b/libc/bionic/sys_statfs.cpp
+index b2f43e7..3594dae 100644
+--- a/libc/bionic/sys_statfs.cpp
++++ b/libc/bionic/sys_statfs.cpp
+@@ -14,6 +14,7 @@
+  * limitations under the License.
+  */
+ 
++#include <errno.h>
+ #include <sys/statfs.h>
+ 
+ #include "custom_rom_hide.h"
+@@ -48,10 +49,15 @@ int fstatfs(int fd, struct statfs* result) {
+ __strong_alias(fstatfs64, fstatfs);
+ 
+ int statfs(const char* path, struct statfs* result) {
++  if (custom_rom_hide_should_block(path)) {
++    errno = ENOENT;
++    return -1;
++  }
+   int rc = __statfs64(path, sizeof(*result), result);
+   if (rc != 0) {
+     return rc;
+   }
++  custom_rom_hide_spoof_statfs(path, result);
+   result->f_flags &= ~ST_VALID;
+   return 0;
+ }
+-- 
+2.43.0
+

@@ -1,0 +1,34 @@
+From f899a2d57df0626dc6ca50307e7d24f54730f59e Mon Sep 17 00:00:00 2001
+From: Pranav Vashi <neobuddy89@gmail.com>
+Date: Sun, 4 Oct 2026 21:56:49 +0530
+Subject: [PATCH] stagefright: Hide emitting non-AOSP symbol
+
+* This gets checked by few detectors for flagging possibility of custom rom.
+
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+
+evox9: picked from Evolution-X/frameworks_av@7eaa22020c
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../include/media/stagefright/ANetworkSession.h               | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/media/libstagefright/include/media/stagefright/ANetworkSession.h b/media/libstagefright/include/media/stagefright/ANetworkSession.h
+index fd3ebaa..401c529 100644
+--- a/media/libstagefright/include/media/stagefright/ANetworkSession.h
++++ b/media/libstagefright/include/media/stagefright/ANetworkSession.h
+@@ -122,8 +122,8 @@ private:
+             const sp<AMessage> &notify,
+             int32_t *sessionID);
+ 
+-    void threadLoop();
+-    void interrupt();
++    void threadLoop() __attribute__((visibility("hidden")));
++    void interrupt() __attribute__((visibility("hidden")));
+ 
+     static status_t MakeSocketNonBlocking(int s);
+ 
+-- 
+2.43.0
+

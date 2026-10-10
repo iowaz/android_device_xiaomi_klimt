@@ -1,0 +1,29 @@
+From ec09cd0339a71a5eaa014e1f284bbfc9f6ee3015 Mon Sep 17 00:00:00 2001
+From: Pranav Vashi <neobuddy89@gmail.com>
+Date: Sun, 4 Oct 2026 01:41:36 +0530
+Subject: [PATCH] init: Remove sys property triggering custom rom detect
+
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+
+evox9: picked from Evolution-X/system_core@ee96af1583
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ init/property_service.cpp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/init/property_service.cpp b/init/property_service.cpp
+index dfd3a98..40a76b0 100644
+--- a/init/property_service.cpp
++++ b/init/property_service.cpp
+@@ -1241,7 +1241,6 @@ static void SetSafetyNetProps() {
+         {"vendor.boot.vbmeta.device_state", "locked"},
+         {"vendor.boot.verifiedbootstate", "green"},
+         {"oplusboot.verifiedbootstate", "green"},
+-        {"sys.oem_unlock_allowed", "0"},
+         {"ro.oem_unlock_supported", "0"},
+         {"ro.crypto.state", "encrypted"},
+         {"ro.is_ever_orange", "0"},
+-- 
+2.43.0
+

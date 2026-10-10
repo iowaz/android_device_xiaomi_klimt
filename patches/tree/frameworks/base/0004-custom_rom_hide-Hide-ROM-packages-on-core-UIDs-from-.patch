@@ -1,0 +1,313 @@
+From 141fcb8790ad61886b5891e58afe500f95a59897 Mon Sep 17 00:00:00 2001
+From: Pranav Vashi <neobuddy89@gmail.com>
+Date: Sat, 10 Oct 2026 12:26:05 -0300
+Subject: [PATCH 4/4] custom_rom_hide: Hide ROM packages on core UIDs from
+ unprivileged apps
+
+Only core UIDs, system/privileged apps, SystemUI and the default launcher
+can keep full visibility.
+
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+
+evox9: picked from Evolution-X/frameworks_base@b0a4ac0d11 (ComputerEngine hunks applied as-is;
+AppsFilterBase.java taken from upstream cnb, which is ours + this commit).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../com/android/server/pm/AppsFilterBase.java | 152 +++++++++++-------
+ .../com/android/server/pm/ComputerEngine.java |  24 ++-
+ 2 files changed, 112 insertions(+), 64 deletions(-)
+
+diff --git a/services/core/java/com/android/server/pm/AppsFilterBase.java b/services/core/java/com/android/server/pm/AppsFilterBase.java
+index 2191fa1c1..02e7af441 100644
+--- a/services/core/java/com/android/server/pm/AppsFilterBase.java
++++ b/services/core/java/com/android/server/pm/AppsFilterBase.java
+@@ -23,7 +23,6 @@ import static com.android.server.pm.AppsFilterUtils.canQueryViaComponents;
+ import static com.android.server.pm.AppsFilterUtils.requestsQueryAllPackages;
+ 
+ import android.annotation.NonNull;
+-import java.util.Set;
+ import android.annotation.Nullable;
+ import android.content.pm.SigningDetails;
+ import android.os.Binder;
+@@ -34,6 +33,7 @@ import android.os.UserHandle;
+ import android.text.TextUtils;
+ import android.util.ArrayMap;
+ import android.util.ArraySet;
++import android.util.Pair;
+ import android.util.Slog;
+ import android.util.SparseArray;
+ 
+@@ -43,6 +43,8 @@ import com.android.server.om.OverlayReferenceMapper;
+ import com.android.server.pm.pkg.AndroidPackage;
+ import com.android.server.pm.pkg.PackageStateInternal;
+ import com.android.server.pm.pkg.SharedUserApi;
++import com.android.internal.pm.pkg.component.ParsedActivity;
++import com.android.internal.pm.pkg.component.ParsedIntentInfo;
+ import com.android.server.pm.snapshot.PackageDataSnapshot;
+ import com.android.server.utils.SnapshotCache;
+ import com.android.server.utils.Watched;
+@@ -54,6 +56,7 @@ import com.android.server.utils.WatchedSparseSetArray;
+ import java.io.PrintWriter;
+ import java.util.Arrays;
+ import java.util.Objects;
++import java.util.Set;
+ import java.util.concurrent.atomic.AtomicBoolean;
+ 
+ /**
+@@ -83,6 +86,42 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+     private static final ArraySet<PackageStateInternal> EMPTY_SHARED_PKG_SETTINGS =
+             new ArraySet<>(0);
+ 
++    private static final Set<String> ROOT_PACKAGES = Set.of(
++            "com.topjohnwu.magisk",
++            "eu.chainfire.supersu",
++            "com.koushikdutta.superuser",
++            "com.noshufou.android.su",
++            "com.noshufou.android.su.elite",
++            "com.thirdparty.superuser",
++            "com.yellowes.su",
++            "me.weishu.kernelsu",
++            "com.kingroot.kinguser",
++            "com.kingo.root",
++            "com.smedialink.oneclickroot",
++            "com.zhiqupk.root.global",
++            "com.alephzain.framaroot",
++            "com.devadvance.rootcloak",
++            "com.devadvance.rootcloakplus",
++            "de.robv.android.xposed.installer",
++            "com.saurik.substrate",
++            "com.amphoras.hidemyroot",
++            "com.amphoras.hidemyrootadfree",
++            "com.formyhm.hiderootPremium",
++            "com.formyhm.hideroot",
++            "com.koushikdutta.rommanager",
++            "com.koushikdutta.rommanager.license",
++            "com.dimonvideo.luckypatcher",
++            "com.chelpus.lackypatch",
++            "com.chelpus.luckypatcher",
++            "com.solohsu.android.edxp.manager",
++            "org.meowcat.edxposed.manager",
++            "org.lsposed.manager",
++            "cc.madkite.freedom",
++            "com.ramdroid.appquarantine",
++            "com.ramdroid.appquarantinepro",
++            "com.zachspong.temprootremovejb"
++    );
++
+     /**
+      * This contains a list of app UIDs that are implicitly queryable because another app explicitly
+      * interacted with it. For example, if application A starts a service in application B,
+@@ -332,57 +371,46 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+         return targetUid == Process.getAppUidForSdkSandboxUid(callingUid);
+     }
+ 
+-    /**
+-     * See
+-     * {@link AppsFilterSnapshot#shouldFilterApplication(PackageDataSnapshot, int, Object,
+-     * PackageStateInternal, int)}
+-     */
+-    private static final java.util.Set<String> ROOT_PACKAGES = java.util.Set.of(
+-            "com.topjohnwu.magisk",
+-            "eu.chainfire.supersu",
+-            "com.koushikdutta.superuser",
+-            "com.noshufou.android.su",
+-            "com.noshufou.android.su.elite",
+-            "com.thirdparty.superuser",
+-            "com.yellowes.su",
+-            "me.weishu.kernelsu",
+-            "com.kingroot.kinguser",
+-            "com.kingo.root",
+-            "com.smedialink.oneclickroot",
+-            "com.zhiqupk.root.global",
+-            "com.alephzain.framaroot",
+-            "com.devadvance.rootcloak",
+-            "com.devadvance.rootcloakplus",
+-            "de.robv.android.xposed.installer",
+-            "com.saurik.substrate",
+-            "com.amphoras.hidemyroot",
+-            "com.amphoras.hidemyrootadfree",
+-            "com.formyhm.hiderootPremium",
+-            "com.formyhm.hideroot",
+-            "com.koushikdutta.rommanager",
+-            "com.koushikdutta.rommanager.license",
+-            "com.dimonvideo.luckypatcher",
+-            "com.chelpus.lackypatch",
+-            "com.chelpus.luckypatcher",
+-            "com.solohsu.android.edxp.manager",
+-            "org.meowcat.edxposed.manager",
+-            "org.lsposed.manager",
+-            "cc.madkite.freedom",
+-            "com.ramdroid.appquarantine",
+-            "com.ramdroid.appquarantinepro",
+-            "com.zachspong.temprootremovejb"
+-    );
+-
+     private static final String PACKAGE_SYSTEMUI = "com.android.systemui";
+ 
+-    private static boolean isHiddenPackage(@NonNull String pkg) {
+-        return ROOT_PACKAGES.contains(pkg) || isRomPackage(pkg);
++    public static boolean isHiddenPackage(@Nullable String packageName) {
++        return packageName != null
++                && (ROOT_PACKAGES.contains(packageName)
++                        || ROM_PACKAGES_EXACT.contains(packageName)
++                        || isRomPackage(packageName));
++    }
++
++    private static final Set<String> ROM_PACKAGES_EXACT = Set.of(
++            "lineageos.platform"
++    );
++
++    private static boolean isRomPackage(@NonNull String packageName) {
++        return packageName.startsWith("org.lineageos.")
++                || packageName.startsWith("com.libremobileos.")
++                || packageName.startsWith("com.crdroid.")
++                || packageName.startsWith("com.android.axion.")
++                || packageName.startsWith("co.aospa.")
++                || packageName.startsWith("io.chaldeaprjkt.")
++                || packageName.startsWith("org.evolution.")
++                || packageName.startsWith("org.lunaris.")
++                || packageName.startsWith("org.omnirom.")
++                || packageName.startsWith("org.protonaosp.");
+     }
+ 
+-    private static boolean isRomPackage(String pkg) {
+-        return pkg.startsWith("org.lineageos.")
+-                || pkg.startsWith("org.omnirom.")
+-                || pkg.startsWith("org.protonaosp.");
++    public static boolean shouldHideFromUid(@NonNull Computer snapshot, int callingUid,
++            @Nullable String targetPackageName) {
++        if (!isHiddenPackage(targetPackageName)) {
++            return false;
++        }
++        final int callingAppId = UserHandle.getAppId(callingUid);
++        if (callingAppId < Process.FIRST_APPLICATION_UID) {
++            return false;
++        }
++        final Pair<PackageStateInternal, SharedUserApi> p =
++                snapshot.getPackageOrSharedUser(callingAppId);
++        final Object callingSetting = p == null ? null
++                : (p.first != null ? p.first : p.second);
++        return !canAccessHiddenPackages(snapshot, callingUid, callingSetting);
+     }
+ 
+     private static boolean canAccessHiddenPackages(@NonNull Computer snapshot, int callingUid,
+@@ -439,6 +467,11 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+         return false;
+     }
+ 
++    /**
++     * See
++     * {@link AppsFilterSnapshot#shouldFilterApplication(PackageDataSnapshot, int, Object,
++     * PackageStateInternal, int)}
++     */
+     @Override
+     public boolean shouldFilterApplication(PackageDataSnapshot snapshot, int callingUid,
+             @Nullable Object callingSetting, PackageStateInternal targetPkgSetting, int userId) {
+@@ -446,19 +479,20 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+             Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "shouldFilterApplication");
+         }
+         try {
+-            int callingAppId = UserHandle.getAppId(callingUid);
+-            String targetPkg = targetPkgSetting.getPackageName();
+-            if (callingAppId >= Process.FIRST_APPLICATION_UID
+-                    && isHiddenPackage(targetPkg)
+-                    && !canAccessHiddenPackages((Computer) snapshot, callingUid, callingSetting)) {
++            final int callingAppId = UserHandle.getAppId(callingUid);
++            final int targetAppId = targetPkgSetting.getAppId();
++            if (callingAppId < Process.FIRST_APPLICATION_UID || callingAppId == targetAppId) {
++                return false;
++            }
++            final Computer computer = (Computer) snapshot;
++            if (isHiddenPackage(targetPkgSetting.getPackageName())
++                    && !canAccessHiddenPackages(computer, callingUid, callingSetting)) {
+                 return true;
+             }
+-            if (callingAppId < Process.FIRST_APPLICATION_UID
+-                    || targetPkgSetting.getAppId() < Process.FIRST_APPLICATION_UID
+-                    || callingAppId == targetPkgSetting.getAppId()) {
++            if (targetAppId < Process.FIRST_APPLICATION_UID) {
+                 return false;
+-            } else if (Process.isSdkSandboxUid(callingAppId)) {
+-                final int targetAppId = targetPkgSetting.getAppId();
++            }
++            if (Process.isSdkSandboxUid(callingAppId)) {
+                 final int targetUid = UserHandle.getUid(userId, targetAppId);
+                 // we only allow sdk sandbox processes access to forcequeryable packages or
+                 // if the target app is the sandbox's client app
+@@ -490,7 +524,7 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
+                     return false;
+                 }
+             } else {
+-                if (!shouldFilterApplicationInternal((Computer) snapshot,
++                if (!shouldFilterApplicationInternal(computer,
+                         callingUid, callingSetting, targetPkgSetting, userId)) {
+                     return false;
+                 }
+diff --git a/services/core/java/com/android/server/pm/ComputerEngine.java b/services/core/java/com/android/server/pm/ComputerEngine.java
+index beb1e1bb9..bc6987c75 100644
+--- a/services/core/java/com/android/server/pm/ComputerEngine.java
++++ b/services/core/java/com/android/server/pm/ComputerEngine.java
+@@ -763,7 +763,11 @@ public class ComputerEngine implements Computer {
+                                 && shouldFilterApplication(
+                                 getPackageStateInternal(ai.applicationInfo.packageName,
+                                         Process.SYSTEM_UID), filterCallingUid, userId);
+-                if (!blockInstantResolution && !blockNormalResolution) {
++                final boolean blockHiddenRomResolution = !isCallerInstantApp
++                        && AppsFilterBase.shouldHideFromUid(
++                                this, filterCallingUid, comp.getPackageName());
++                if (!blockInstantResolution && !blockNormalResolution
++                        && !blockHiddenRomResolution) {
+                     final ResolveInfo ri = new ResolveInfo();
+                     ri.activityInfo = ai;
+                     ri.userHandle = UserHandle.of(userId);
+@@ -979,8 +983,10 @@ public class ComputerEngine implements Computer {
+             final PackageStateInternal setting =
+                     getPackageStateInternal(pkgName, Process.SYSTEM_UID);
+ 
+-            if (setting != null && setting.getAndroidPackage() != null && (resolveForStart
+-                    || !shouldFilterApplication(setting, filterCallingUid, userId))) {
++            if (setting != null && setting.getAndroidPackage() != null
++                    && ((resolveForStart && !AppsFilterBase.shouldHideFromUid(
++                                    this, filterCallingUid, pkgName))
++                            || !shouldFilterApplication(setting, filterCallingUid, userId))) {
+                 final List<ResolveInfo> queryResult = mComponentResolver.queryActivities(this,
+                         intent, resolvedType, flags, setting.getAndroidPackage().getActivities(),
+                         userId);
+@@ -1425,6 +1431,11 @@ public class ComputerEngine implements Computer {
+                 resolveInfos.remove(i);
+                 continue;
+             }
++            if (info.activityInfo != null && AppsFilterBase.shouldHideFromUid(
++                    this, filterCallingUid, info.activityInfo.packageName)) {
++                resolveInfos.remove(i);
++                continue;
++            }
+             // remove locally resolved instant app web results when disabled
+             if (info.isInstantAppAvailable && blockInstant) {
+                 resolveInfos.remove(i);
+@@ -6052,8 +6063,10 @@ public class ComputerEngine implements Computer {
+     @Override
+     public String[] getSharedUserPackagesForPackage(@NonNull String packageName,
+             @UserIdInt int userId) {
++        final int callingUid = Binder.getCallingUid();
+         final PackageStateInternal packageSetting = mSettings.getPackage(packageName);
+-        if (packageSetting == null || mSettings.getSharedUserFromPackageName(packageName) == null) {
++        if (packageSetting == null || mSettings.getSharedUserFromPackageName(packageName) == null
++                || shouldFilterApplicationIncludingUninstalled(packageSetting, callingUid, userId)) {
+             return EmptyArray.STRING;
+         }
+ 
+@@ -6064,7 +6077,8 @@ public class ComputerEngine implements Computer {
+         int i = 0;
+         for (int index = 0; index < numPackages; index++) {
+             final PackageStateInternal ps = packages.valueAt(index);
+-            if (ps.getUserStateOrDefault(userId).isInstalled()) {
++            if (ps.getUserStateOrDefault(userId).isInstalled()
++                    && !shouldFilterApplication(ps, callingUid, userId)) {
+                 res[i++] = ps.getPackageName();
+             }
+         }
+-- 
+2.43.0
+
