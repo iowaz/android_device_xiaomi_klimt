@@ -25,6 +25,9 @@ bluetooth.profile.sap.server.enabled=true
 # Camera
 vendor.camera.aux.packagelist=com.android.camera,com.xiaomi.cameratest,com.xiaomi.factory.mmi,com.xiaomi.runin
 
+# Doze: let SystemUI put the panel in its low-power doze mode for AOD.
+doze.display.supported=true
+
 # Display
 debug.sf.early.app.duration=20000000
 debug.sf.early.sf.duration=27600000
