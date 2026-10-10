@@ -27,6 +27,9 @@
         <item>standby</item>
     </string-array>
 
+    <!-- Always-on display, off until enabled in Settings > Display > Lock screen. -->
+    <bool name="config_dozeAlwaysOnDisplayAvailable">true</bool>
+    <bool name="config_dozeAlwaysOnEnabled">false</bool>
     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
     <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>
     <bool name="config_showNavigationBar">true</bool>
