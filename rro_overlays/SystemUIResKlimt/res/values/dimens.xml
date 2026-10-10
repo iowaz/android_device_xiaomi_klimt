@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Microns per pixel: 1280x2772 on a 6.83" panel is 447 ppi, 25400 / 447 = 56.82.
+         SystemUI sizes the UDFPS icon as udfps_icon_size / pixel_pitch; the AOSP default of -1
+         gave a padding of 3105 px and drew the icon as a white block over the sensor. -->
+    <item name="pixel_pitch" format="float" type="dimen">56.82</item>
+</resources>
