@@ -4500,6 +4500,7 @@ vendor/lib64/libtinyxml2.so:vendor/lib64/libtinyxml2_vendor.so
 vendor/lib64/libjpegdecoder.so:vendor/lib64/libjpegdecoder_vendor.so
 vendor/lib64/libjpegencoder.so:vendor/lib64/libjpegencoder_vendor.so
 vendor/lib64/libgui.so:vendor/lib64/libgui_vendor.so
+vendor/lib64/libui.so:vendor/lib64/libui_vendor.so
 vendor/lib64/libultrahdr.so:vendor/lib64/libultrahdr_vendor.so
 vendor/lib64/libpcap.so:vendor/lib64/libpcap_vendor.so
 vendor/lib64/libperfctl_vendor.so
