@@ -891,6 +891,11 @@ on early-boot
 on boot
     write /proc/bootprof "INIT:boot"
 
+    # Charging control (vendor.lineage.health) runs as system. The stock
+    # micharge rc only hands input_suspend over at boot completion.
+    chown system system /sys/class/power_supply/battery/input_suspend
+    chmod 0660 /sys/class/power_supply/battery/input_suspend
+
     write /proc/sys/vm/dirty_writeback_centisecs 300
     chmod 0660 /sys/power/autosleep
 
