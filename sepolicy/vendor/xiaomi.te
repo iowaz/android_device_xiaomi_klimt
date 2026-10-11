@@ -280,8 +280,10 @@ allow xiaomi_misys_common sysfs_display_feature:file { getattr open read write }
 allow xiaomi_misys_common sysfs_soc:dir { search };
 allow xiaomi_misys_common sysfs_soc:file { getattr open read };
 allow xiaomi_misys_common sysfs_xm_power:file { getattr open read write };
-allow xiaomi_misys_common vendor_data_file:dir { add_name open read remove_name write };
-allow xiaomi_misys_common vendor_data_file:file { append create getattr open read setattr unlink write };
+# MIUI Camera has misys copy its watermark configs to /data/vendor/camera/watermarks/,
+# creating the directories on the way. Stock grants the same.
+allow xiaomi_misys_common vendor_data_file:dir create_dir_perms;
+allow xiaomi_misys_common vendor_data_file:file create_file_perms;
 allow xiaomi_misys_common self:netlink_kobject_uevent_socket { bind create read };
 allow xiaomi_misys_common xiaomi_misys_core:binder { call };
 
