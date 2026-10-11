@@ -144,6 +144,11 @@ allow batterysecret sysfs_batteryinfo:file { open read write };
 allow batterysecret self:capability2 { block_suspend };
 allow batterysecret kmsg_device:chr_file { getattr open write };
 allow batterysecret sysfs_wake_lock:file { open write };
+# batterysecret verifies Xiaomi PD adapters through Charging_Adapter/pd_adapter/*
+# and swaps the typec data role (port*/data_role); both are plain sysfs here.
+# While it was denied, charging stayed at 5 V. Stock grants the same access.
+allow batterysecret sysfs:dir r_dir_perms;
+allow batterysecret sysfs:file rw_file_perms;
 
 # display tuning daemon
 type displayfeature, domain;
