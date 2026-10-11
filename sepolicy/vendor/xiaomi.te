@@ -86,7 +86,7 @@ allow mpbe proc_perfmgr:dir search;
 allow mpbe proc_perfmgr:file r_file_perms;
 allow mpbe proc_mpbe:dir search;
 allow mpbe proc_mpbe:file rw_file_perms;
-allowxperm mpbe proc_mpbe:file ioctl { 0x6701 0x6702 0x6704 };
+allowxperm mpbe proc_mpbe:file ioctl { 0x6701 0x6702 0x6703 0x6704 };
 allow mpbe sysfs_ufs:dir search;
 allow mpbe sysfs_ufs:file rw_file_perms;
 allow mpbe self:netlink_kobject_uevent_socket { bind create getopt read setopt };
