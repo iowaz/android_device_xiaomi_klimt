@@ -10,3 +10,7 @@ allow mnld fwk_sensor_service:service_manager find;
 
 allow mnld hf_manager_device:chr_file { ioctl open read write };
 binder_use(mnld)
+
+# It looks up ro.logsystem.usertype and other unlabeled properties that aren't set
+# on this ROM.
+dontaudit mnld default_prop:file read;

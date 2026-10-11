@@ -23,3 +23,7 @@ allow hal_audio_default sysfs_vibrator:file { open read };
 allow hal_audio_default hal_dolby_dms_service:service_manager find;
 allow hal_audio_default audio_hw_socket:sock_file write;
 binder_call(hal_audio_default, hal_dolby_dms)
+
+# The MediaTek HAL looks up ro.miui.build.region and ro.miui.ui.version.code, which
+# have no label here and aren't set on this ROM.
+dontaudit hal_audio_default default_prop:file read;

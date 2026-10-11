@@ -32,6 +32,11 @@ allow mtk_hal_camera system_data_file:dir search;
 # The camera HAL records the build stamps of the components it loaded.
 set_prop(mtk_hal_camera, vendor_camera_skynet_prop)
 
+# The HAL and its algorithm libraries look up properties that have no label here
+# (persist.camera.aftrack.*, ro.miui.*, ro.product.marketname and more), dozens of
+# times per session. None is set on this ROM, so the reads come back empty either way.
+dontaudit mtk_hal_camera default_prop:file read;
+
 # The algo threads statfs() the dmabuf filesystem, which carries no label.
 allow mtk_hal_camera unlabeled:filesystem getattr;
 
