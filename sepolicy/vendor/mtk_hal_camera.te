@@ -20,7 +20,7 @@ allow mtk_hal_camera sysfs_chipid:file { open read };
 allow mtk_hal_camera sysfs_therm:dir { open read };
 allow mtk_hal_camera system_data_file:dir { search };
 allow mtk_hal_camera vendor_data_file:dir { add_name open read remove_name write };
-allow mtk_hal_camera vendor_data_file:file { create unlink write };
+allow mtk_hal_camera vendor_data_file:file { create setattr unlink write };
 add_service(mtk_hal_camera, xiaomi_bgservice_service)
 add_service(mtk_hal_camera, virtualcamera_service)
 get_prop(mtk_hal_camera, camera_config_prop)
