@@ -505,8 +505,10 @@ persist.vendor.sys.pq.disp_gamma_silky_brightness_by_hwc=0
 persist.vendor.sys.pq.mtk_disp_clarity_support=1
 persist.vendor.sys.pq.oddmr_dbi_support=0
 persist.vendor.tcpdump.enable=false
-persist.vendor.vilte_support=1
-persist.vendor.viwifi_support=1
+# No vtservice (media.VTS) in this ROM; with ViLTE or ViWiFi on, ImsService's VT
+# init retries it forever.
+persist.vendor.vilte_support=0
+persist.vendor.viwifi_support=0
 persist.vendor.volte_support=1
 persist.vendor.vt.camera.rotate=1
 persist.vendor.vt.multi_profile_support=1
