@@ -256,6 +256,7 @@ blob_fixups = {
         'vendor/lib64/mt6991/libmtkcam_grallocutils.so',
         'vendor/lib64/mt6991/libmtkcam_hal_hidl_provider.so',
         'vendor/lib64/vendor.xiaomi.hardware.camera.injection-service.so',
+        'odm/bin/hw/vendor.xiaomi.sensor.citsensorservice.aidl',
     ): blob_fixup().replace_needed('libui.so', 'libui_vendor.so'),
     # Other platform libraries the A15 blobs need their own copy of.
     'vendor/lib64/android.hardware.audio.core-impl-mediatek.so': blob_fixup()
@@ -313,6 +314,7 @@ blob_fixups = {
     ): aidl_bump('android.hardware.security.keymint', 3, 4),
     (
         'odm/bin/hw/vendor.xiaomi.hw.touchfeature-service',
+        'odm/bin/hw/vendor.xiaomi.sensor.citsensorservice.aidl',
         'odm/bin/test-nusensors',
         'odm/lib64/hw/displayfeature.default.so',
         'odm/lib64/libadaptivehdr.so',

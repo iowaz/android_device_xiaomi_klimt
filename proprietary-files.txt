@@ -2436,6 +2436,7 @@ odm/bin/crossbuild/DataSet/SQLiteModule/db/port_select.db;MAKE_COPY_RULE_ONLY
 odm/bin/hw/mifaced
 odm/bin/hw/miteetuid
 odm/bin/hw/vendor.xiaomi.hw.touchfeature-service
+odm/bin/hw/vendor.xiaomi.sensor.citsensorservice.aidl
 odm/bin/SoterProvisioningTool_mitee
 odm/bin/idmanager
 odm/bin/mpbe_service
@@ -2490,6 +2491,7 @@ odm/etc/init/vendor.xiaomi.hardware.aidl.mtdservice-miteeservice.rc
 odm/etc/init/vendor.xiaomi.hardware.idmanager.rc
 odm/etc/init/vendor.xiaomi.hardware.miteetui.rc
 odm/etc/init/vendor.xiaomi.hw.touchfeature-service.rc
+odm/etc/init/vendor.xiaomi.sensor.citsensorservice.aidl.rc
 odm/etc/sems/4LS_M4M-3.1.5.1_iPass_araRules_for_GooglePlay_Wallet_1.0.txt
 odm/etc/touch/dynamicrate.json
 odm/etc/touch/gameturbotool-control.json
@@ -2501,6 +2503,7 @@ odm/etc/vintf/manifest/manifest_vendor.xiaomi.hardware.miteetui.xml
 odm/etc/vintf/manifest/vendor.xiaomi.hardware.framemaster_aidl-service.xml
 odm/etc/vintf/manifest/vendor.xiaomi.hardware.idmanager.xml
 odm/etc/vintf/manifest/vendor.xiaomi.hw.touchfeature-service.xml
+odm/etc/vintf/manifest/vendor.xiaomi.sensor.citsensorservice.aidl.xml
 odm/etc/vintf/manifest_dsds.xml
 odm/etc/vintf/manifest_qsqs.xml
 odm/etc/vintf/manifest_ss.xml

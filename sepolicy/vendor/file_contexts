@@ -21,6 +21,7 @@
 /odm/bin/hw/mifaced                                                        u:object_r:mifaced_exec:s0
 /odm/bin/hw/miteetuid                                                      u:object_r:miteetuid_exec:s0
 /odm/bin/hw/vendor\.xiaomi\.hw\.touchfeature-service                       u:object_r:hal_touchfeature_exec:s0
+/odm/bin/hw/vendor\.xiaomi\.sensor\.citsensorservice\.aidl                 u:object_r:citsensorservice_exec:s0
 /odm/bin/idmanager                                                         u:object_r:mitee_idmanager_exec:s0
 /odm/bin/mpbe_service                                                      u:object_r:mpbe_exec:s0
 /odm/bin/mtd_mitee                                                         u:object_r:mitee_mtdservice_exec:s0
