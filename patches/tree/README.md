@@ -9,6 +9,8 @@ repositories, so they are kept here instead of in forks. Apply with `patches/tre
   (LineageOS 47a31e21f0, f4ed08a03b; tests left out), ROM packages hidden from unprivileged apps (upstream b0a4ac0d11).
 - frameworks/av: hide the non-AOSP ANetworkSession symbols (upstream 7eaa22020c).
 - frameworks/opt/telephony: decodeWapPdu remote DoS fix (upstream 71d68ae390).
+- frameworks/native (evox13): libui skips SMPTE 2094-50 when the mapper doesn't list it; MediaTek's mapper
+  logs an error for every RenderEngine draw otherwise.
 - packages/apps/Evolver: PlayIntegrityFix follows the frameworks PIF default (upstream 5a5cfae).
 - packages/modules/Bluetooth: CVE-2026-58880 fix (upstream 71940ed630).
 - system/core: stop spoofing sys.oem_unlock_allowed (upstream ee96af1583).

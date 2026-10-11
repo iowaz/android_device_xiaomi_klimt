@@ -5,3 +5,4 @@ frameworks/opt/telephony a0aa60e8014152a704dd64f84f78e2dc0b87a5ae
 packages/apps/Evolver 1b4360f1fb666a9951aad0679eea5c881edd1af1
 packages/modules/Bluetooth 2daafd384d5985cc84654da5ae299bff85d5929c
 system/core 39f6732ee8c3ec0fa6daefa0fd38e833a519a6d5
+frameworks/native 75e2cc6363936395299f10577e765a2425509316
