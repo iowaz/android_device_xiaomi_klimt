@@ -12,6 +12,18 @@ persist.vendor.sys.idmgr. u:object_r:vendor_idmgr_prop:s0
 persist.vendor.sys.fp.          u:object_r:vendor_fingerprint_prop:s0
 persist.vendor.camera.skynet.   u:object_r:vendor_camera_skynet_prop:s0
 
+# Camera HAL debug switches it sets itself (labels as on stock)
+vendor.camera.sensor.logsystem  u:object_r:vendor_camera_skynet_prop:s0
+persist.vendor.camera.st_repair. u:object_r:vendor_mtk_camera_prop:s0
+
+# TEE provisioning state that mtd_mitee records (labels as on stock)
+vendor.sys.feature_state                 u:object_r:vendor_payment_security_prop:s0
+vendor.sys.rpmb_state                    u:object_r:vendor_payment_security_prop:s0
+persist.vendor.sys.pay.widevine          u:object_r:vendor_payment_security_prop:s0
+persist.vendor.sys.provision.status      u:object_r:vendor_payment_security_prop:s0
+persist.vendor.sys.attestation.status    u:object_r:vendor_payment_security_prop:s0
+persist.vendor.sys.rkp.status            u:object_r:vendor_payment_security_prop:s0
+
 # Touch feature service state (labels as on stock)
 vendor.touchfeature.                  u:object_r:vendor_touchfeature_prop:s0
 persist.vendor.touchfeature.          u:object_r:vendor_touchfeature_prop:s0

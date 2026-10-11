@@ -77,6 +77,8 @@ allow mitee_mtdservice mnt_vendor_file:dir search;
 binder_use(mitee_mtdservice)
 add_service(mitee_mtdservice, mitee_mtdservice_service)
 hal_client_domain(mitee_mtdservice, hal_keymint)
+# It records the TEE provisioning and attestation state at boot.
+set_prop(mitee_mtdservice, vendor_payment_security_prop)
 
 # power/battery estimator
 type mpbe, domain;
