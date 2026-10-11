@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">Xiaomi Parts</string>
+
+    <string name="thermal_title">Performance &amp; thermal</string>
+    <string name="thermal_summary">CPU profile for apps, games and the screen-off state</string>
+    <string name="thermal_tile_label">Performance mode</string>
+    <string name="thermal_navigate_up">Navigate up</string>
+
+    <string name="thermal_default_title">Default profile</string>
+    <string name="thermal_default_summary">Used by every app that has no profile of its own. Both profiles slow the CPU down as the phone heats up, and the screen-off state always uses Balanced.</string>
+    <string name="thermal_performance_summary">HyperOS performance mode: faster and smoother, a little warmer</string>
+    <string name="thermal_balanced_summary">HyperOS standard limits: cooler and lighter on the battery</string>
+
+    <string name="thermal_per_app_title">Per-app profiles</string>
+    <string name="thermal_per_app_summary">Games use the gaming profile. Pick a profile for any other app below.</string>
+    <string name="thermal_apps_title">Apps</string>
+    <string name="thermal_loading">Loading apps…</string>
+    <string name="thermal_no_apps">No apps found</string>
+    <string name="thermal_select_profile">Select a profile</string>
+    <string name="thermal_reset">Reset app profiles</string>
+    <string name="thermal_reset_message">Every app goes back to its automatic profile.</string>
+
+    <string name="thermal_state_default">Default</string>
+    <string name="thermal_state_performance">Performance</string>
+    <string name="thermal_state_balanced">Balanced</string>
+    <string name="thermal_state_gaming">Gaming</string>
+    <string name="thermal_state_benchmark">No limits (benchmarks)</string>
+    <string name="thermal_state_camera">Camera</string>
+    <string name="thermal_state_video">Video</string>
+    <string name="thermal_state_navigation">Navigation</string>
+    <string name="thermal_state_video_call">Video call</string>
+    <string name="thermal_state_call">Calls</string>
+</resources>

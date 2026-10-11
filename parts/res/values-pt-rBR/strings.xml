@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">Xiaomi Parts</string>
+
+    <string name="thermal_title">Desempenho e temperatura</string>
+    <string name="thermal_summary">Perfil de CPU para apps, jogos e tela desligada</string>
+    <string name="thermal_tile_label">Modo desempenho</string>
+    <string name="thermal_navigate_up">Navegar para cima</string>
+
+    <string name="thermal_default_title">Perfil padrão</string>
+    <string name="thermal_default_summary">Usado por todo app que não tem um perfil próprio. Os dois perfis reduzem a CPU conforme o aparelho esquenta, e com a tela desligada o perfil é sempre Equilibrado.</string>
+    <string name="thermal_performance_summary">Modo desempenho do HyperOS: mais rápido e fluido, um pouco mais quente</string>
+    <string name="thermal_balanced_summary">Limites padrão do HyperOS: mais frio e mais econômico</string>
+
+    <string name="thermal_per_app_title">Perfis por app</string>
+    <string name="thermal_per_app_summary">Jogos usam o perfil de jogos. Escolha um perfil para qualquer outro app abaixo.</string>
+    <string name="thermal_apps_title">Apps</string>
+    <string name="thermal_loading">Carregando apps…</string>
+    <string name="thermal_no_apps">Nenhum app encontrado</string>
+    <string name="thermal_select_profile">Escolher um perfil</string>
+    <string name="thermal_reset">Redefinir perfis dos apps</string>
+    <string name="thermal_reset_message">Todos os apps voltam ao perfil automático.</string>
+
+    <string name="thermal_state_default">Padrão</string>
+    <string name="thermal_state_performance">Desempenho</string>
+    <string name="thermal_state_balanced">Equilibrado</string>
+    <string name="thermal_state_gaming">Jogos</string>
+    <string name="thermal_state_benchmark">Sem limites (benchmarks)</string>
+    <string name="thermal_state_camera">Câmera</string>
+    <string name="thermal_state_video">Vídeo</string>
+    <string name="thermal_state_navigation">Navegação</string>
+    <string name="thermal_state_video_call">Videochamada</string>
+    <string name="thermal_state_call">Chamadas</string>
+</resources>

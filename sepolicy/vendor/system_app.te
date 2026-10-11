@@ -1,0 +1,9 @@
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# XiaomiParts runs as system_app and picks the mi_thermald profile by writing
+# /sys/class/thermal/thermal_message/sconfig (owned by system, see init.project.rc).
+allow system_app sysfs_therm:dir search;
+allow system_app sysfs_therm:lnk_file { getattr read };
+allow system_app sysfs_therm:file { getattr open write };

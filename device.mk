@@ -48,6 +48,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     DolbyAtmos
 
+# Thermal profiles (mi_thermald scenes)
+PRODUCT_PACKAGES += \
+    XiaomiParts
+
 # Boot control
 PRODUCT_PACKAGES += \
     android.hardware.boot-service.default_recovery
