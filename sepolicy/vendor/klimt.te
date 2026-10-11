@@ -19,7 +19,9 @@ typeattribute klimt_felica vendor_executes_system_violators;
 allow klimt_felica vendor_shell_exec:file rx_file_perms;
 binder_use(klimt_felica)
 allow klimt_felica settings_service:service_manager find;
-allow klimt_felica system_server:binder { transfer };
+# Without call, `cmd settings` fails and the provisioned check reads empty, so the
+# script went on to `cmd package` on every boot.
+allow klimt_felica system_server:binder { call transfer };
 
 # mounts the pstore block device
 type init_pstore_blk_sh, domain;
