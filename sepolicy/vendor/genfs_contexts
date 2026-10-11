@@ -45,3 +45,63 @@ genfscon sysfs /devices/platform/1c013000.dvfsrc                 u:object_r:sysf
 
 # mi_thermald toggles /sys/powersave/boost, which carries no label of its own.
 genfscon sysfs /powersave                                        u:object_r:sysfs_powersave:s0
+
+# Wakeup sources that are plain sysfs or inherit a parent's sysfs_batteryinfo or
+# sysfs_vibrator label; system_suspend can't read either, so every stats poll
+# floods the audit log. Most paths match stock; the usb, wireless, cp_master and
+# bms supplies and the 7-0033 wireless charger don't. genfscon matches prefixes,
+# so battery/wakeup also labels battery/wakeup_fg, as stock does.
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-04/wakeup                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-05/wakeup                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-06/wakeup                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-07/wakeup                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-08/wakeup                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-09/mt6685-rtc/rtc/rtc0/alarmtimer.0.auto/wakeup                        u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-09/mt6685-rtc/wakeup                                                   u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/1c01a000.spmi:mt6379@e:adc/wakeup                                   u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/1c01a000.spmi:mt6379@e:auxadc/wakeup                                u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/1c01a000.spmi:mt6379@e:chg/power_supply/primary_chg/wakeup          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/1c01a000.spmi:mt6379@e:mtk-gauge/power_supply/mt6379-gauge1/wakeup  u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/1c01a000.spmi:mt6379@e:tcpc/tcpc/type_c_port0/wakeup                u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/1c01a000.spmi:mt6379@e:tcpc/wakeup                                  u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/wakeup                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0f/wakeup                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/aov/wakeup                                                                                    u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/battery-manager/power_supply/battery/wakeup                                                   u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/charger/power_supply/mtk-mst-hvdiv-chg/wakeup                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/charger/power_supply/mtk-slv-hvdiv-chg/wakeup                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/charger/power_supply/usb/wakeup                                                               u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/charger/power_supply/wireless/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/goodix_ts.0/wakeup                                                                            u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/gpio-keys/wakeup                                                                              u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/odm/odm:mi_t1_chip/wakeup                                                                     u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/120a0000.i2c/i2c-5/5-006e/power_supply/cp_master/wakeup                                   u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/13150000.i2c/i2c-3/3-0028/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/13190000.i2c/i2c-10/10-0055/power_supply/bms/wakeup                                       u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/13930000.i2c/i2c-1/1-006b/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/139b0000.i2c/i2c-2/2-0010/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/13a30000.i2c/i2c-4/4-0010/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/13ab0000.i2c/i2c-7/7-0033/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/13b30000.i2c/i2c-8/8-0010/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/13bb0000.i2c/i2c-9/9-0010/wakeup                                                          u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/161d0000.spi6/spi_master/spi6/spi6.0/wakeup                                               u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/16701000.usb0/wakeup                                                                      u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/1a000000.adspsys/wakeup                                                                   u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/3e400000.mmlsys1-config/wakeup                                                            u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-agent/gpsmdl-agent/wakeup                                                               u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-aolts/gpsmdl-aolts/wakeup                                                               u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-corr/gpsmdl-corr/wakeup                                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-dsp0/gpsmdl-dsp0/wakeup                                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-dsp1/gpsmdl-dsp1/wakeup                                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-gdlog/gpsmdl-gdlog/wakeup                                                               u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-lppm/gpsmdl-lppm/wakeup                                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-mcufn/gpsmdl-mcufn/wakeup                                                               u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-mcusys/gpsmdl-mcusys/wakeup                                                             u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-meas/gpsmdl-meas/wakeup                                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-mnl/gpsmdl-mnl/wakeup                                                                   u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-mpelog/gpsmdl-mpelog/wakeup                                                             u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-mpelog2/gpsmdl-mpelog2/wakeup                                                           u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-mpets/gpsmdl-mpets/wakeup                                                               u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-nmea/gpsmdl-nmea/wakeup                                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-pmtk/gpsmdl-pmtk/wakeup                                                                 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/gpsmdl-scpts/gpsmdl-scpts/wakeup                                                               u:object_r:sysfs_wakeup:s0
