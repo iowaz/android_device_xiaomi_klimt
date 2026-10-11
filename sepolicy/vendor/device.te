@@ -15,3 +15,7 @@ type audio_hw_socket, file_type;
 
 # MI_RIC reads and writes /dev/block/by-name/gsort, which nothing labels.
 type gsort_block_device, dev_type;
+
+# Stock OS3.0.335 direct-I/O camera mapper and MiSys diagnostic partition.
+type dio_dma_mapper_device, dev_type;
+type blackbox_block_device, dev_type;

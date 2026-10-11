@@ -16,6 +16,12 @@ persist.vendor.camera.skynet.   u:object_r:vendor_camera_skynet_prop:s0
 vendor.camera.sensor.logsystem  u:object_r:vendor_camera_skynet_prop:s0
 persist.vendor.camera.st_repair. u:object_r:vendor_mtk_camera_prop:s0
 
+# Stock camera state/calibration and composer idle-mode properties. The more
+# specific camera debug labels above retain precedence over these prefixes.
+vendor.camera.             u:object_r:vendor_mtkcam_prop:s0
+persist.vendor.camera.     u:object_r:vendor_mtkcam_prop:s0
+vendor.debug.sf.kickidle.   u:object_r:vendor_mtk_debug_sf_kickidle_prop:s0
+
 # TEE provisioning state that mtd_mitee records (labels as on stock)
 vendor.sys.feature_state                 u:object_r:vendor_payment_security_prop:s0
 vendor.sys.rpmb_state                    u:object_r:vendor_payment_security_prop:s0
@@ -23,6 +29,10 @@ persist.vendor.sys.pay.widevine          u:object_r:vendor_payment_security_prop
 persist.vendor.sys.provision.status      u:object_r:vendor_payment_security_prop:s0
 persist.vendor.sys.attestation.status    u:object_r:vendor_payment_security_prop:s0
 persist.vendor.sys.rkp.status            u:object_r:vendor_payment_security_prop:s0
+
+# This stock citsensorservice binary publishes its framebuffer capture path.
+# Stock leaves it on vendor_default_prop; constrain the observed setter here.
+persist.vendor.sensors.used.framebuffer u:object_r:vendor_citsensor_framebuffer_prop:s0 exact bool
 
 # Touch feature service state (labels as on stock)
 vendor.touchfeature.                  u:object_r:vendor_touchfeature_prop:s0

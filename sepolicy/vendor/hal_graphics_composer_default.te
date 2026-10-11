@@ -14,3 +14,6 @@ add_service(hal_graphics_composer_default, mihwcextension_service)
 allow hal_graphics_composer_default citsensorservice_service:service_manager find;
 allow hal_graphics_composer_default hal_displayfeature_service:service_manager find;
 allow hal_graphics_composer_default sysfs_display_feature:dir { search };
+
+# Stock vendor.debug.sf.kickidle. belongs to the composer.
+set_prop(hal_graphics_composer_default, vendor_mtk_debug_sf_kickidle_prop)

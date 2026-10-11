@@ -20,7 +20,7 @@ allow mtk_hal_camera sysfs_chipid:file { open read };
 allow mtk_hal_camera sysfs_therm:dir { open read };
 allow mtk_hal_camera system_data_file:dir { search };
 allow mtk_hal_camera vendor_data_file:dir { add_name open read remove_name write };
-allow mtk_hal_camera vendor_data_file:file { create setattr unlink write };
+allow mtk_hal_camera vendor_data_file:file { append create setattr unlink write };
 add_service(mtk_hal_camera, xiaomi_bgservice_service)
 add_service(mtk_hal_camera, virtualcamera_service)
 get_prop(mtk_hal_camera, camera_config_prop)
@@ -28,6 +28,13 @@ get_prop(mtk_hal_camera, graphics_config_writable_prop)
 get_prop(mtk_hal_camera, zygote_config_prop)
 get_prop(mtk_hal_camera, graphics_config_prop)
 allow mtk_hal_camera system_data_file:dir search;
+
+# Stock OS3.0.335 labels the DataStorager direct-I/O mapper and grants these
+# character-device permissions. Stock has no mapper-specific allowxperm rule.
+allow mtk_hal_camera dio_dma_mapper_device:chr_file rw_file_perms;
+
+# Camera state and sensor calibration properties (stock vendor.camera. prefixes).
+set_prop(mtk_hal_camera, vendor_mtkcam_prop)
 
 # The camera HAL records the build stamps of the components it loaded.
 set_prop(mtk_hal_camera, vendor_camera_skynet_prop)

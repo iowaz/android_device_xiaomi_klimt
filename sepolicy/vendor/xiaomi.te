@@ -265,6 +265,9 @@ allow xiaomi_misys_common sysfs_hardware_info:dir { search };
 allow xiaomi_misys_common sysfs_hardware_info:file { open read write };
 # HardWareInfo stats a partition node to report the storage size.
 allow xiaomi_misys_common block_device:blk_file getattr;
+# MtkDump reads /dev/block/by-name/blackbox (sdc90), labelled as on stock.
+# Stock grants rw_file_perms; only its observed read path is needed here.
+allow xiaomi_misys_common blackbox_block_device:blk_file r_file_perms;
 allow xiaomi_misys_core block_device:blk_file { getattr setattr };
 allow xiaomi_misys_common sysfs_therm:dir { search };
 allow xiaomi_misys_common sysfs_therm:file { getattr open read };
@@ -332,6 +335,15 @@ allow citsensorservice input_device:dir r_dir_perms;
 allow citsensorservice input_device:chr_file rw_file_perms;
 allow citsensorservice { dri_device gpu_device }:dir r_dir_perms;
 allow citsensorservice { dri_device gpu_device }:chr_file rw_file_perms;
+# Startup probes the MTK heaps before using the Binder allocator for CWB.
+# Observed-need exception: stock has no effective heap allow for this domain.
+# Permit only opening/reading the heap nodes, not allocation ioctls or writes.
+allow citsensorservice { dmabuf_system_heap_device dmabuf_system_secure_heap_device }:chr_file { open read };
+# Stock hides this legacy system property read instead of allowing it.
+dontaudit citsensorservice system_prop:file read;
+# The shipped binary sets this exact property to 1 at startup (stock ELF
+# property_set call at 0x80870); no generic vendor_default_prop setter.
+set_prop(citsensorservice, vendor_citsensor_framebuffer_prop)
 
 # sensor low power daemon
 type slad, domain;
