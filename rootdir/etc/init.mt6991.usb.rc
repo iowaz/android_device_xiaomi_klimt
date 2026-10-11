@@ -151,8 +151,10 @@ on boot
 on boot && property:ro.boot.factorybuild=1
     write /config/usb_gadget/g1/strings/0x409/serialnumber 1234567890ABCDEF
 
+# Stock writes ${ro.product.marketname} here; this ROM doesn't set it, and vendor_init
+# can't read it, so the gadget kept the model number.
 on property:dev.bootcomplete=1
-    write /config/usb_gadget/g1/strings/0x409/product ${ro.product.marketname}
+    write /config/usb_gadget/g1/strings/0x409/product "Xiaomi 15T Pro"
 
 on charger
     mkdir /dev/usb-ffs 0775 shell shell
