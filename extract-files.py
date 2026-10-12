@@ -9,6 +9,8 @@ import os
 import re
 from zipfile import ZipFile
 
+from camera_his_bounded_photo import fixup_his_bounded_photo
+
 from extract_utils.fixups_blob import blob_fixup
 from extract_utils.fixups_lib import lib_fixups
 from extract_utils.tools import apktool_path, java_path
@@ -131,6 +133,10 @@ blob_fixups = {
     .patch_dir('patches/MiuiCamera')
     .call(pack_miuicamera)
     .stripzip(),
+    # Experimental busy-photo fallback: reuse HIS's existing bounded acquire
+    # for mode 0x9002. Old-session flush recovery still needs runtime validation.
+    'odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.mihisv2.so': blob_fixup()
+    .call(fixup_his_bounded_photo),
     # Libraries renamed in proprietary-files.txt, plus libnotifyaudiohal whose
     # stock SONAME is libnotifyaudiohal@aidl-2.0.so.
     (

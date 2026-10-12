@@ -1,0 +1,27 @@
+// SPDX-License-Identifier: Apache-2.0
+cc_defaults {
+    name: "klimt_health_defaults",
+    defaults: ["libhealth_aidl_impl_user"],
+    relative_install_path: "hw",
+    vintf_fragments: ["android.hardware.health-service.example.xml"],
+    static_libs: ["libhealth_aidl_impl"],
+    srcs: ["main.cpp"],
+}
+
+cc_binary {
+    name: "android.hardware.health-service.klimt",
+    stem: "android.hardware.health-service.example",
+    vendor: true,
+    defaults: ["klimt_health_defaults"],
+    init_rc: ["android.hardware.health-service.example.rc"],
+    overrides: ["android.hardware.health-service.example", "charger"],
+}
+
+cc_binary {
+    name: "android.hardware.health-service.klimt_recovery",
+    stem: "android.hardware.health-service.example_recovery",
+    recovery: true,
+    defaults: ["klimt_health_defaults"],
+    init_rc: ["android.hardware.health-service.example_recovery.rc"],
+    overrides: ["android.hardware.health-service.example_recovery", "charger.recovery"],
+}

@@ -93,8 +93,8 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health-service.example \
-    android.hardware.health-service.example_recovery
+    android.hardware.health-service.klimt \
+    android.hardware.health-service.klimt_recovery
 
 # Charging control (LineageParts): stop charging at the chosen limit by
 # suspending the charger input. input_suspend keeps the phone on battery, so
