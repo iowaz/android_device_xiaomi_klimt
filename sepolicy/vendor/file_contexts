@@ -14,6 +14,7 @@
 /vendor/bin/hw/android\.hardware\.bluetooth-service-mediatek               u:object_r:hal_bluetooth_default_exec:s0
 /vendor/bin/hw/android\.hardware\.boot-service\.mtk                        u:object_r:hal_bootctl_default_exec:s0
 /vendor/bin/hw/android\.hardware\.dumpstate-service\.xiaomi                u:object_r:hal_dumpstate_default_exec:s0
+/vendor/bin/hw/android\.hardware\.health-service\.klimt                    u:object_r:hal_health_default_exec:s0
 /vendor/bin/hw/android\.hardware\.nqnfc-service\.nxp                       u:object_r:hal_nfc_default_exec:s0
 /vendor/bin/hw/android\.hardware\.usb-aidl-service\.mediatekv1\.0          u:object_r:mtk_hal_usb_exec:s0
 /vendor/bin/hw/android\.hardware\.usb\.gadget-aidl-service\.mediatekv1\.0  u:object_r:mtk_hal_usb_exec:s0

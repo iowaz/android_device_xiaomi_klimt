@@ -9,7 +9,7 @@ import /vendor/etc/init/trustonic.rc
 import ${ro.vendor.rc}meta_init.connectivity.rc
 import /vendor/etc/init/hw/meta_init.project.rc
 import /vendor/etc/init/microtrust.rc
-import /vendor/etc/init/android.hardware.health-service.example.rc
+import /vendor/etc/init/android.hardware.health-service.klimt.rc
 import /vendor/etc/init/android.hardware.security.keymint.mitee@3.0-service.rc
 import /vendor/etc/init/tee-supplicant.rc
 import /vendor/etc/init/miteelog.rc
