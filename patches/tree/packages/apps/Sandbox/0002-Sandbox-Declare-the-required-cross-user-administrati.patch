@@ -1,0 +1,22 @@
+From 515ba24d62b89a795d31ca80033469ae5c2ec5c6 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 15:56:23 -0300
+Subject: [PATCH 2/2] Sandbox: Declare the required cross-user administration
+ permission
+
+---
+ AndroidManifest.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index 1db4285..6a51c9a 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -11,6 +11,7 @@
+     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
++    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+     <uses-permission android:name="android.permission.MANAGE_APP_OPS_MODES" />
+     <uses-permission android:name="android.permission.UPDATE_APP_OPS_STATS" />
+     <uses-permission android:name="android.permission.GET_APP_OPS_STATS" />

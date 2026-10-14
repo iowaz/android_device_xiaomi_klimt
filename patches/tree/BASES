@@ -1,3 +1,4 @@
+frameworks/base d84fa40043bca5caddd86325e95a85f932d5e7b7
 build/soong 1ac47f839dbb998440f558d886ba03a61954cfe8
 frameworks/native 49687694bd18a4a2df972f89b6717dbfce610721
 libcore 4ebfb391ee0109d16abe6e2bc965724b940928c5
@@ -8,4 +9,6 @@ packages/services/Telecomm 3be358b7a129fb6486913c8125e2301c906f7deb
 system/memory/libdmabufheap 57925b760460430b1424bf0fa4cb0ffe001b9cfd
 packages/apps/Sandbox fda7e163893dac66381594806cec1f80d00b146c
 packages/apps/ThemeStore d96bfe6e6b52236ac5845ac4ed5ac4c93b5fad65
+packages/apps/AppLocker 065f2f5553bcf297fe503b28ef15433447df92a5
 hardware/xiaomi af5766acc6d6766eddeb52574996247128428ff6
+packages/apps/Seedvault f47750d208dc69bdd65744e49ceb287b43aa5c00

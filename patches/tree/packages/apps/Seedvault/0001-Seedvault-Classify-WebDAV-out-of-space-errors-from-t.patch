@@ -1,0 +1,24 @@
+From 30c6534aa6c2fd5974c5b00d5273491e9e0b6afb Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 15:56:24 -0300
+Subject: [PATCH] Seedvault: Classify WebDAV out-of-space errors from the
+ selected client
+
+Change-Id: I98bf330a8ef0eaa89bad2e2f800a9eb250bf2126
+---
+ .../org/calyxos/seedvault/core/backends/BackendProperties.kt    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/src/main/java/org/calyxos/seedvault/core/backends/BackendProperties.kt b/core/src/main/java/org/calyxos/seedvault/core/backends/BackendProperties.kt
+index 0e11823..53253a8 100644
+--- a/core/src/main/java/org/calyxos/seedvault/core/backends/BackendProperties.kt
++++ b/core/src/main/java/org/calyxos/seedvault/core/backends/BackendProperties.kt
+@@ -9,7 +9,7 @@ import android.content.Context
+ import android.net.ConnectivityManager
+ import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+ import androidx.annotation.WorkerThread
+-import at.bitfire.dav4jvm.ktor.exception.HttpException
++import at.bitfire.dav4jvm.okhttp.exception.HttpException
+ import java.io.IOException
+ 
+ public abstract class BackendProperties<T> {

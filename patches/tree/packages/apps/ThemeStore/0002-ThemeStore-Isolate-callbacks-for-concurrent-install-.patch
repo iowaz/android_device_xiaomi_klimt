@@ -1,0 +1,40 @@
+From b9d634605b2c070d6bc53aa44265734e0b2cb0fd Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 15:56:23 -0300
+Subject: [PATCH 2/4] ThemeStore: Isolate callbacks for concurrent install
+ sessions
+
+---
+ src/com/android/axion/axthemestore/install/ThemeInstaller.kt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/android/axion/axthemestore/install/ThemeInstaller.kt b/src/com/android/axion/axthemestore/install/ThemeInstaller.kt
+index 578a08c..233ffe7 100644
+--- a/src/com/android/axion/axthemestore/install/ThemeInstaller.kt
++++ b/src/com/android/axion/axthemestore/install/ThemeInstaller.kt
+@@ -57,6 +57,7 @@ class ThemeInstaller(private val context: Context) {
+             return@callbackFlow
+         }
+         
++        val installAction = "$INSTALL_ACTION.$sessionId"
+         val receiver = object : BroadcastReceiver() {
+             override fun onReceive(context: Context, intent: Intent) {
+                 val status = intent.getIntExtra(PackageInstaller.EXTRA_STATUS, -1)
+@@ -87,7 +88,7 @@ class ThemeInstaller(private val context: Context) {
+         
+         context.registerReceiver(
+             receiver, 
+-            IntentFilter(INSTALL_ACTION),
++            IntentFilter(installAction),
+             Context.RECEIVER_NOT_EXPORTED
+         )
+         
+@@ -104,7 +105,7 @@ class ThemeInstaller(private val context: Context) {
+             val pendingIntent = PendingIntent.getBroadcast(
+                 context,
+                 sessionId,
+-                Intent(INSTALL_ACTION).setPackage(context.packageName),
++                Intent(installAction).setPackage(context.packageName),
+                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
+             )
+             

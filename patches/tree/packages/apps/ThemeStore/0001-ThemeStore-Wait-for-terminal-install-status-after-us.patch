@@ -1,7 +1,7 @@
 From 1ead6ac0ecf3940ccf4ab504d87ff8610547f38c Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 15:43:36 -0300
-Subject: [PATCH] ThemeStore: Wait for terminal install status after user
+Subject: [PATCH 1/4] ThemeStore: Wait for terminal install status after user
  confirmation
 
 ---

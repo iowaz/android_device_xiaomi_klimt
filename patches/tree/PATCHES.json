@@ -1,5 +1,19 @@
 [
   {
+    "project": "frameworks/base",
+    "base": "d84fa40043bca5caddd86325e95a85f932d5e7b7",
+    "base_tree": "4f32527b88978a46c810ecb856664bc10354ab37",
+    "final_head": "f60f8d1357b56a5f0b946926defe13deae943d31",
+    "final_tree": "fad75e552c7cbb674756b41804ec90ab7e671045",
+    "patches": [
+      {
+        "file": "frameworks/base/0001-Sandbox-Enforce-privileged-per-user-configuration-mu.patch",
+        "sha256": "437a454d5588a2de282d6bd8c05349ff68f092b26e6320c2527ee29c19bb0e08"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
     "project": "build/soong",
     "base": "1ac47f839dbb998440f558d886ba03a61954cfe8",
     "base_tree": "817bd5132eb46fa036b23759a49ec3c171d40c80",
@@ -115,12 +129,16 @@
     "project": "packages/apps/Sandbox",
     "base": "fda7e163893dac66381594806cec1f80d00b146c",
     "base_tree": "99f12486f6ff130b61e333b39fe21be4efa01883",
-    "final_head": "6c74018e0b51269b97aa4319d3457f170c1362fc",
-    "final_tree": "692e2039c6161fc604f2b092b697f05398da5fbb",
+    "final_head": "515ba24d62b89a795d31ca80033469ae5c2ec5c6",
+    "final_tree": "a3df062c8118f9013d3a4669a66ee9c36833b227",
     "patches": [
       {
         "file": "packages/apps/Sandbox/0001-Sandbox-Restore-app-configuration-for-the-saved-Andr.patch",
-        "sha256": "cee9aad5181c08fadffb07c84ddce948eca24585d1d14b8d8e04f92970c82629"
+        "sha256": "48e68699ac5ab937878064504f84a845993d355bcd0438e7a7b3b9d719bfa71c"
+      },
+      {
+        "file": "packages/apps/Sandbox/0002-Sandbox-Declare-the-required-cross-user-administrati.patch",
+        "sha256": "045772f8c1e90ff148233dd794cc0025c1f6a7cdc1c24036fb93adcda6936310"
       }
     ],
     "publication": "local-only derived commit; base preserved/fetchable as recorded"
@@ -129,12 +147,38 @@
     "project": "packages/apps/ThemeStore",
     "base": "d96bfe6e6b52236ac5845ac4ed5ac4c93b5fad65",
     "base_tree": "39efd673b553aa1ae867b66e76c552103f714de2",
-    "final_head": "1ead6ac0ecf3940ccf4ab504d87ff8610547f38c",
-    "final_tree": "2a940eb6838df2c9ef14f581f318609b107f2918",
+    "final_head": "1c4ab6d86eab2f34617e1792825f547168dbd15f",
+    "final_tree": "4b1ec73edf57d00af9cd3d7393f555a69a5dc720",
     "patches": [
       {
         "file": "packages/apps/ThemeStore/0001-ThemeStore-Wait-for-terminal-install-status-after-us.patch",
-        "sha256": "20b04f91ae34c0ee3bda20b2baa3d2e70fd543cd02bf918c29316aba26c60e0f"
+        "sha256": "44931b1668ec3d3d299415a0c5abe890abf9b480fccde873b83ed5360fffc766"
+      },
+      {
+        "file": "packages/apps/ThemeStore/0002-ThemeStore-Isolate-callbacks-for-concurrent-install-.patch",
+        "sha256": "f619b8fb65ef28e3e119232f039e0c07450f78ca9f2f0f3a3574f358d07693c0"
+      },
+      {
+        "file": "packages/apps/ThemeStore/0003-ThemeStore-Preserve-per-app-icon-pack-assignments-du.patch",
+        "sha256": "220d50739e6605bc961268e7d7b9d3a2804acb2b95697508f7eb53f89a6cbe0f"
+      },
+      {
+        "file": "packages/apps/ThemeStore/0004-ThemeStore-Isolate-callbacks-for-each-uninstall-oper.patch",
+        "sha256": "ff77f9acfdaf7f319fe859b44c99f5aff436b7e9899f5a097d6cc61e5c20626a"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "packages/apps/AppLocker",
+    "base": "065f2f5553bcf297fe503b28ef15433447df92a5",
+    "base_tree": "0e26114cb7fa71de2b5cf8c757194eb387ba4c9e",
+    "final_head": "34d03ec0a4c33d82079f1a4688575a061776f1dd",
+    "final_tree": "2b2c3ee5424d8fe3067eb9b5120f185f9abd99f9",
+    "patches": [
+      {
+        "file": "packages/apps/AppLocker/0001-AppLocker-Declare-permissions-for-the-guarded-per-us.patch",
+        "sha256": "6743581272104cf6519e42bad064f903e8b6a96dd6b9f13d63a191ea8ea8a736"
       }
     ],
     "publication": "local-only derived commit; base preserved/fetchable as recorded"
@@ -149,6 +193,20 @@
       {
         "file": "hardware/xiaomi/0001-sensors-Terminate-bounded-UDFPS-status-reads.patch",
         "sha256": "bb388bb92ebe4be69f6c5f658844c685da031dcc88e65486850c2f1c1533f919"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "packages/apps/Seedvault",
+    "base": "f47750d208dc69bdd65744e49ceb287b43aa5c00",
+    "base_tree": "676ddbed125c43b6a4c37add6cd759e6021029bc",
+    "final_head": "30c6534aa6c2fd5974c5b00d5273491e9e0b6afb",
+    "final_tree": "3e166ebfb1f5a760d14bcb791413f3e974c10bd4",
+    "patches": [
+      {
+        "file": "packages/apps/Seedvault/0001-Seedvault-Classify-WebDAV-out-of-space-errors-from-t.patch",
+        "sha256": "2d665d8fe1e052e829f42918609fcf1f53e46cd7ed26515d20402e6ebe7fa0a3"
       }
     ],
     "publication": "local-only derived commit; base preserved/fetchable as recorded"

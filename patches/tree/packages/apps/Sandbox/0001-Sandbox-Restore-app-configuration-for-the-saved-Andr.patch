@@ -1,7 +1,8 @@
 From 6c74018e0b51269b97aa4319d3457f170c1362fc Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 15:43:35 -0300
-Subject: [PATCH] Sandbox: Restore app configuration for the saved Android user
+Subject: [PATCH 1/2] Sandbox: Restore app configuration for the saved Android
+ user
 
 ---
  src/com/android/axion/sandbox/io/BackupManager.kt | 9 ++++-----
