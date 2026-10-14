@@ -101,12 +101,16 @@
     "project": "packages/services/Telecomm",
     "base": "3be358b7a129fb6486913c8125e2301c906f7deb",
     "base_tree": "8f3b25199d30a189fa681f2ae5dc080e020b89f5",
-    "final_head": "9e1349dc623b5945c0181f4e925d2fe015fd77df",
-    "final_tree": "50920a86acca61b30dda8ac92e27c45a9411e0fd",
+    "final_head": "1029477e8adee7b35ca154e34b770fe61c5cf25d",
+    "final_tree": "d62a6da504add75f44c20a26a7881b3139bdb9fa",
     "patches": [
       {
         "file": "packages/services/Telecomm/0001-Telecomm-cancel-call-flash-by-session-and-retain-acc.patch",
-        "sha256": "ae9b512cf3287b44e761dabd8b7d00060ba18fc0b12280cb42a51c08d52179f2"
+        "sha256": "05843bc84d59f710bd85f13ecc852bc4a7b25f9db611b8053d84562d331fd08b"
+      },
+      {
+        "file": "packages/services/Telecomm/0002-Telecomm-use-android.telecom.Log-overloads-for-torch.patch",
+        "sha256": "15a301e32f17acbc6cbd07a9d04cc08ac29c3a96756cde1e3252d45614c56e39"
       }
     ],
     "publication": "local-only derived commit; base preserved/fetchable as recorded"

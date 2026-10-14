@@ -1,7 +1,7 @@
 From 9e1349dc623b5945c0181f4e925d2fe015fd77df Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 15:37:10 -0300
-Subject: [PATCH] Telecomm: cancel call flash by session and retain
+Subject: [PATCH 1/2] Telecomm: cancel call flash by session and retain
  accessibility default
 
 ---

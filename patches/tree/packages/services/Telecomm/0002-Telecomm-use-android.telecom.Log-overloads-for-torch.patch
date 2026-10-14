@@ -1,0 +1,37 @@
+From 1029477e8adee7b35ca154e34b770fe61c5cf25d Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 18:04:39 -0300
+Subject: [PATCH 2/2] Telecomm: use android.telecom.Log overloads for torch
+ errors
+
+Ringer imports android.telecom.Log, whose error overload takes the
+Throwable before the format string. The android.util.Log-style call
+failed javac in the Evox16 focused precheck (precheck04). Its warning
+method has no Throwable overload, so pass the exception as a format
+argument instead of silently dropping it.
+---
+ src/com/android/server/telecom/Ringer.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/android/server/telecom/Ringer.java b/src/com/android/server/telecom/Ringer.java
+index fe12822..70d7751 100644
+--- a/src/com/android/server/telecom/Ringer.java
++++ b/src/com/android/server/telecom/Ringer.java
+@@ -1262,7 +1262,7 @@ public class Ringer {
+                         stop();
+                     }
+                 } catch (Exception e) {
+-                    Log.e(TAG, "Cannot flash incoming-call torch", e);
++                    Log.e(TAG, e, "Cannot flash incoming-call torch");
+                     mTorchToggler = null;
+                     stop();
+                 }
+@@ -1274,7 +1274,7 @@ public class Ringer {
+                 try {
+                     cameraManager.setTorchMode(cameraId, false);
+                 } catch (Exception e) {
+-                    Log.w(TAG, "Cannot turn incoming-call torch off", e);
++                    Log.w(TAG, "Cannot turn incoming-call torch off: %s", e);
+                 } finally {
+                     torchOn = false;
+                 }
