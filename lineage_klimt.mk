@@ -25,6 +25,11 @@ $(call inherit-product, device/xiaomi/klimt/device.mk)
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
+# Keep Klimt's black AOD default above common product overlays.
+PRODUCT_PACKAGE_OVERLAYS := \
+    device/xiaomi/klimt/overlay-product \
+    $(PRODUCT_PACKAGE_OVERLAYS)
+
 PRODUCT_DEVICE := klimt
 PRODUCT_NAME := lineage_klimt
 PRODUCT_BRAND := Xiaomi
