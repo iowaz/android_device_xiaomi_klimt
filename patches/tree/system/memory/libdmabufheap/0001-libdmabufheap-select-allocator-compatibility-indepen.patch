@@ -1,0 +1,68 @@
+From 22d1435f67bda2c5f7a881b7671406c868c52603 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 15:37:10 -0300
+Subject: [PATCH] libdmabufheap: select allocator compatibility independently
+ of libion
+
+---
+ Android.bp | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/Android.bp b/Android.bp
+index fcb75ac..8a3d323 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -21,7 +21,7 @@ package {
+ soong_config_module_type {
+     name: "libdmabufheap_libion_export_defaults",
+     module_type: "cc_defaults",
+-    config_namespace: "libion",
++    config_namespace: "libdmabufheap",
+     bool_variables: ["legacy_impl"],
+     properties: ["export_static_lib_headers"],
+ }
+@@ -41,17 +41,16 @@ libdmabufheap_libion_export_defaults {
+     },
+ }
+ 
+-// Gated on the same "libion.legacy_impl" soong config variable as libion (which
+-// declares it). Opt in to the legacy ION-backed implementation from a device
+-// tree with:
++// Keep allocator compatibility independent of libion's backend selection.
++// Some vendor blobs still use the old allocator API while libion itself is
++// intentionally the upstream stub. A device can preserve that combination:
+ //
+-//     $(call soong_config_set_bool,libion,legacy_impl,true)
++//     $(call soong_config_set_bool,libdmabufheap,legacy_impl,true)
+ //
+-// When unset (the default) libdmabufheap is built without ION support,
+-// matching upstream.
++// When unset, the ION-free implementation remains the default.
+ cc_library {
+     defaults: ["libdmabufheap_libion_export_defaults"],
+-    srcs: select(soong_config_variable("libion", "legacy_impl"), {
++    srcs: select(soong_config_variable("libdmabufheap", "legacy_impl"), {
+         true: [
+             "BufferAllocator_legacy.cpp",
+             "BufferAllocatorWrapper_legacy.cpp",
+@@ -77,17 +76,17 @@ cc_library {
+         "-Wall",
+         "-Werror",
+     ],
+-    local_include_dirs: select(soong_config_variable("libion", "legacy_impl"), {
++    local_include_dirs: select(soong_config_variable("libdmabufheap", "legacy_impl"), {
+         true: ["include_legacy"],
+         default: ["include"],
+     }),
+-    export_include_dirs: select(soong_config_variable("libion", "legacy_impl"), {
++    export_include_dirs: select(soong_config_variable("libdmabufheap", "legacy_impl"), {
+         true: ["include_legacy"],
+         default: ["include"],
+     }),
+     static_libs: [
+         "libbase",
+-    ] + select(soong_config_variable("libion", "legacy_impl"), {
++    ] + select(soong_config_variable("libdmabufheap", "legacy_impl"), {
+         true: ["libion"],
+         default: [],
+     }),

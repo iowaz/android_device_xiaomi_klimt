@@ -1,0 +1,29 @@
+From 9f64386a675bc73bd2a34fe41da4e099338b8800 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 15:37:10 -0300
+Subject: [PATCH] Bluetooth: tolerate absent accessory device class
+
+---
+ .../com/android/bluetooth/btservice/BondStateMachine.java    | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/android/app/src/com/android/bluetooth/btservice/BondStateMachine.java b/android/app/src/com/android/bluetooth/btservice/BondStateMachine.java
+index 42e8c92..f773f10 100644
+--- a/android/app/src/com/android/bluetooth/btservice/BondStateMachine.java
++++ b/android/app/src/com/android/bluetooth/btservice/BondStateMachine.java
+@@ -561,12 +561,13 @@ public final class BondStateMachine extends StateMachine {
+     @RequiresPermission(BLUETOOTH_CONNECT)
+     private static boolean isSkipConfirmationAccessory(BluetoothDevice device) {
+         String deviceName = device.getName();
+-        if (deviceName == null) {
++        BluetoothClass deviceClass = device.getBluetoothClass();
++        if (deviceName == null || deviceClass == null) {
+             return false;
+         }
+         for (Pair<String, Integer> entry : accConfirmSkip) {
+             if (deviceName.equals(entry.first)
+-                    && device.getBluetoothClass().getDeviceClass() == entry.second) {
++                    && deviceClass.getDeviceClass() == entry.second) {
+                 return true;
+             }
+         }

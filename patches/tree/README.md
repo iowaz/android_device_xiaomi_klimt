@@ -1,19 +1,7 @@
-# Source patches for the klimt Evolution X build (evox9 / evox10)
+# Evox16 exact-base patch set
 
-Local commits in projects that have no klimt fork, exported with `git format-patch`. They sit on the
-Evolution X `cnb` revisions in `BASES` (the 2026-10-09 snapshot); upstream has since rebased most of these
-repositories, so they are kept here instead of in forks. Apply with `patches/tree/apply.sh <tree root>`.
+BASES and PATCHES.json record exact upstream bases, patch SHA256 values and reviewed final source trees. apply.sh rejects dirty projects and incompatible bases, applies every patch, and verifies the complete resulting tree. It skips only a complete final-tree identity; it never relies on commit subjects or a short log window. A failed application preserves Git am state for diagnosis.
 
-- bionic: custom_rom_hide synced to upstream 3d41693 (plus its header and sys_statfs.cpp parts).
-- frameworks/base: PIF default profile (Pixel 6a canary) from upstream, PduParser October 2026 security fixes
-  (LineageOS 47a31e21f0, f4ed08a03b; tests left out), ROM packages hidden from unprivileged apps (upstream b0a4ac0d11).
-- frameworks/av: hide the non-AOSP ANetworkSession symbols (upstream 7eaa22020c).
-- frameworks/opt/telephony: decodeWapPdu remote DoS fix (upstream 71d68ae390).
-- frameworks/native (evox13): libui skips SMPTE 2094-50 when the mapper doesn't list it; MediaTek's mapper
-  logs an error for every RenderEngine draw otherwise.
-- packages/apps/Evolver: PlayIntegrityFix follows the frameworks PIF default (upstream 5a5cfae).
-- packages/modules/Bluetooth: CVE-2026-58880 fix (upstream 71940ed630).
-- system/core: stop spoofing sys.oem_unlock_allowed (upstream ee96af1583).
+Previous eight-project exports are retained in ../tree-evox15 for rollback evidence, not automatically reapplied. Bionic, AV symbol hiding, framework PIF/PduParser/ROM hiding, WAP, Evolver PIF, AVRCP and init-property picks were positively superseded by the audited targets. Required native metadata behavior is re-exported here. Existing lights commits remain in the pinned iowaz hardware/interfaces fork.
 
-Other local changes live in their own repositories: hardware_interfaces and build_soong (iowaz forks, branch
-cnb-klimt), vendor_evolution (private iowaz repo, cnb-klimt) and the proprietary vendor tree (private).
+These derived commits are local and unpublished. The resolved local build manifest records their actual SHAs. A portable recipe must fetch the recorded bases and apply this patch set; it must not claim unpublished commits are available remotely. Device-only TouchBridge/allocator changes are in device history; sensor parser is exported here. Kernel and proprietary blob identities remain fixed.

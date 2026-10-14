@@ -1,0 +1,156 @@
+[
+  {
+    "project": "build/soong",
+    "base": "1ac47f839dbb998440f558d886ba03a61954cfe8",
+    "base_tree": "817bd5132eb46fa036b23759a49ec3c171d40c80",
+    "final_head": "ffe1ef057ccd96e9db801e3fb12860c67d9fb71f",
+    "final_tree": "c6bed26d421ec9cf705b5626a35c1ee990e42f53",
+    "patches": [
+      {
+        "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
+        "sha256": "473ca7c06363700fee7f108e4f6b68d251242905eed442c36291faca6c042026"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "frameworks/native",
+    "base": "49687694bd18a4a2df972f89b6717dbfce610721",
+    "base_tree": "0a17b5a3b1c7274c7d80186392e80110e0b1f11c",
+    "final_head": "2341752da7cc47dfb8ca54af82e8ae825bc53d5e",
+    "final_tree": "a1d6ca889dadbe26da068bb4f2484174c9d3b7c3",
+    "patches": [
+      {
+        "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
+        "sha256": "87b4d0cfd93c9fa56b44fe00c9c27be22db7d62f165596a61a4bc24c59033165"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "libcore",
+    "base": "4ebfb391ee0109d16abe6e2bc965724b940928c5",
+    "base_tree": "301ec2686ccc880ea2e937ad2992ed43b8d03117",
+    "final_head": "77b7dba97fe8eb92d66654f2a7cf981ef75a1ca1",
+    "final_tree": "7f09cc02c767a52ef3b0f46e1c68b532513ffaac",
+    "patches": [
+      {
+        "file": "libcore/0001-libcore-Preserve-the-current-Unix-file-visibility-po.patch",
+        "sha256": "a1ec73c04946667ec18a597b46b7a32e538061a436c9834aa7b2ba4caf210199"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "system/sepolicy",
+    "base": "c3997bf608b40a7217d0eb2257af887afa78617b",
+    "base_tree": "23ba5f19296f7d8b4a331a2c8f01786dfc4ced83",
+    "final_head": "5bcb7c60218b3fe43d81520ff634ba4d949f5965",
+    "final_tree": "5712e7cd67161c6875b0a218bdb271996548e4ba",
+    "patches": [
+      {
+        "file": "system/sepolicy/0001-sepolicy-Preserve-user-build-su-gating-and-root-poli.patch",
+        "sha256": "8d64de1317efbd9a9b9bf4056399fff7f190a075e1ce486e68b553f38db45261"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "packages/apps/Settings",
+    "base": "bab27c819a81c53900d5fc4f7cc785c099324346",
+    "base_tree": "86af24e8114378cafa7f1378abce84d7e3dd37f4",
+    "final_head": "b0e5928b750c5493bff1b53b4b5dbe4959878070",
+    "final_tree": "6cda89f4f46e50844c406f8a7f6b5f8c05ac256f",
+    "patches": [
+      {
+        "file": "packages/apps/Settings/0001-Settings-preserve-carrier-scan-error-and-cancellatio.patch",
+        "sha256": "be45806a347163aacb201e9e542120d252646b10c6f3c43a679cfbfde36a6d66"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "packages/modules/Bluetooth",
+    "base": "9c3b6fb69cc0ba55ed6814fa04fd36744ca91547",
+    "base_tree": "fbfde8de66fd2fd1a89c184d09ca8ac206c43382",
+    "final_head": "9f64386a675bc73bd2a34fe41da4e099338b8800",
+    "final_tree": "a4cc32916c7d13b95c68a5b342aa8cc0318bcb34",
+    "patches": [
+      {
+        "file": "packages/modules/Bluetooth/0001-Bluetooth-tolerate-absent-accessory-device-class.patch",
+        "sha256": "aa3d52319dd4f6e30371e3fd740b19049b2f5451c913a4f1e74d6fbaded5208e"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "packages/services/Telecomm",
+    "base": "3be358b7a129fb6486913c8125e2301c906f7deb",
+    "base_tree": "8f3b25199d30a189fa681f2ae5dc080e020b89f5",
+    "final_head": "9e1349dc623b5945c0181f4e925d2fe015fd77df",
+    "final_tree": "50920a86acca61b30dda8ac92e27c45a9411e0fd",
+    "patches": [
+      {
+        "file": "packages/services/Telecomm/0001-Telecomm-cancel-call-flash-by-session-and-retain-acc.patch",
+        "sha256": "ae9b512cf3287b44e761dabd8b7d00060ba18fc0b12280cb42a51c08d52179f2"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "system/memory/libdmabufheap",
+    "base": "57925b760460430b1424bf0fa4cb0ffe001b9cfd",
+    "base_tree": "10af1a10e13f62c7d7e9caa300b044b2cf55ad45",
+    "final_head": "22d1435f67bda2c5f7a881b7671406c868c52603",
+    "final_tree": "71526400792799dc702b68accd49210c09d99f77",
+    "patches": [
+      {
+        "file": "system/memory/libdmabufheap/0001-libdmabufheap-select-allocator-compatibility-indepen.patch",
+        "sha256": "1c9c5cfb919a237942e855f823e1daf7dc9afef0c33ffa61046ce57fdc5fe4d3"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "packages/apps/Sandbox",
+    "base": "fda7e163893dac66381594806cec1f80d00b146c",
+    "base_tree": "99f12486f6ff130b61e333b39fe21be4efa01883",
+    "final_head": "6c74018e0b51269b97aa4319d3457f170c1362fc",
+    "final_tree": "692e2039c6161fc604f2b092b697f05398da5fbb",
+    "patches": [
+      {
+        "file": "packages/apps/Sandbox/0001-Sandbox-Restore-app-configuration-for-the-saved-Andr.patch",
+        "sha256": "cee9aad5181c08fadffb07c84ddce948eca24585d1d14b8d8e04f92970c82629"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "packages/apps/ThemeStore",
+    "base": "d96bfe6e6b52236ac5845ac4ed5ac4c93b5fad65",
+    "base_tree": "39efd673b553aa1ae867b66e76c552103f714de2",
+    "final_head": "1ead6ac0ecf3940ccf4ab504d87ff8610547f38c",
+    "final_tree": "2a940eb6838df2c9ef14f581f318609b107f2918",
+    "patches": [
+      {
+        "file": "packages/apps/ThemeStore/0001-ThemeStore-Wait-for-terminal-install-status-after-us.patch",
+        "sha256": "20b04f91ae34c0ee3bda20b2baa3d2e70fd543cd02bf918c29316aba26c60e0f"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  },
+  {
+    "project": "hardware/xiaomi",
+    "base": "af5766acc6d6766eddeb52574996247128428ff6",
+    "base_tree": "b77c7e9bfa779879251a79c2a772d026779fccb1",
+    "final_head": "f8f00fcc11b8bf5a5ea82ddaae9a3c62b120861a",
+    "final_tree": "abb8d4c3f461a2352f6eb01ad7a1643953ebae13",
+    "patches": [
+      {
+        "file": "hardware/xiaomi/0001-sensors-Terminate-bounded-UDFPS-status-reads.patch",
+        "sha256": "bb388bb92ebe4be69f6c5f658844c685da031dcc88e65486850c2f1c1533f919"
+      }
+    ],
+    "publication": "local-only derived commit; base preserved/fetchable as recorded"
+  }
+]

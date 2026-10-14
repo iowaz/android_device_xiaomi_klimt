@@ -1,0 +1,123 @@
+From 5bcb7c60218b3fe43d81520ff634ba4d949f5965 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 15:37:31 -0300
+Subject: [PATCH] sepolicy: Preserve user build su gating and root policy
+ analysis
+
+---
+ Android.bp                       |  5 +----
+ build/soong/policy.go            |  2 +-
+ prebuilts/api/34.0/private/su.te | 10 +++++-----
+ private/su.te                    | 10 +++++-----
+ 4 files changed, 12 insertions(+), 15 deletions(-)
+
+diff --git a/Android.bp b/Android.bp
+index 9ff4263..7c10f41 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -680,7 +680,7 @@ se_policy_binary {
+     name: "precompiled_sepolicy_without_vendor",
+     srcs: [":precompiled_sepolicy_without_vendor_srcs"],
+     installable: false, // used only for Treble labeling tests
+-    permissive_domains_on_user_builds: ["backuptool", "su"],
++    permissive_domains_on_user_builds: ["backuptool"],
+ }
+ 
+ filegroup {
+@@ -717,7 +717,6 @@ precompiled_se_policy_binary {
+     ],
+     permissive_domains_on_user_builds: [
+         "backuptool",
+-        "su",
+     ],
+ }
+ 
+@@ -765,7 +764,6 @@ se_policy_binary {
+     permissive_domains_on_user_builds: [
+         "backuptool",
+         "recovery",
+-        "su",
+     ],
+ }
+ 
+@@ -821,7 +819,6 @@ se_policy_binary {
+     dist: {
+         targets: ["sepolicy_finalize"],
+     },
+-    permissive_domains_on_user_builds: ["su"],
+ }
+ 
+ se_policy_conf {
+diff --git a/build/soong/policy.go b/build/soong/policy.go
+index 1caecaa..97ac079 100644
+--- a/build/soong/policy.go
++++ b/build/soong/policy.go
+@@ -573,7 +573,7 @@ func (c *policyBinary) GenerateAndroidBuildActions(ctx android.ModuleContext) {
+ 	rule.Temporary(bin)
+ 
+ 	// permissive check is performed only in user build (not debuggable).
+-	if !ctx.Config().Debuggable() && !ctx.InstallInRoot() {
++	if !ctx.Config().Debuggable() {
+ 		permissiveDomains := pathForModuleOut(ctx, c.stem()+"_permissive")
+ 		cmd := rule.Command().BuiltTool("sepolicy-analyze").
+ 			Input(bin).
+diff --git a/prebuilts/api/34.0/private/su.te b/prebuilts/api/34.0/private/su.te
+index bac0ae0..cc00e10 100644
+--- a/prebuilts/api/34.0/private/su.te
++++ b/prebuilts/api/34.0/private/su.te
+@@ -1,6 +1,6 @@
+-typeattribute su coredomain;
+-
+ userdebug_or_eng(`
++  typeattribute su coredomain;
++
+   domain_auto_trans(shell, su_exec, su)
+   # Allow dumpstate to call su on userdebug / eng builds to collect
+   # additional information.
+@@ -22,6 +22,9 @@ userdebug_or_eng(`
+   # Put the virtmgr command into its domain.
+   domain_auto_trans(su, virtualizationmanager_exec, virtualizationmanager)
+ 
++  # su is also permissive to permit setenforce.
++  permissive su;
++
+   app_domain(su)
+ 
+   # Do not audit accesses to keystore2 namespace for the su domain.
+@@ -30,6 +33,3 @@ userdebug_or_eng(`
+   # Allow root to set MTE permissive mode.
+   set_prop(su, permissive_mte_prop);
+ ')
+-
+-# su is also permissive to permit setenforce.
+-permissive su;
+diff --git a/private/su.te b/private/su.te
+index 4d453f7..69c68fc 100644
+--- a/private/su.te
++++ b/private/su.te
+@@ -1,6 +1,6 @@
+-typeattribute su coredomain;
+-
+ userdebug_or_eng(`
++  typeattribute su coredomain;
++
+   # Exempt userdebug-only coredomains from Treble labeling tests (b/493040969)
+   typeattribute su treble_labeling_violators;
+ 
+@@ -30,6 +30,9 @@ userdebug_or_eng(`
+   typeattribute su_virtualizationmanager treble_labeling_violators;
+   typeattribute su_virtmgr_crosvm treble_labeling_violators;
+ 
++  # su is also permissive to permit setenforce.
++  permissive su;
++
+   app_domain(su)
+ 
+   # Do not audit accesses to keystore2 namespace for the su domain.
+@@ -141,6 +144,3 @@ userdebug_or_eng(`
+   typeattribute su hal_wifi_hostapd_client;
+   typeattribute su hal_wifi_supplicant_client;
+ ')
+-
+-# su is also permissive to permit setenforce.
+-permissive su;

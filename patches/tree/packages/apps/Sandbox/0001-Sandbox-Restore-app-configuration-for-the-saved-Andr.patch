@@ -1,0 +1,39 @@
+From 6c74018e0b51269b97aa4319d3457f170c1362fc Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 15:43:35 -0300
+Subject: [PATCH] Sandbox: Restore app configuration for the saved Android user
+
+---
+ src/com/android/axion/sandbox/io/BackupManager.kt | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/src/com/android/axion/sandbox/io/BackupManager.kt b/src/com/android/axion/sandbox/io/BackupManager.kt
+index 063f76a..b87f2bc 100644
+--- a/src/com/android/axion/sandbox/io/BackupManager.kt
++++ b/src/com/android/axion/sandbox/io/BackupManager.kt
+@@ -135,12 +135,13 @@ class BackupManager(private val context: Context) {
+                 try {
+                     val appObj = appsArray.getJSONObject(i)
+                     val packageName = appObj.getString("packageName")
++                    val userId = appObj.optInt("userId", 0)
+                     
+-                    // Skip if the package is not installed on this device
++                    // Skip if the package is not installed for the saved user
+                     try {
+-                        pm.getPackageInfo(packageName, 0)
++                        pm.getPackageInfoAsUser(packageName, 0, userId)
+                     } catch (e: Exception) {
+-                        Log.w(TAG, "Skipping config for uninstalled package: $packageName")
++                        Log.w(TAG, "Skipping config for uninstalled package: $packageName (user $userId)")
+                         continue
+                     }
+                     
+@@ -148,8 +149,6 @@ class BackupManager(private val context: Context) {
+                     val isHidden = appObj.optBoolean("isHidden", false)
+                     val isSandboxed = appObj.optBoolean("isSandboxed", false)
+ 
+-                    val userId = appObj.optInt("userId", 0)
+-
+                     if (isLocked) {
+                         sandboxManager.addLockedApp(packageName, userId)
+                     } else {
