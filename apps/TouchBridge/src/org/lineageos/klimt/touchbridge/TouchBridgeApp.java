@@ -18,7 +18,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 
 /**
- * Mirrors double-tap wake/doze and screen-off fingerprint unlock settings into
+ * Mirrors the double tap to wake and screen-off fingerprint unlock settings into
  * system properties. libudfpshandler (fingerprint HAL) watches them and switches
  * the touch panel's gesture modes, which the stock power HAL does not do.
  */
@@ -40,9 +40,6 @@ public class TouchBridgeApp extends Application {
                 Settings.Secure.getUriFor(Settings.Secure.DOUBLE_TAP_TO_WAKE),
                 false, observer, UserHandle.USER_ALL);
         getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.DOZE_TRIGGER_DOUBLETAP),
-                false, observer, UserHandle.USER_ALL);
-        getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.SCREEN_OFF_UNLOCK_UDFPS_ENABLED),
                 false, observer, UserHandle.USER_ALL);
         registerReceiver(new BroadcastReceiver() {
@@ -55,11 +52,8 @@ public class TouchBridgeApp extends Application {
     }
 
     private void update() {
-        // Both policies need the panel gesture armed; the framework chooses wake or doze.
         final boolean doubleTap = Settings.Secure.getIntForUser(getContentResolver(),
-                Settings.Secure.DOUBLE_TAP_TO_WAKE, 0, UserHandle.USER_CURRENT) != 0
-                || Settings.System.getIntForUser(getContentResolver(),
-                        Settings.System.DOZE_TRIGGER_DOUBLETAP, 0, UserHandle.USER_CURRENT) != 0;
+                Settings.Secure.DOUBLE_TAP_TO_WAKE, 0, UserHandle.USER_CURRENT) != 0;
         final boolean fodDefault = getResources().getBoolean(
                 com.android.internal.R.bool.config_screen_off_udfps_default_on);
         final boolean screenOffFod = Settings.Secure.getIntForUser(getContentResolver(),
