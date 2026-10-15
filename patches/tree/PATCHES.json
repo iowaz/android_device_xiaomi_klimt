@@ -1,218 +1,30 @@
 [
-  {
-    "project": "frameworks/base",
-    "base": "d84fa40043bca5caddd86325e95a85f932d5e7b7",
-    "base_tree": "4f32527b88978a46c810ecb856664bc10354ab37",
-    "final_head": "f60f8d1357b56a5f0b946926defe13deae943d31",
-    "final_tree": "fad75e552c7cbb674756b41804ec90ab7e671045",
-    "patches": [
-      {
-        "file": "frameworks/base/0001-Sandbox-Enforce-privileged-per-user-configuration-mu.patch",
-        "sha256": "437a454d5588a2de282d6bd8c05349ff68f092b26e6320c2527ee29c19bb0e08"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "build/soong",
-    "base": "1ac47f839dbb998440f558d886ba03a61954cfe8",
-    "base_tree": "817bd5132eb46fa036b23759a49ec3c171d40c80",
-    "final_head": "ffe1ef057ccd96e9db801e3fb12860c67d9fb71f",
-    "final_tree": "c6bed26d421ec9cf705b5626a35c1ee990e42f53",
-    "patches": [
-      {
-        "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
-        "sha256": "473ca7c06363700fee7f108e4f6b68d251242905eed442c36291faca6c042026"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "frameworks/native",
-    "base": "49687694bd18a4a2df972f89b6717dbfce610721",
-    "base_tree": "0a17b5a3b1c7274c7d80186392e80110e0b1f11c",
-    "final_head": "2341752da7cc47dfb8ca54af82e8ae825bc53d5e",
-    "final_tree": "a1d6ca889dadbe26da068bb4f2484174c9d3b7c3",
-    "patches": [
-      {
-        "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
-        "sha256": "87b4d0cfd93c9fa56b44fe00c9c27be22db7d62f165596a61a4bc24c59033165"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "libcore",
-    "base": "4ebfb391ee0109d16abe6e2bc965724b940928c5",
-    "base_tree": "301ec2686ccc880ea2e937ad2992ed43b8d03117",
-    "final_head": "77b7dba97fe8eb92d66654f2a7cf981ef75a1ca1",
-    "final_tree": "7f09cc02c767a52ef3b0f46e1c68b532513ffaac",
-    "patches": [
-      {
-        "file": "libcore/0001-libcore-Preserve-the-current-Unix-file-visibility-po.patch",
-        "sha256": "a1ec73c04946667ec18a597b46b7a32e538061a436c9834aa7b2ba4caf210199"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "system/sepolicy",
-    "base": "c3997bf608b40a7217d0eb2257af887afa78617b",
-    "base_tree": "23ba5f19296f7d8b4a331a2c8f01786dfc4ced83",
-    "final_head": "5bcb7c60218b3fe43d81520ff634ba4d949f5965",
-    "final_tree": "5712e7cd67161c6875b0a218bdb271996548e4ba",
-    "patches": [
-      {
-        "file": "system/sepolicy/0001-sepolicy-Preserve-user-build-su-gating-and-root-poli.patch",
-        "sha256": "8d64de1317efbd9a9b9bf4056399fff7f190a075e1ce486e68b553f38db45261"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "packages/apps/Settings",
-    "base": "bab27c819a81c53900d5fc4f7cc785c099324346",
-    "base_tree": "86af24e8114378cafa7f1378abce84d7e3dd37f4",
-    "final_head": "b0e5928b750c5493bff1b53b4b5dbe4959878070",
-    "final_tree": "6cda89f4f46e50844c406f8a7f6b5f8c05ac256f",
-    "patches": [
-      {
-        "file": "packages/apps/Settings/0001-Settings-preserve-carrier-scan-error-and-cancellatio.patch",
-        "sha256": "be45806a347163aacb201e9e542120d252646b10c6f3c43a679cfbfde36a6d66"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "packages/modules/Bluetooth",
-    "base": "9c3b6fb69cc0ba55ed6814fa04fd36744ca91547",
-    "base_tree": "fbfde8de66fd2fd1a89c184d09ca8ac206c43382",
-    "final_head": "9f64386a675bc73bd2a34fe41da4e099338b8800",
-    "final_tree": "a4cc32916c7d13b95c68a5b342aa8cc0318bcb34",
-    "patches": [
-      {
-        "file": "packages/modules/Bluetooth/0001-Bluetooth-tolerate-absent-accessory-device-class.patch",
-        "sha256": "aa3d52319dd4f6e30371e3fd740b19049b2f5451c913a4f1e74d6fbaded5208e"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "packages/services/Telecomm",
-    "base": "3be358b7a129fb6486913c8125e2301c906f7deb",
-    "base_tree": "8f3b25199d30a189fa681f2ae5dc080e020b89f5",
-    "final_head": "1029477e8adee7b35ca154e34b770fe61c5cf25d",
-    "final_tree": "d62a6da504add75f44c20a26a7881b3139bdb9fa",
-    "patches": [
-      {
-        "file": "packages/services/Telecomm/0001-Telecomm-cancel-call-flash-by-session-and-retain-acc.patch",
-        "sha256": "05843bc84d59f710bd85f13ecc852bc4a7b25f9db611b8053d84562d331fd08b"
-      },
-      {
-        "file": "packages/services/Telecomm/0002-Telecomm-use-android.telecom.Log-overloads-for-torch.patch",
-        "sha256": "15a301e32f17acbc6cbd07a9d04cc08ac29c3a96756cde1e3252d45614c56e39"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "system/memory/libdmabufheap",
-    "base": "57925b760460430b1424bf0fa4cb0ffe001b9cfd",
-    "base_tree": "10af1a10e13f62c7d7e9caa300b044b2cf55ad45",
-    "final_head": "22d1435f67bda2c5f7a881b7671406c868c52603",
-    "final_tree": "71526400792799dc702b68accd49210c09d99f77",
-    "patches": [
-      {
-        "file": "system/memory/libdmabufheap/0001-libdmabufheap-select-allocator-compatibility-indepen.patch",
-        "sha256": "1c9c5cfb919a237942e855f823e1daf7dc9afef0c33ffa61046ce57fdc5fe4d3"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "packages/apps/Sandbox",
-    "base": "fda7e163893dac66381594806cec1f80d00b146c",
-    "base_tree": "99f12486f6ff130b61e333b39fe21be4efa01883",
-    "final_head": "515ba24d62b89a795d31ca80033469ae5c2ec5c6",
-    "final_tree": "a3df062c8118f9013d3a4669a66ee9c36833b227",
-    "patches": [
-      {
-        "file": "packages/apps/Sandbox/0001-Sandbox-Restore-app-configuration-for-the-saved-Andr.patch",
-        "sha256": "48e68699ac5ab937878064504f84a845993d355bcd0438e7a7b3b9d719bfa71c"
-      },
-      {
-        "file": "packages/apps/Sandbox/0002-Sandbox-Declare-the-required-cross-user-administrati.patch",
-        "sha256": "045772f8c1e90ff148233dd794cc0025c1f6a7cdc1c24036fb93adcda6936310"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "packages/apps/ThemeStore",
-    "base": "d96bfe6e6b52236ac5845ac4ed5ac4c93b5fad65",
-    "base_tree": "39efd673b553aa1ae867b66e76c552103f714de2",
-    "final_head": "1c4ab6d86eab2f34617e1792825f547168dbd15f",
-    "final_tree": "4b1ec73edf57d00af9cd3d7393f555a69a5dc720",
-    "patches": [
-      {
-        "file": "packages/apps/ThemeStore/0001-ThemeStore-Wait-for-terminal-install-status-after-us.patch",
-        "sha256": "44931b1668ec3d3d299415a0c5abe890abf9b480fccde873b83ed5360fffc766"
-      },
-      {
-        "file": "packages/apps/ThemeStore/0002-ThemeStore-Isolate-callbacks-for-concurrent-install-.patch",
-        "sha256": "f619b8fb65ef28e3e119232f039e0c07450f78ca9f2f0f3a3574f358d07693c0"
-      },
-      {
-        "file": "packages/apps/ThemeStore/0003-ThemeStore-Preserve-per-app-icon-pack-assignments-du.patch",
-        "sha256": "220d50739e6605bc961268e7d7b9d3a2804acb2b95697508f7eb53f89a6cbe0f"
-      },
-      {
-        "file": "packages/apps/ThemeStore/0004-ThemeStore-Isolate-callbacks-for-each-uninstall-oper.patch",
-        "sha256": "ff77f9acfdaf7f319fe859b44c99f5aff436b7e9899f5a097d6cc61e5c20626a"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "packages/apps/AppLocker",
-    "base": "065f2f5553bcf297fe503b28ef15433447df92a5",
-    "base_tree": "0e26114cb7fa71de2b5cf8c757194eb387ba4c9e",
-    "final_head": "34d03ec0a4c33d82079f1a4688575a061776f1dd",
-    "final_tree": "2b2c3ee5424d8fe3067eb9b5120f185f9abd99f9",
-    "patches": [
-      {
-        "file": "packages/apps/AppLocker/0001-AppLocker-Declare-permissions-for-the-guarded-per-us.patch",
-        "sha256": "6743581272104cf6519e42bad064f903e8b6a96dd6b9f13d63a191ea8ea8a736"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "hardware/xiaomi",
-    "base": "af5766acc6d6766eddeb52574996247128428ff6",
-    "base_tree": "b77c7e9bfa779879251a79c2a772d026779fccb1",
-    "final_head": "f8f00fcc11b8bf5a5ea82ddaae9a3c62b120861a",
-    "final_tree": "abb8d4c3f461a2352f6eb01ad7a1643953ebae13",
-    "patches": [
-      {
-        "file": "hardware/xiaomi/0001-sensors-Terminate-bounded-UDFPS-status-reads.patch",
-        "sha256": "bb388bb92ebe4be69f6c5f658844c685da031dcc88e65486850c2f1c1533f919"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  },
-  {
-    "project": "packages/apps/Seedvault",
-    "base": "f47750d208dc69bdd65744e49ceb287b43aa5c00",
-    "base_tree": "676ddbed125c43b6a4c37add6cd759e6021029bc",
-    "final_head": "30c6534aa6c2fd5974c5b00d5273491e9e0b6afb",
-    "final_tree": "3e166ebfb1f5a760d14bcb791413f3e974c10bd4",
-    "patches": [
-      {
-        "file": "packages/apps/Seedvault/0001-Seedvault-Classify-WebDAV-out-of-space-errors-from-t.patch",
-        "sha256": "2d665d8fe1e052e829f42918609fcf1f53e46cd7ed26515d20402e6ebe7fa0a3"
-      }
-    ],
-    "publication": "local-only derived commit; base preserved/fetchable as recorded"
-  }
+ {
+  "project": "build/soong",
+  "base": "1ac47f839dbb998440f558d886ba03a61954cfe8",
+  "base_tree": "817bd5132eb46fa036b23759a49ec3c171d40c80",
+  "final_head": "ffe1ef057ccd96e9db801e3fb12860c67d9fb71f",
+  "final_tree": "c6bed26d421ec9cf705b5626a35c1ee990e42f53",
+  "patches": [
+   {
+    "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
+    "sha256": "473ca7c06363700fee7f108e4f6b68d251242905eed442c36291faca6c042026"
+   }
+  ],
+  "publication": "also published as the iowaz fork branch evox16; base is the Evolution X cnb head"
+ },
+ {
+  "project": "frameworks/native",
+  "base": "49687694bd18a4a2df972f89b6717dbfce610721",
+  "base_tree": "0a17b5a3b1c7274c7d80186392e80110e0b1f11c",
+  "final_head": "2341752da7cc47dfb8ca54af82e8ae825bc53d5e",
+  "final_tree": "a1d6ca889dadbe26da068bb4f2484174c9d3b7c3",
+  "patches": [
+   {
+    "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
+    "sha256": "87b4d0cfd93c9fa56b44fe00c9c27be22db7d62f165596a61a4bc24c59033165"
+   }
+  ],
+  "publication": "also published as the iowaz fork branch evox16; base is the Evolution X cnb head"
+ }
 ]

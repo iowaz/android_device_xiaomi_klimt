@@ -1,7 +1,16 @@
-# Evox16 exact-base patch set
+# Evox17 exact-base patch set
 
-BASES and PATCHES.json record exact upstream bases, patch SHA256 values and reviewed final source trees. apply.sh rejects dirty projects and incompatible bases, applies every patch, and verifies the complete resulting tree. It skips only a complete final-tree identity; it never relies on commit subjects or a short log window. A failed application preserves Git am state for diagnosis.
+Two projects carry a local change on top of Evolution X 12.3 (`cnb`). Both were already in
+evox15, which runs on the phone:
 
-Previous eight-project exports are retained in ../tree-evox15 for rollback evidence, not automatically reapplied. Bionic, AV symbol hiding, framework PIF/PduParser/ROM hiding, WAP, Evolver PIF, AVRCP and init-property picks were positively superseded by the audited targets. Required native metadata behavior is re-exported here. Existing lights commits remain in the pinned iowaz hardware/interfaces fork.
+- `build/soong`: the MIUI boot jar packages (`miui`, `miui.*`) are allowed on the boot class path;
+- `frameworks/native`: libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata
+  instead of failing (and logging) on every buffer (evox13).
 
-These derived commits are local and unpublished. The resolved local build manifest records their actual SHAs. A portable recipe must fetch the recorded bases and apply this patch set; it must not claim unpublished commits are available remotely. Device-only TouchBridge/allocator changes are in device history; sensor parser is exported here. Kernel and proprietary blob identities remain fixed.
+The same commits are on the iowaz forks' `evox16` branches, which the local manifest uses. `apply.sh`
+is for a plain Evolution X checkout: it checks the recorded base and patch hashes, applies the patches
+and verifies the final tree; it skips a project whose tree is already final and refuses dirty projects.
+
+evox16 exported twelve more projects here. They were reverted to upstream for evox17 because none of
+them was needed for klimt; see `docs/evox17.md` in the build repository. `../tree-evox15` keeps the
+evox15 picks as history; all of them are in the 12.3 sources.
