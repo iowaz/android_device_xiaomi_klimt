@@ -36,10 +36,6 @@ TARGET_CPU_VARIANT_RUNTIME := cortex-a55
 TARGET_BOOTLOADER_BOARD_NAME := klimt
 TARGET_NO_BOOTLOADER := true
 
-# DMA-BUF allocator compatibility
-# Preserve the baseline allocator ABI/behavior without enabling libion's real backend.
-$(call soong_config_set_bool,libdmabufheap,legacy_impl,true)
-
 # Display
 TARGET_SCREEN_DENSITY := 480
 TARGET_USES_VULKAN := true
