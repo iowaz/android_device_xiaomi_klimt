@@ -39,5 +39,19 @@ PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="klimt_global-user 15 AP3A.240905.015.A2 OS3.0.335.0.XOSMIXM release-keys" \
     DeviceProduct=klimt_global
+
+# evox20: the build identity matches Evolution X's bluejay canary fingerprint
+# override (vendor/lineage/config/evolution.mk). The product identity
+# (ro.product.*) stays klimt's: the vendor KeyMint, Google ID and TEE code read it.
+# gen_build_prop.py rejects unknown keys; Make's vendor/build.prop ignores these.
+ifeq ($(TARGET_ENABLE_FP_OVERRIDE),true)
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    BuildId=ZP11.260918.007 \
+    BuildNumber=16484274 \
+    BuildFlavor=bluejay_beta-user \
+    BuildDesc="bluejay_beta-user CANARY ZP11.260918.007 16484274 release-keys" \
+    BuildSystemDesc="bluejay_beta-user CANARY ZP11.260918.007 16484274 release-keys" \
+    BuildSystemFingerprint=google/bluejay_beta/bluejay:CANARY/ZP11.260918.007/16484274:user/release-keys \
+    Platform_security_patch=2026-10-05
+endif
