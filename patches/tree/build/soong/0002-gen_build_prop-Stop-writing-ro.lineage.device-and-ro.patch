@@ -1,0 +1,30 @@
+From f1cbddf5c93541039f63180cd19aadb48bb34a63 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Mon, 19 Oct 2026 20:46:19 -0300
+Subject: [PATCH] gen_build_prop: Stop writing ro.lineage.device and
+ ro.evolution.device
+
+The Updater and Settings, which need the device name, now take it from
+org.evolution.build.Device.VALUE (vendor/lineage
+build/soong/evolution-build-info). It has the same value (klimt), so
+what they show doesn't change. config["LineageDevice"] stays.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ scripts/gen_build_prop.py | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/scripts/gen_build_prop.py b/scripts/gen_build_prop.py
+index 958fd19df..2630fe041 100644
+--- a/scripts/gen_build_prop.py
++++ b/scripts/gen_build_prop.py
+@@ -263,9 +263,6 @@ def generate_build_info(args):
+   # flavor (via a dedicated lunch config for example).
+   print(f"ro.build.flavor={config['BuildFlavor']}")
+ 
+-  print(f"ro.lineage.device={config['LineageDevice']}")
+-  print(f"ro.evolution.device={config['LineageDevice']}")
+-
+   # These values are deprecated, use "ro.product.cpu.abilist"
+   # instead (see below).
+   print(f"# ro.product.cpu.abi and ro.product.cpu.abi2 are obsolete,")

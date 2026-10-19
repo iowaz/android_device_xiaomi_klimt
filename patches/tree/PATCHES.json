@@ -3,12 +3,16 @@
   "project": "build/soong",
   "base": "1ac47f839dbb998440f558d886ba03a61954cfe8",
   "base_tree": "817bd5132eb46fa036b23759a49ec3c171d40c80",
-  "final_head": "ffe1ef057ccd96e9db801e3fb12860c67d9fb71f",
-  "final_tree": "c6bed26d421ec9cf705b5626a35c1ee990e42f53",
+  "final_head": "f1cbddf5c93541039f63180cd19aadb48bb34a63",
+  "final_tree": "4a7678c20fb35536b427a4be3513f41d259c43f5",
   "patches": [
    {
     "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
     "sha256": "473ca7c06363700fee7f108e4f6b68d251242905eed442c36291faca6c042026"
+   },
+   {
+    "file": "build/soong/0002-gen_build_prop-Stop-writing-ro.lineage.device-and-ro.patch",
+    "sha256": "ae2af064a6784c0dd4bca4917b0d95766126e312419c55d52dee71daf0a83cac"
    }
   ],
   "publication": "also published as the iowaz fork branch evox16; base is the Evolution X cnb head"
