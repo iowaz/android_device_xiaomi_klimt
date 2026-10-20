@@ -1,13 +1,17 @@
-# Evox17 exact-base patch set
+# Exact-base patch set
 
-Two projects carry a local change on top of Evolution X 12.3 (`cnb`). Both were already in
-evox15, which runs on the phone:
+Three projects carry a local change on top of Evolution X 12.3 (`cnb`):
 
-- `build/soong`: the MIUI boot jar packages (`miui`, `miui.*`) are allowed on the boot class path;
+- `build/soong`: the MIUI boot jar packages (`miui`, `miui.*`) are allowed on the boot class path
+  (since evox15), and `gen_build_prop.py` no longer writes `ro.lineage.device` and
+  `ro.evolution.device` (evox20);
 - `frameworks/native`: libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata
-  instead of failing (and logging) on every buffer (evox13).
+  instead of failing (and logging) on every buffer (evox13);
+- `device/lineage/sepolicy`: the adb root policy goes only into userdebug and eng builds, the ones
+  that ship `adb_root`; a user build no longer allows adbd to call an adbroot domain (evox21).
 
-The same commits are on the iowaz forks' `evox16` branches, which the local manifest uses. `apply.sh`
+The build/soong and frameworks/native commits are on the iowaz forks' `evox16` branches, which the
+local manifest uses; the device/lineage/sepolicy commit is not published yet. `apply.sh`
 is for a plain Evolution X checkout: it checks the recorded base and patch hashes, applies the patches
 and verifies the final tree; it skips a project whose tree is already final and refuses dirty projects.
 

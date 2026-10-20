@@ -30,5 +30,19 @@
    }
   ],
   "publication": "also published as the iowaz fork branch evox16; base is the Evolution X cnb head"
+ },
+ {
+  "project": "device/lineage/sepolicy",
+  "base": "fe4d5dd55e30bc68cc56b7b9b3fa295389640691",
+  "base_tree": "fae1f6085e51552d3cc5776562c933bff460c4ea",
+  "final_head": "9112cdacfea9cdb48a5ee145dfc53c471669ae3d",
+  "final_tree": "ac8f2f8da3ca638ef865bbc9ebb378c8790985ff",
+  "patches": [
+   {
+    "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-to-debuggable-buil.patch",
+    "sha256": "caf4a2693d23e6cd97b3c3a510a5b3dd7df87f48bde84d5a27a9c0d2a74cce4b"
+   }
+  ],
+  "publication": "local commit, not published yet; base is the Evolution X cnb head"
  }
 ]

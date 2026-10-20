@@ -1,2 +1,3 @@
 build/soong 1ac47f839dbb998440f558d886ba03a61954cfe8
 frameworks/native 49687694bd18a4a2df972f89b6717dbfce610721
+device/lineage/sepolicy fe4d5dd55e30bc68cc56b7b9b3fa295389640691
