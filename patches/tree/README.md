@@ -1,6 +1,6 @@
 # Exact-base patch set
 
-Three projects carry a local change on top of Evolution X 12.3 (`cnb`):
+Four projects carry a local change on top of Evolution X 12.3 (`cnb`):
 
 - `build/soong`: the MIUI boot jar packages (`miui`, `miui.*`) are allowed on the boot class path
   (since evox15), and `gen_build_prop.py` no longer writes `ro.lineage.device` and
@@ -8,7 +8,10 @@ Three projects carry a local change on top of Evolution X 12.3 (`cnb`):
 - `frameworks/native`: libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata
   instead of failing (and logging) on every buffer (evox13);
 - `device/lineage/sepolicy`: the adb root policy goes only into userdebug and eng builds, the ones
-  that ship `adb_root`; a user build no longer allows adbd to call an adbroot domain (evox21).
+  that ship `adb_root`; a user build no longer allows adbd to call an adbroot domain (evox21);
+- `frameworks/base`: the in-framework TrickyStore leaf-hack persists the rewritten certificate
+  chain into keystore2 at key generation (for LEAF_HACK targets only), so the owner, grant and
+  raw-binder read paths all return the same chain (evox22).
 
 The build/soong and frameworks/native commits are on the iowaz forks' `evox16` branches, which the
 local manifest uses; the device/lineage/sepolicy commit is not published yet. `apply.sh`

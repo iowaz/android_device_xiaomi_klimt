@@ -44,5 +44,19 @@
    }
   ],
   "publication": "local commit, not published yet; base is the Evolution X cnb head"
+ },
+ {
+  "project": "frameworks/base",
+  "base": "e4cc2598d62b6f4bc468a649971e429551e7148b",
+  "base_tree": "51c38c1e1719cf99f95881a1a7c76199eddfa6d4",
+  "final_head": "f963d8b1afd31768d789e451696cedf4da8b920a",
+  "final_tree": "abcbfd6db50b13db15d57e68bf0241c152c63e36",
+  "patches": [
+   {
+    "file": "frameworks/base/0001-TrickyStore-Persist-the-leaf-hacked-chain-so-all-key.patch",
+    "sha256": "ea13d85c05dde565b1b647f7a2b55f1932c768b627133af91dbbffde72a9fdb6"
+   }
+  ],
+  "publication": "local commit, not published yet; base is the Evolution X cnb head"
  }
 ]
