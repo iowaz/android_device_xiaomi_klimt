@@ -53,5 +53,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="bluejay_beta-user CANARY ZP11.260918.007 16484274 release-keys" \
     BuildSystemDesc="bluejay_beta-user CANARY ZP11.260918.007 16484274 release-keys" \
     BuildSystemFingerprint=google/bluejay_beta/bluejay:CANARY/ZP11.260918.007/16484274:user/release-keys \
-    Platform_security_patch=2026-10-05
+    Platform_security_patch=2026-10-05 \
+    BuildHostname=r-06b84ad74750c689-xc7u
 endif

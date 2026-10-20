@@ -80,6 +80,16 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
     KCFLAGS=-D__ANDROID_COMMON_KERNEL__ \
     CONFIG_UNUSED_KSYMS_WHITELIST=$(KLIMT_KMI_SYMBOL_LIST)
 
+# evox20: neutral CI-style kernel metadata. The host is ro.build.host
+# (BuildHostname in lineage_klimt.mk); keep the two literals equal,
+# fixcheck20.sh checks them. The timestamp is taken in UTC when the kernel
+# recipe runs, so the build machine's time zone stays out of /proc/version.
+TARGET_KERNEL_ADDITIONAL_FLAGS += \
+    KBUILD_BUILD_USER=android-build \
+    KBUILD_BUILD_HOST=r-06b84ad74750c689-xc7u \
+    KBUILD_BUILD_VERSION=1 \
+    KBUILD_BUILD_TIMESTAMP="$$(TZ=UTC LC_ALL=C date)"
+
 PREBUILT_PATH := kernel/xiaomi/klimt-prebuilt
 TARGET_KERNEL_EXT_MODULE_ROOT := kernel/xiaomi
 TARGET_KERNEL_EXT_MODULES := klimt-prebuilt
