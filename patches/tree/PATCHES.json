@@ -62,5 +62,19 @@
    }
   ],
   "publication": "frameworks/base final head was already present in Evox24; no new framework runtime delta in Evox25"
+ },
+ {
+  "project": "build/make",
+  "base": "646e5671fe2617107d12ec56b1ef11ad12bc087f",
+  "base_tree": "cf3c6fb406d4d55bbe2d8f4e27889505ee79c1de",
+  "final_head": "4923147cc6c6fede608eba7807350d32007246e7",
+  "final_tree": "a9c365a4d08c6ed58dfaea1f0ddb499499849c36",
+  "patches": [
+   {
+    "file": "build/make/0001-sysprop-Honor-configured-vendor-build-identity.patch",
+    "sha256": "a5e8c5a09b2e260175e30774775600ea5e4462f81cef7e37e9ab2aa6f1ada42b"
+   }
+  ],
+  "publication": "Local evox26 metadata generation change; exact base is retained in the frozen source graph."
  }
 ]

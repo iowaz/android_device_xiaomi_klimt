@@ -70,6 +70,7 @@ BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 
 TARGET_KERNEL_SOURCE := kernel/xiaomi/klimt
 TARGET_KERNEL_CONFIG := klimt_defconfig
+TARGET_KERNEL_CONFIG_EXT := $(DEVICE_PATH)/configs/kernel/metadata.config
 # scripts/gen_gki_modules_headers.sh runs sed -i on CONFIG_UNUSED_KSYMS_WHITELIST. The build sandbox mounts
 # the source tree read-only, so hand the kernel a copy of the symbol list that lives in OUT_DIR.
 KLIMT_KMI_SYMBOL_LIST := $(abspath $(OUT_DIR)/target/product/klimt/obj/KERNEL_KMI/abi_gki_aarch64_klimt)
@@ -80,15 +81,14 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
     KCFLAGS=-D__ANDROID_COMMON_KERNEL__ \
     CONFIG_UNUSED_KSYMS_WHITELIST=$(KLIMT_KMI_SYMBOL_LIST)
 
-# evox20: neutral CI-style kernel metadata. The host is ro.build.host
-# (BuildHostname in lineage_klimt.mk); keep the two literals equal,
-# fixcheck20.sh checks them. The timestamp is taken in UTC when the kernel
-# recipe runs, so the build machine's time zone stays out of /proc/version.
+# evox26: reproducible metadata for the owner's Xiaomi reference profile.
+# Kernel source is unchanged; metadata.config records its real revision and
+# the local build number 26. This is not a Xiaomi build-farm provenance claim.
 TARGET_KERNEL_ADDITIONAL_FLAGS += \
-    KBUILD_BUILD_USER=android-build \
-    KBUILD_BUILD_HOST=r-06b84ad74750c689-xc7u \
+    KBUILD_BUILD_USER=builder \
+    KBUILD_BUILD_HOST=pangu-build-component-system-247-r6kfm \
     KBUILD_BUILD_VERSION=1 \
-    KBUILD_BUILD_TIMESTAMP="$$(TZ=UTC LC_ALL=C date)"
+    KBUILD_BUILD_TIMESTAMP="Thu Aug 6 00:00:00 UTC 2026"
 
 PREBUILT_PATH := kernel/xiaomi/klimt-prebuilt
 TARGET_KERNEL_EXT_MODULE_ROOT := kernel/xiaomi
@@ -168,8 +168,10 @@ TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2026-02-01
-BOOT_SECURITY_PATCH := $(VENDOR_SECURITY_PATCH)
+# Reported vendor SPL aligned at owner request; proprietary blobs are unchanged.
+VENDOR_SECURITY_PATCH := 2026-10-05
+# Keep the existing boot image AVB patch date; this pass does not update firmware.
+BOOT_SECURITY_PATCH := 2026-02-01
 
 # SELinux
 include device/mediatek/sepolicy_vndr/SEPolicy.mk

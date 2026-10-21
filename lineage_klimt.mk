@@ -6,9 +6,8 @@
 
 # Evolution X
 WITH_GMS := true
-# Evolution X's Pixel fingerprint override, needed for Play Integrity with its keybox.
-# libinit still sets the klimt attestation IDs.
-TARGET_ENABLE_FP_OVERRIDE := true
+# Use the owner's klimt_global reference instead of the upstream Pixel default.
+TARGET_ENABLE_FP_OVERRIDE := false
 # No Columbus (back tap) sensor on klimt
 TARGET_SUPPORTS_QUICK_TAP := false
 # Boot animation size
@@ -38,21 +37,29 @@ PRODUCT_MANUFACTURER := Xiaomi
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    DeviceProduct=klimt_global
+# evox26: tools/evox25-prop-fix.sh reference, applied at image generation.
+KLIMT_BUILD_FINGERPRINT := Xiaomi/klimt_global/klimt:17/OS3.3.260806.171839609/OS3.0.335.0.XOSMIXM:user/release-keys
+# Also cover Make-generated AVB fingerprint metadata, not only Soong build.prop.
+BUILD_FINGERPRINT := $(KLIMT_BUILD_FINGERPRINT)
+BUILD_SYSTEM_FINGERPRINT := $(KLIMT_BUILD_FINGERPRINT)
 
-# evox20: the build identity matches Evolution X's bluejay canary fingerprint
-# override (vendor/lineage/config/evolution.mk). The product identity
-# (ro.product.*) stays klimt's: the vendor KeyMint, Google ID and TEE code read it.
-# gen_build_prop.py rejects unknown keys; Make's vendor/build.prop ignores these.
-ifeq ($(TARGET_ENABLE_FP_OVERRIDE),true)
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildId=ZP11.260918.007 \
-    BuildNumber=16484274 \
-    BuildFlavor=bluejay_beta-user \
-    BuildDesc="bluejay_beta-user CANARY ZP11.260918.007 16484274 release-keys" \
-    BuildSystemDesc="bluejay_beta-user CANARY ZP11.260918.007 16484274 release-keys" \
-    BuildSystemFingerprint=google/bluejay_beta/bluejay:CANARY/ZP11.260918.007/16484274:user/release-keys \
+    DeviceProduct=klimt_global \
+    BuildId=OS3.3.260806.171839609 \
+    BuildNumber=OS3.0.335.0.XOSMIXM \
+    BuildFlavor=klimt_global-user \
+    BuildDesc="klimt_global-user 17 OS3.3.260806.171839609 OS3.0.335.0.XOSMIXM release-keys" \
+    BuildSystemDesc="klimt_global-user 17 OS3.3.260806.171839609 OS3.0.335.0.XOSMIXM release-keys" \
+    BuildFingerprint=$(KLIMT_BUILD_FINGERPRINT) \
+    BuildSystemFingerprint=$(KLIMT_BUILD_FINGERPRINT) \
     Platform_security_patch=2026-10-05 \
-    BuildHostname=r-06b84ad74750c689-xc7u
-endif
+    BuildHostname=pangu-build-component-system-247-r6kfm \
+    BuildUsername=builder \
+    Platform_version_known_codenames=Base,Base11,Cupcake,Donut,Eclair,Eclair01,EclairMr1,Froyo,Gingerbread,GingerbreadMr1,Honeycomb,HoneycombMr2,IceCreamSandwich,IceCreamSandwichMr1,JellyBean,JellyBeanMr1,JellyBeanMr2,Kitkat,KitkatWatch,Lollipop,LollipopMr1,M,N,NMr1,O,OMr1,P,Q,R,S,Sv2,Tiramisu,UpsideDownCake,VanillaIceCream,Baklava,CinnamonBun
+
+# Override the optional generated display ID on both historical emitters.
+PRODUCT_SYSTEM_PROPERTIES += ro.build.display.id=OS3.3.260806.171839609
+PRODUCT_PRODUCT_PROPERTIES += ro.build.display.id=OS3.3.260806.171839609
+
+# Runtime compatibility alias used by the reference profile.
+PRODUCT_SYSTEM_PROPERTIES += ro.bootimage.fingerprint=$(KLIMT_BUILD_FINGERPRINT)

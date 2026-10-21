@@ -1,7 +1,8 @@
 # Exact-base patch set
 
-Four projects carry a local change on top of Evolution X 12.3 (`cnb`):
+Five projects carry a local change on top of Evolution X 12.3 (`cnb`):
 
+- `build/make`: vendor build.prop honors the same ID and incremental overrides as Soong (evox26);
 - `build/soong`: the MIUI boot jar packages (`miui`, `miui.*`) are allowed on the boot class path
   (since evox15), and `gen_build_prop.py` no longer writes `ro.lineage.device` and
   `ro.evolution.device` (evox20);
