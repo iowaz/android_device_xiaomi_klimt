@@ -49,14 +49,18 @@
   "project": "frameworks/base",
   "base": "e4cc2598d62b6f4bc468a649971e429551e7148b",
   "base_tree": "51c38c1e1719cf99f95881a1a7c76199eddfa6d4",
-  "final_head": "f963d8b1afd31768d789e451696cedf4da8b920a",
-  "final_tree": "abcbfd6db50b13db15d57e68bf0241c152c63e36",
+  "final_head": "829dab06450fd192e7fb0115b639b8066052be89",
+  "final_tree": "76c7fb946cc9419ad033877104baaf2ce5937ec6",
   "patches": [
    {
     "file": "frameworks/base/0001-TrickyStore-Persist-the-leaf-hacked-chain-so-all-key.patch",
     "sha256": "ea13d85c05dde565b1b647f7a2b55f1932c768b627133af91dbbffde72a9fdb6"
+   },
+   {
+    "file": "frameworks/base/0002-AxSpoofManager-seed-default-PIF-config-at-boot.patch",
+    "sha256": "934ea7c365a056827ca98531058a2f52af57418d24902e50c0a715b107b49eb3"
    }
   ],
-  "publication": "local commit, not published yet; base is the Evolution X cnb head"
+  "publication": "frameworks/base final head was already present in Evox24; no new framework runtime delta in Evox25"
  }
 ]

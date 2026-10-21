@@ -42,8 +42,7 @@ void vendor_load_properties() {
 
     // Mobile FeliCa sends Build.MODEL to its server. Publish the hardware model
     // before init derives product properties and before zygote starts.
-    // evox24-full: app/system model reports the Pixel; attestation keeps the real SKU model below.
-    override_property("ro.product.model", "Pixel 6a");
+    override_property("ro.product.model", model);
 
     // Derive ro.product.name from the build's partition properties. The build
     // description and vendor-style fingerprint use klimt_global. Keep
@@ -53,8 +52,7 @@ void vendor_load_properties() {
     override_property("ro.product.model_for_attestation", model);
     override_property("ro.product.name_for_attestation", product);
     override_property("ro.product.brand_for_attestation", "Xiaomi");
-    // evox24-full: static product is now Pixel, so pin these back to genuine klimt/Xiaomi
-    // (otherwise they fall back to the bluejay/Google bare props and dirty the attestation IDs).
+    // Keep hardware attestation IDs explicit when product configuration changes.
     override_property("ro.product.device_for_attestation", "klimt");
     override_property("ro.product.manufacturer_for_attestation", "Xiaomi");
 }
