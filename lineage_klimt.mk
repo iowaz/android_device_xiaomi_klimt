@@ -32,14 +32,15 @@ PRODUCT_PACKAGE_OVERLAYS := \
 
 PRODUCT_DEVICE := klimt
 PRODUCT_NAME := lineage_klimt
-PRODUCT_BRAND := Xiaomi
-PRODUCT_MODEL := 2506BPN68G
-PRODUCT_MANUFACTURER := Xiaomi
+PRODUCT_BRAND := google
+PRODUCT_MODEL := Pixel 6a
+PRODUCT_MANUFACTURER := Google
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    DeviceProduct=klimt_global
+    DeviceName=bluejay \
+    DeviceProduct=bluejay
 
 # evox20: the build identity matches Evolution X's bluejay canary fingerprint
 # override (vendor/lineage/config/evolution.mk). The product identity
