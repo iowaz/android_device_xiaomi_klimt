@@ -40,6 +40,11 @@ TARGET_NO_BOOTLOADER := true
 TARGET_SCREEN_DENSITY := 480
 TARGET_USES_VULKAN := true
 
+# Graphics
+# libgui reports each frame's timestamps to the MediaTek GED KPI (/proc/ged), as the stock HyperOS
+# libgui does, so the GPU DVFS governor sees the frames. Without /proc/ged nothing is sent.
+$(call soong_config_set_bool,libgui,support_mtk_ged_kpi,true)
+
 # Fastbootd
 $(call soong_config_set_bool,fastbootd,bypass_lock_state,true)
 
