@@ -1,20 +1,23 @@
-From ffe1ef057ccd96e9db801e3fb12860c67d9fb71f Mon Sep 17 00:00:00 2001
+From 5a85bf487ba38dd21a5f5251baad51c461640d59 Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 15:37:30 -0300
-Subject: [PATCH] klimt: Retain MIUI boot jar package allowance on Evox16
+Subject: [PATCH 1/2] klimt: Retain MIUI boot jar package allowance on Evox16
 
 ---
  scripts/check_boot_jars/package_allowed_list.txt | 3 +++
  1 file changed, 3 insertions(+)
 
 diff --git a/scripts/check_boot_jars/package_allowed_list.txt b/scripts/check_boot_jars/package_allowed_list.txt
-index 357385989..fc0816dbf 100644
+index 37b4a38b8..4894e1fad 100644
 --- a/scripts/check_boot_jars/package_allowed_list.txt
 +++ b/scripts/check_boot_jars/package_allowed_list.txt
-@@ -276,3 +276,6 @@ com\.mediatek\..*
+@@ -277,3 +277,6 @@ com\.mediatek\..*
  # LG adds
  com\.lge
  com\.lge\..* 
 +
 +# klimt: MIUI framework stubs remain in the boot class path.
 +miui(\..*)?
+-- 
+2.43.0
+

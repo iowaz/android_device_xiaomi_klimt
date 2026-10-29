@@ -1,80 +1,84 @@
 [
  {
   "project": "build/soong",
-  "base": "1ac47f839dbb998440f558d886ba03a61954cfe8",
-  "base_tree": "817bd5132eb46fa036b23759a49ec3c171d40c80",
-  "final_head": "f1cbddf5c93541039f63180cd19aadb48bb34a63",
-  "final_tree": "4a7678c20fb35536b427a4be3513f41d259c43f5",
+  "base": "541d7c2ccbb7c6cfdf370da58314a8dd03607a5f",
+  "base_tree": "1860d8f87387fa0f2298a6000a842ae133175496",
+  "final_head": "e3ff79a20ac6f17261ac40a55db28f17fc3d0927",
+  "final_tree": "16f6c1a29c6b28ddaca08f0e8644487da5a1bfaf",
   "patches": [
    {
     "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
-    "sha256": "473ca7c06363700fee7f108e4f6b68d251242905eed442c36291faca6c042026"
+    "sha256": "263dfee60cb133f1f488bed90bc701f4297083bc90986442622237e90ba93348"
    },
    {
     "file": "build/soong/0002-gen_build_prop-Stop-writing-ro.lineage.device-and-ro.patch",
-    "sha256": "ae2af064a6784c0dd4bca4917b0d95766126e312419c55d52dee71daf0a83cac"
+    "sha256": "c0670cf87d7ff66a712a4ddda3ba3c2490ba9e0875689cf02a48f0ceb8531d95"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox16; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
  },
  {
   "project": "frameworks/native",
-  "base": "49687694bd18a4a2df972f89b6717dbfce610721",
-  "base_tree": "0a17b5a3b1c7274c7d80186392e80110e0b1f11c",
-  "final_head": "2341752da7cc47dfb8ca54af82e8ae825bc53d5e",
-  "final_tree": "a1d6ca889dadbe26da068bb4f2484174c9d3b7c3",
+  "base": "cc9996b368ccd4ee5b93b7140643f033bc87f7fb",
+  "base_tree": "97bdf22ea35d340b457ab4a405b222a802f6e0b7",
+  "final_head": "f195a1b176b438ce6420705735ac69feee4d899e",
+  "final_tree": "16abc88664218b1b13da06e600fb3e40c71e63ea",
   "patches": [
    {
     "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
-    "sha256": "87b4d0cfd93c9fa56b44fe00c9c27be22db7d62f165596a61a4bc24c59033165"
+    "sha256": "d37f27ec52b56fed46a30a7cbe425c028d5c57a78658b67c42c983e8c6f306b3"
+   },
+   {
+    "file": "frameworks/native/0002-libgui-GED-KPI-Initialize-the-producer-pid-and-surfa.patch",
+    "sha256": "fecc9cd1754db2b79bd3b816a4a5347ef4397fc8bddfc36de8d73cbdcd5634d0"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox16; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
  },
  {
   "project": "device/lineage/sepolicy",
-  "base": "fe4d5dd55e30bc68cc56b7b9b3fa295389640691",
-  "base_tree": "fae1f6085e51552d3cc5776562c933bff460c4ea",
-  "final_head": "9112cdacfea9cdb48a5ee145dfc53c471669ae3d",
-  "final_tree": "ac8f2f8da3ca638ef865bbc9ebb378c8790985ff",
+  "base": "2472f7e1377924773ec99ddb628247c028d03842",
+  "base_tree": "5547940b2d7dbe7f8edc3a1fc6e0e0e7286baa22",
+  "final_head": "35fa413553da08f97365d27151675fbc4580f045",
+  "final_tree": "52d9b0c9c46f8a3d164fac06463364824ef1cbfa",
   "patches": [
    {
     "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-to-debuggable-buil.patch",
-    "sha256": "caf4a2693d23e6cd97b3c3a510a5b3dd7df87f48bde84d5a27a9c0d2a74cce4b"
+    "sha256": "4389341de131b07ea518a261dcae9ab2fd123d556150066e109f82f47593558d"
    }
   ],
-  "publication": "local commit, not published yet; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
  },
  {
   "project": "frameworks/base",
-  "base": "e4cc2598d62b6f4bc468a649971e429551e7148b",
-  "base_tree": "51c38c1e1719cf99f95881a1a7c76199eddfa6d4",
-  "final_head": "829dab06450fd192e7fb0115b639b8066052be89",
-  "final_tree": "76c7fb946cc9419ad033877104baaf2ce5937ec6",
+  "base": "e6bdfbeaeaa172cee2a4d59ff04a3a2a0ba590da",
+  "base_tree": "cdc59bde1a6d4ce2b3bc69f6567d3e3464ba7aa5",
+  "final_head": "5286b667633f4c51016a3fdc257aec9a32db6aa0",
+  "final_tree": "4bdaa3ea042ad712ea9c64a918ad3bd653b5727e",
   "patches": [
    {
-    "file": "frameworks/base/0001-TrickyStore-Persist-the-leaf-hacked-chain-so-all-key.patch",
-    "sha256": "ea13d85c05dde565b1b647f7a2b55f1932c768b627133af91dbbffde72a9fdb6"
+    "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
+    "sha256": "d512ee011799e86961ecd788a168333287b60744f14019c6e8075fb3f1253130"
    },
    {
-    "file": "frameworks/base/0002-AxSpoofManager-seed-default-PIF-config-at-boot.patch",
-    "sha256": "934ea7c365a056827ca98531058a2f52af57418d24902e50c0a715b107b49eb3"
+    "file": "frameworks/base/0002-TrickyStore-Don-t-attest-an-all-zero-verified-boot-k.patch",
+    "sha256": "c4b2c2dfbcd46d1b709f48d8adcba45c3f45555dea69f98e7fae9002eddc49c0"
    }
   ],
-  "publication": "frameworks/base final head was already present in Evox24; no new framework runtime delta in Evox25"
+  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
  },
  {
   "project": "build/make",
-  "base": "646e5671fe2617107d12ec56b1ef11ad12bc087f",
-  "base_tree": "cf3c6fb406d4d55bbe2d8f4e27889505ee79c1de",
-  "final_head": "4923147cc6c6fede608eba7807350d32007246e7",
-  "final_tree": "a9c365a4d08c6ed58dfaea1f0ddb499499849c36",
+  "base": "75f33f854b8f750c46b5fd666457cea5c3636a65",
+  "base_tree": "3ef22273ab3746911a3effa0c9ff3a69c43252d8",
+  "final_head": "250650a4bcbb72ea25b4caa63c1e8edb99a8fbca",
+  "final_tree": "eed20eeca5182eebba114236fdc87f5f67fc801d",
   "patches": [
    {
-    "file": "build/make/0001-sysprop-Honor-configured-vendor-build-identity.patch",
-    "sha256": "a5e8c5a09b2e260175e30774775600ea5e4462f81cef7e37e9ab2aa6f1ada42b"
+    "file": "build/make/0001-sysprop-Honor-configured-vendor-build-identity-overr.patch",
+    "sha256": "06d61271b82f754f60600dbabe194bf19c015092fa503242f0ad4d329e289392"
    }
   ],
-  "publication": "Local evox26 metadata generation change; exact base is retained in the frozen source graph."
+  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
  }
 ]

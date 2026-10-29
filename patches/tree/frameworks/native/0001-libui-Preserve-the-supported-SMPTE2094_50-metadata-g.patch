@@ -1,7 +1,7 @@
-From 2341752da7cc47dfb8ca54af82e8ae825bc53d5e Mon Sep 17 00:00:00 2001
+From aef68341d769a0939e29b011c31cadc4b8baa89b Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 15:37:30 -0300
-Subject: [PATCH] libui: Preserve the supported SMPTE2094_50 metadata guard
+Subject: [PATCH 1/2] libui: Preserve the supported SMPTE2094_50 metadata guard
 
 ---
  libs/ui/Gralloc5.cpp | 23 +++++++++++++++++++++++
@@ -48,3 +48,6 @@ index d4ec87d..91ec9da 100644
      auto value = getStandardMetadata<StandardMetadataType::SMPTE2094_50>(mMapper, bufferHandle);
      if (value.has_value()) {
          *outSmpte2094_50 = std::move(*value);
+-- 
+2.43.0
+

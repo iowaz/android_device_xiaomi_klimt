@@ -1,4 +1,4 @@
-From 9112cdacfea9cdb48a5ee145dfc53c471669ae3d Mon Sep 17 00:00:00 2001
+From 35fa413553da08f97365d27151675fbc4580f045 Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Tue, 20 Oct 2026 10:51:20 -0300
 Subject: [PATCH] sepolicy: Keep the adb root policy to debuggable builds
@@ -67,3 +67,6 @@ index 0200129..b34330d 100644
  
  add_service(system_server, ax_sandbox_service);
  
+-- 
+2.43.0
+

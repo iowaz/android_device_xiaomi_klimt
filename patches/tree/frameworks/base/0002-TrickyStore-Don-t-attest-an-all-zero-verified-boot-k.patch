@@ -1,0 +1,61 @@
+From 5286b667633f4c51016a3fdc257aec9a32db6aa0 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Thu, 29 Oct 2026 20:07:42 -0300
+Subject: [PATCH 2/2] TrickyStore: Don't attest an all-zero verified boot key
+ as Verified
+
+hackAttestExtension() takes the verified boot key from the TEE's own
+RootOfTrust and falls back to AttestationUtils.getBootKey() only when
+that octet string is missing or empty. It then always writes
+deviceLocked=true and verifiedBootState=Verified.
+
+klimt's TEE attests a 32-byte all-zero boot key while the bootloader is
+unlocked (Duck Detector, 2026-10-20: Unverified, deviceLocked false,
+boot key 00..00). That key is not empty, so every leaf- or auto-hacked
+key would claim a locked, Verified device with an all-zero boot key,
+a combination AOSP only allows for Unverified, and upstream now also
+persists that chain at key generation. The generated-key path
+(CertificateGenerator) already uses AttestationUtils.getBootKey().
+
+Treat an all-zero key like a missing one. The boot hash is unchanged.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../security/trickystore/CertificateHacker.java    | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/security/trickystore/CertificateHacker.java b/core/java/android/security/trickystore/CertificateHacker.java
+index 1639ada403d0..b57db44dc108 100644
+--- a/core/java/android/security/trickystore/CertificateHacker.java
++++ b/core/java/android/security/trickystore/CertificateHacker.java
+@@ -360,7 +360,10 @@ public final class CertificateHacker {
+             String[] packages) throws Exception {
+ 
+         byte[] bootKey = rootOfTrustOctet(originalRootOfTrust, 0);
+-        if (bootKey == null) {
++        // An unlocked bootloader can make the TEE attest an all-zero verified boot key, which is
++        // only valid with an Unverified boot state. The hacked RootOfTrust says Verified, so use
++        // the same boot key as the generated path instead.
++        if (bootKey == null || isAllZero(bootKey)) {
+             bootKey = AttestationUtils.getBootKey();
+         }
+ 
+@@ -422,6 +425,15 @@ public final class CertificateHacker {
+         return new Extension(CertificateGenerator.ATTESTATION_OID, false, hackedOctets);
+     }
+ 
++    private static boolean isAllZero(byte[] value) {
++        for (byte b : value) {
++            if (b != 0) {
++                return false;
++            }
++        }
++        return true;
++    }
++
+     private static byte[] rootOfTrustOctet(ASN1Encodable rootOfTrust, int index) {
+         try {
+             ASN1Sequence sequence = ASN1Sequence.getInstance(rootOfTrust);
+-- 
+2.43.0
+
