@@ -88,7 +88,7 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
 
 # evox26: reproducible metadata for the owner's Xiaomi reference profile.
 # Kernel source is unchanged; metadata.config records its real revision and
-# the local build number 26. This is not a Xiaomi build-farm provenance claim.
+# the local build number (ab27 since evox27). This is not a Xiaomi build-farm provenance claim.
 TARGET_KERNEL_ADDITIONAL_FLAGS += \
     KBUILD_BUILD_USER=builder \
     KBUILD_BUILD_HOST=pangu-build-component-system-247-r6kfm \
