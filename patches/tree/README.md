@@ -8,7 +8,8 @@ Five projects carry a local change on top of Evolution X 12.3 (`cnb`) that is ex
   `ro.evolution.device` (evox20);
 - `frameworks/native`: libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata
   instead of failing (and logging) on every buffer (evox13); the MediaTek GED KPI hooks in libgui
-  start with a known producer pid and surfaceflinger flag and declare them for every module (evox27);
+  start with a known producer pid and surfaceflinger flag and declare them for every module (evox27),
+  and probe /proc/ged once per process with O_CLOEXEC and no error-level logging (evox28);
 - `device/lineage/sepolicy`: the adb root policy goes only into userdebug and eng builds, the ones
   that ship `adb_root`; a user build no longer allows adbd to call an adbroot domain (evox21);
 - `frameworks/base`: the package manager's upgrade digest (`PackagePartitions.FINGERPRINT`) also
@@ -18,7 +19,7 @@ Five projects carry a local change on top of Evolution X 12.3 (`cnb`) that is ex
   Verified (evox27). The evox22 chain-persist and evox24 PIF-seeding changes were dropped in evox27:
   upstream's TrickyStore rework persists the hacked chain at key generation itself.
 
-Since evox27 all five are also on the iowaz forks' `evox27` branches, which the frozen manifest uses;
+All five are also on the iowaz forks' `evox27` and `evox28` branches, which the frozen manifests use;
 the bases are the Evolution X `cnb` heads of 2026-10-29. `apply.sh`
 is for a plain Evolution X checkout: it checks the recorded base and patch hashes, applies the patches
 and verifies the final tree; it skips a project whose tree is already final and refuses dirty projects.

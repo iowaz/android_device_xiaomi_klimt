@@ -15,25 +15,29 @@
     "sha256": "c0670cf87d7ff66a712a4ddda3ba3c2490ba9e0875689cf02a48f0ceb8531d95"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
  },
  {
   "project": "frameworks/native",
   "base": "cc9996b368ccd4ee5b93b7140643f033bc87f7fb",
   "base_tree": "97bdf22ea35d340b457ab4a405b222a802f6e0b7",
-  "final_head": "f195a1b176b438ce6420705735ac69feee4d899e",
-  "final_tree": "16abc88664218b1b13da06e600fb3e40c71e63ea",
+  "final_head": "30e5b1d1eda5fe0cb34a50ff265d24038ab1b5ae",
+  "final_tree": "8fad5c8d5f878cae3a4ba1fb5eea41537827afb7",
   "patches": [
    {
     "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
-    "sha256": "d37f27ec52b56fed46a30a7cbe425c028d5c57a78658b67c42c983e8c6f306b3"
+    "sha256": "7cf5bcbee67770545da55ce359a5c1d8dab82923a668cf7b9a37cdf08ced94d8"
    },
    {
     "file": "frameworks/native/0002-libgui-GED-KPI-Initialize-the-producer-pid-and-surfa.patch",
-    "sha256": "fecc9cd1754db2b79bd3b816a4a5347ef4397fc8bddfc36de8d73cbdcd5634d0"
+    "sha256": "79d4ca0bf8c2064c87a88531a5102d2be44527b1b857221defe9f5334de178c5"
+   },
+   {
+    "file": "frameworks/native/0003-libgui-GED-KPI-Probe-once-per-process-quietly.patch",
+    "sha256": "42ba55373b2153576cb1da127aec8a00d40674b27c3ab09d012ce00731c1fe06"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
  },
  {
   "project": "device/lineage/sepolicy",
@@ -47,7 +51,7 @@
     "sha256": "4389341de131b07ea518a261dcae9ab2fd123d556150066e109f82f47593558d"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
  },
  {
   "project": "frameworks/base",
@@ -65,7 +69,7 @@
     "sha256": "c4b2c2dfbcd46d1b709f48d8adcba45c3f45555dea69f98e7fae9002eddc49c0"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
  },
  {
   "project": "build/make",
@@ -79,6 +83,6 @@
     "sha256": "06d61271b82f754f60600dbabe194bf19c015092fa503242f0ad4d329e289392"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox27; base is the Evolution X cnb head"
+  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
  }
 ]
