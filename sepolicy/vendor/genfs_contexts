@@ -67,9 +67,6 @@ genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/1c01a000.spmi:mt6379@
 genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0e/wakeup                                                              u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/1c01a000.spmi/spmi-0/0-0f/wakeup                                                              u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/aov/wakeup                                                                                    u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/battery-manager/power_supply/battery/wakeup                                                   u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/charger/power_supply/mtk-mst-hvdiv-chg/wakeup                                                 u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/charger/power_supply/mtk-slv-hvdiv-chg/wakeup                                                 u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/charger/power_supply/usb/wakeup                                                               u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/charger/power_supply/wireless/wakeup                                                          u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/goodix_ts.0/wakeup                                                                            u:object_r:sysfs_wakeup:s0

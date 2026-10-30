@@ -20,7 +20,6 @@ persist.vendor.camera.st_repair. u:object_r:vendor_mtk_camera_prop:s0
 # specific camera debug labels above retain precedence over these prefixes.
 vendor.camera.             u:object_r:vendor_mtkcam_prop:s0
 persist.vendor.camera.     u:object_r:vendor_mtkcam_prop:s0
-vendor.debug.sf.kickidle.   u:object_r:vendor_mtk_debug_sf_kickidle_prop:s0
 
 # TEE provisioning state that mtd_mitee records (labels as on stock)
 vendor.sys.feature_state                 u:object_r:vendor_payment_security_prop:s0
