@@ -19,8 +19,8 @@ Five projects carry a local change on top of Evolution X 12.3 (`cnb`) that is ex
   Verified (evox27). The evox22 chain-persist and evox24 PIF-seeding changes were dropped in evox27:
   upstream's TrickyStore rework persists the hacked chain at key generation itself.
 
-All five are also on the iowaz forks' `evox27` and `evox28` branches, which the frozen manifests use;
-the bases are the Evolution X `cnb` heads of 2026-10-29. `apply.sh`
+The evox30 series is recorded below with exact upstream bases and final trees;
+the frozen manifest records the corresponding fork commits. `apply.sh`
 is for a plain Evolution X checkout: it checks the recorded base and patch hashes, applies the patches
 and verifies the final tree; it skips a project whose tree is already final and refuses dirty projects.
 

@@ -1,4 +1,4 @@
-From 35fa413553da08f97365d27151675fbc4580f045 Mon Sep 17 00:00:00 2001
+From be8d74ad7bf957319b7dbd76acb0bc13c1b9bb6d Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Tue, 20 Oct 2026 10:51:20 -0300
 Subject: [PATCH] sepolicy: Keep the adb root policy to debuggable builds

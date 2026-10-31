@@ -3,86 +3,86 @@
   "project": "build/soong",
   "base": "541d7c2ccbb7c6cfdf370da58314a8dd03607a5f",
   "base_tree": "1860d8f87387fa0f2298a6000a842ae133175496",
-  "final_head": "e3ff79a20ac6f17261ac40a55db28f17fc3d0927",
+  "final_head": "a76b738f90c57025417ffc940cee1f34b4faa673",
   "final_tree": "16f6c1a29c6b28ddaca08f0e8644487da5a1bfaf",
   "patches": [
    {
     "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
-    "sha256": "263dfee60cb133f1f488bed90bc701f4297083bc90986442622237e90ba93348"
+    "sha256": "72fc5ed7817777e165bedcff0a5ff8123ec85ae00e62bb0339457938782939de"
    },
    {
     "file": "build/soong/0002-gen_build_prop-Stop-writing-ro.lineage.device-and-ro.patch",
-    "sha256": "c0670cf87d7ff66a712a4ddda3ba3c2490ba9e0875689cf02a48f0ceb8531d95"
+    "sha256": "656cec8e6d0c3519ecb2946b3aa97b58f3f844bb57646ca2f499d0cfb93ab97b"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
+  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "frameworks/native",
-  "base": "cc9996b368ccd4ee5b93b7140643f033bc87f7fb",
-  "base_tree": "97bdf22ea35d340b457ab4a405b222a802f6e0b7",
-  "final_head": "30e5b1d1eda5fe0cb34a50ff265d24038ab1b5ae",
-  "final_tree": "8fad5c8d5f878cae3a4ba1fb5eea41537827afb7",
+  "base": "69f224f8e46d5eb95167a764a7dd2668da838e3d",
+  "base_tree": "5be6c5501d48f27bc07a7de382e27248a6e03a9f",
+  "final_head": "8e5791a58cf8ce90bae8a2aced7a109047da19b0",
+  "final_tree": "f508246cdae658df593a6c88707b7bdde328d09a",
   "patches": [
    {
     "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
-    "sha256": "7cf5bcbee67770545da55ce359a5c1d8dab82923a668cf7b9a37cdf08ced94d8"
+    "sha256": "2f1255ab12406d152f9536fe78825c9fb8ffa9ad8a90b0e7b5ecf1314a964b58"
    },
    {
     "file": "frameworks/native/0002-libgui-GED-KPI-Initialize-the-producer-pid-and-surfa.patch",
-    "sha256": "79d4ca0bf8c2064c87a88531a5102d2be44527b1b857221defe9f5334de178c5"
+    "sha256": "6560f54cb77a5f4eac46045efa948c2b55b710b8a28e79089c68445817ef2279"
    },
    {
     "file": "frameworks/native/0003-libgui-GED-KPI-Probe-once-per-process-quietly.patch",
-    "sha256": "42ba55373b2153576cb1da127aec8a00d40674b27c3ab09d012ce00731c1fe06"
+    "sha256": "8f18560dc9134fed45e5a7759ff526c77aa6e8cb99a30a5432754c95882ba105"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
+  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "device/lineage/sepolicy",
   "base": "2472f7e1377924773ec99ddb628247c028d03842",
   "base_tree": "5547940b2d7dbe7f8edc3a1fc6e0e0e7286baa22",
-  "final_head": "35fa413553da08f97365d27151675fbc4580f045",
+  "final_head": "be8d74ad7bf957319b7dbd76acb0bc13c1b9bb6d",
   "final_tree": "52d9b0c9c46f8a3d164fac06463364824ef1cbfa",
   "patches": [
    {
     "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-to-debuggable-buil.patch",
-    "sha256": "4389341de131b07ea518a261dcae9ab2fd123d556150066e109f82f47593558d"
+    "sha256": "0bb427d3ccff1f7190db1816747cb78fbe094b20dd834fb7999f50e383acca37"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
+  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "frameworks/base",
-  "base": "e6bdfbeaeaa172cee2a4d59ff04a3a2a0ba590da",
-  "base_tree": "cdc59bde1a6d4ce2b3bc69f6567d3e3464ba7aa5",
-  "final_head": "5286b667633f4c51016a3fdc257aec9a32db6aa0",
-  "final_tree": "4bdaa3ea042ad712ea9c64a918ad3bd653b5727e",
+  "base": "5f1b9fd7ae52fdc5c845580c90739309355c3026",
+  "base_tree": "c10c4ca2b8d5006460cb4a5058ed1470d1feb265",
+  "final_head": "4c8b728d34f43151b44a6dbaf7b4ad4f72496bff",
+  "final_tree": "c5998f56ff4d44ad59ea4e06ca6efd2789a04d99",
   "patches": [
    {
     "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
-    "sha256": "d512ee011799e86961ecd788a168333287b60744f14019c6e8075fb3f1253130"
+    "sha256": "d73e5718959d72e9f580182dcdbf2a51f7e1b8e677854d0c6c774cc3aff7b6d6"
    },
    {
     "file": "frameworks/base/0002-TrickyStore-Don-t-attest-an-all-zero-verified-boot-k.patch",
-    "sha256": "c4b2c2dfbcd46d1b709f48d8adcba45c3f45555dea69f98e7fae9002eddc49c0"
+    "sha256": "8913f7dd8e5ec891a7b4489c83742b5638c980c6f2ccab0a535afae3c63b2d1a"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
+  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "build/make",
   "base": "75f33f854b8f750c46b5fd666457cea5c3636a65",
   "base_tree": "3ef22273ab3746911a3effa0c9ff3a69c43252d8",
-  "final_head": "250650a4bcbb72ea25b4caa63c1e8edb99a8fbca",
+  "final_head": "33d40d975cb265c814fb9dd80cc64d5238f963fc",
   "final_tree": "eed20eeca5182eebba114236fdc87f5f67fc801d",
   "patches": [
    {
     "file": "build/make/0001-sysprop-Honor-configured-vendor-build-identity-overr.patch",
-    "sha256": "06d61271b82f754f60600dbabe194bf19c015092fa503242f0ad4d329e289392"
+    "sha256": "e61077358df7c0d6af11c20aacce8c7b06b502a4a284e961ea6369e8b7b0fbe7"
    }
   ],
-  "publication": "also published as the iowaz fork branch evox28; base is the Evolution X cnb head"
+  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
  }
 ]

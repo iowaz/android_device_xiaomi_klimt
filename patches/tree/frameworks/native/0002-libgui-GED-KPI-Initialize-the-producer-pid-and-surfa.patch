@@ -1,4 +1,4 @@
-From f195a1b176b438ce6420705735ac69feee4d899e Mon Sep 17 00:00:00 2001
+From 050255ce02ecf09c107d941985f19ee5cefec081 Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Thu, 29 Oct 2026 20:07:21 -0300
 Subject: [PATCH 2/3] libgui: GED KPI: Initialize the producer pid and

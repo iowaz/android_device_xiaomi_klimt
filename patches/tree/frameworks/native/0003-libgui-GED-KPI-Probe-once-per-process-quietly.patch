@@ -1,4 +1,4 @@
-From 30e5b1d1eda5fe0cb34a50ff265d24038ab1b5ae Mon Sep 17 00:00:00 2001
+From 8e5791a58cf8ce90bae8a2aced7a109047da19b0 Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Fri, 30 Oct 2026 02:03:10 -0300
 Subject: [PATCH 3/3] libgui: GED KPI: Probe once per process, quietly

@@ -1,4 +1,4 @@
-From 250650a4bcbb72ea25b4caa63c1e8edb99a8fbca Mon Sep 17 00:00:00 2001
+From 33d40d975cb265c814fb9dd80cc64d5238f963fc Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 21 Oct 2026 16:24:22 -0300
 Subject: [PATCH] sysprop: Honor configured vendor build identity overrides
