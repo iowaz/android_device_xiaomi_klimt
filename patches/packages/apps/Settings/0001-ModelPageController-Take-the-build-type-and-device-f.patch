@@ -1,0 +1,69 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Mon, 19 Oct 2026 20:46:19 -0300
+Subject: [PATCH] ModelPageController: Take the build type and device from
+ build constants
+
+evox27: upstream replaced HardwareInfoPreferenceController with the
+Material 3 model page (ModelPageController); this ports the evox20
+change to it.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ Android.bp                                                | 2 ++
+ .../deviceinfo/hardwareinfo/ModelPageController.java      | 8 ++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/Android.bp b/Android.bp
+index 51234ec2a8fe3ddeb9a31c2d9337ae27396a26b6..ee726d0300492418ae65406a10357dacfb269f28 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -58,6 +58,8 @@ android_library {
+         "src/**/*.aidl",
+         "Evolver/src/**/*.java",
+         "Evolver/src/**/*.kt",
++        ":evolution-build-info-build-type",
++        ":evolution-build-info-device",
+     ],
+     exclude_srcs: [
+         "src/com/android/settings/biometrics/fingerprint2/lib/**/*.kt",
+diff --git a/src/com/android/settings/deviceinfo/hardwareinfo/ModelPageController.java b/src/com/android/settings/deviceinfo/hardwareinfo/ModelPageController.java
+index 7b1664d2463d9a7b6c5bed2f3cd3b97a89b98ba9..cb4ebbff2c6fd170b0b6bd1c7f6899a7cf936fdc 100644
+--- a/src/com/android/settings/deviceinfo/hardwareinfo/ModelPageController.java
++++ b/src/com/android/settings/deviceinfo/hardwareinfo/ModelPageController.java
+@@ -191,7 +191,7 @@ public class ModelPageController extends BasePreferenceController {
+ 
+     private boolean isOfficialBuild() {
+         return "Official".equalsIgnoreCase(
+-                SystemProperties.get("ro.evolution.build.type", ""));
++                org.evolution.build.BuildType.VALUE);
+     }
+ 
+     // -------------------------------------------------------------------------
+@@ -200,7 +200,7 @@ public class ModelPageController extends BasePreferenceController {
+ 
+     @Override
+     public int getAvailabilityStatus() {
+-        String evoDevice = SystemProperties.get("ro.evolution.device", "");
++        String evoDevice = org.evolution.build.Device.VALUE;
+         if (!evoDevice.isEmpty()) return AVAILABLE;
+         return SystemProperties.get("ro.product.device", "").isEmpty()
+                 ? UNSUPPORTED_ON_DEVICE : AVAILABLE;
+@@ -649,7 +649,7 @@ public class ModelPageController extends BasePreferenceController {
+     }
+ 
+     private String getCodename() {
+-        String c = SystemProperties.get("ro.evolution.device", "");
++        String c = org.evolution.build.Device.VALUE;
+         return c.isEmpty() ? SystemProperties.get("ro.product.device", "") : c;
+     }
+ 
+@@ -1456,7 +1456,7 @@ public class ModelPageController extends BasePreferenceController {
+ 
+     private Set<String> getCodenameCandidates(String primary) {
+         Set<String> result = new LinkedHashSet<>();
+-        addIfNotEmpty(result, SystemProperties.get("ro.evolution.device", null));
++        addIfNotEmpty(result, org.evolution.build.Device.VALUE);
+         addIfNotEmpty(result, primary);
+         addIfNotEmpty(result, SystemProperties.get("ro.product.vendor.device", null));
+         addIfNotEmpty(result, SystemProperties.get("ro.build.product", null));

@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Mon, 19 Oct 2026 21:02:21 -0300
+Subject: [PATCH] sdk: Say where the Evolution X versions come from
+
+The class comment still said every value comes from system properties.
+EVOLUTION_VERSION and EVOLUTION_DISPLAY_VERSION are now constants set
+at build time; LINEAGE_VERSION.SDK_INT still reads a system property.
+Comment only.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ sdk/src/java/lineageos/os/Build.java | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/sdk/src/java/lineageos/os/Build.java b/sdk/src/java/lineageos/os/Build.java
+index a51717f31910d8f28cebaa08c536d27dc047df2b..0c1203f92eb0e47b9310ab81196ea936ff1cb691 100644
+--- a/sdk/src/java/lineageos/os/Build.java
++++ b/sdk/src/java/lineageos/os/Build.java
+@@ -10,7 +10,9 @@ import android.text.TextUtils;
+ import android.util.SparseArray;
+ 
+ /**
+- * Information about the current LineageOS build, extracted from system properties.
++ * Information about the current LineageOS build. {@link #EVOLUTION_VERSION} and
++ * {@link #EVOLUTION_DISPLAY_VERSION} are constants set at build time;
++ * {@link LINEAGE_VERSION#SDK_INT} is extracted from a system property.
+  */
+ public class Build {
+     /** Value used for when a build property is unknown. */

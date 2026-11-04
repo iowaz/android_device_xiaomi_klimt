@@ -1,0 +1,46 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Thu, 29 Oct 2026 19:47:41 -0300
+Subject: [PATCH] PackagePartitions: Include the build time in the upgrade
+ fingerprint
+
+PackagePartitions.FINGERPRINT digests the partition fingerprints and
+ro.build.version.incremental. The package manager compares it with the
+value saved in packages.xml to decide whether the system was upgraded,
+and names the package parser cache after it.
+
+klimt reports its stock Xiaomi build identity, so all of those values
+stay the same from one build to the next. A dirty flash of a new build
+would then not count as an upgrade, and the parser cache of the old
+system would be reused for the new one.
+
+Add ro.build.date.utc to the digest. It is the real build time of every
+build, so each new system build is an upgrade again. Apps don't see the
+digest; the reported fingerprints and properties are unchanged.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ core/java/android/content/pm/PackagePartitions.java | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/content/pm/PackagePartitions.java b/core/java/android/content/pm/PackagePartitions.java
+index da3b68ecf789f0e10034b7b259ac62accc360faf..d03cbbe0abe3e9bfe6c6c569860f1c86e523950d 100644
+--- a/core/java/android/content/pm/PackagePartitions.java
++++ b/core/java/android/content/pm/PackagePartitions.java
+@@ -126,12 +126,15 @@ public class PackagePartitions {
+      */
+     @NonNull
+     private static String getFingerprint() {
+-        final String[] digestProperties = new String[SYSTEM_PARTITIONS.size() + 1];
++        final String[] digestProperties = new String[SYSTEM_PARTITIONS.size() + 2];
+         for (int i = 0; i < SYSTEM_PARTITIONS.size(); i++) {
+             final String partitionName = SYSTEM_PARTITIONS.get(i).getName();
+             digestProperties[i] = "ro." + partitionName + ".build.fingerprint";
+         }
+         digestProperties[SYSTEM_PARTITIONS.size()] = "ro.build.version.incremental";
++        // The fingerprints and incremental can stay the same across builds (a device may report its
++        // stock build identity), so the build time marks each new system build as an upgrade.
++        digestProperties[SYSTEM_PARTITIONS.size() + 1] = "ro.build.date.utc";
+         return SystemProperties.digestOf(digestProperties);
+     }
+ 

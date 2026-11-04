@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Mon, 19 Oct 2026 20:46:19 -0300
+Subject: [PATCH] recovery: Take the Evolution X version from a build constant
+
+The menu title's "Version ..." line read ro.evolution.build.version,
+which is gone. Use EVOLUTION_BUILD_VERSION from <evolution/build_info.h>
+(genrule evolution-build-info-headers in vendor/lineage), added to
+librecovery's generated_headers. It holds the same value, so the title
+doesn't change.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ Android.bp   | 2 ++
+ recovery.cpp | 3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Android.bp b/Android.bp
+index 490fe0c8b890f2b04247049f7d3c7fd7229cb7d5..0259c3230ee19d2c906ef429fe0f62fa46a5a7c6 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -150,6 +150,8 @@ cc_library_static {
+         "recovery.cpp",
+     ],
+ 
++    generated_headers: ["evolution-build-info-headers"],
++
+     shared_libs: [
+         "librecovery_ui",
+     ],
+diff --git a/recovery.cpp b/recovery.cpp
+index 16ef05851dc4178f704487c7d2001becedfca2bb..79726dade83b52195751fd11eefb476deab0e443 100644
+--- a/recovery.cpp
++++ b/recovery.cpp
+@@ -43,6 +43,7 @@
+ #include <android/binder_manager.h>
+ #include <android/hardware/boot/1.0/IBootControl.h>
+ #include <cutils/properties.h> /* for property_list */
++#include <evolution/build_info.h>
+ #include <fs_mgr/roots.h>
+ #include <volume_manager/VolumeManager.h>
+ #include <ziparchive/zip_archive.h>
+@@ -936,7 +937,7 @@ Device::BuiltinAction start_recovery(Device* device, const std::vector<std::stri
+   std::string ver = android::base::GetProperty("ro.modversion", "");
+ 
+   std::vector<std::string> title_lines = {
+-    "Version " + android::base::GetProperty("ro.evolution.build.version", "(unknown)"),
++    "Version " + std::string(EVOLUTION_BUILD_VERSION),
+   };
+   title_lines.push_back("Product name - " + android::base::GetProperty("ro.product.device", ""));
+   if (android::base::GetBoolProperty("ro.build.ab_update", false)) {

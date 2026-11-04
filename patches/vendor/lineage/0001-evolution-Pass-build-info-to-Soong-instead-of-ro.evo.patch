@@ -1,0 +1,168 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Mon, 19 Oct 2026 20:46:19 -0300
+Subject: [PATCH] evolution: Pass build info to Soong instead of ro.evolution
+ props
+
+Move the Evolution X build metadata from product properties to
+compile-time constants. version.mk passes the values it used for the
+props to the Soong config namespace evolution_build_info, and
+build/soong/evolution-build-info generates:
+
+  ro.evolution.build.type      -> org.evolution.build.BuildType.VALUE
+  ro.evolution.device and
+  ro.lineage.device            -> org.evolution.build.Device.VALUE
+  ro.evolution.version         -> org.evolution.build.Version.VALUE
+  ro.evolution.display.version -> org.evolution.build.DisplayVersion.VALUE
+  ro.evolution.build.version   -> EVOLUTION_BUILD_VERSION in
+                                  <evolution/build_info.h>
+
+The same Make variables feed them, so the values shown don't change.
+version.mk no longer exports the four ro.evolution.* props (build/soong
+writes the two device props); ro.modversion stays. common_mobile.mk
+drops ro.evolutionlegal.url, which nothing reads.
+
+backuptool's ROM check reads ro.build.version.release (17 for V=17.0)
+instead of ro.evolution.version. The file lists and the error message
+are unchanged.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ build/soong/evolution-build-info/Android.bp | 61 +++++++++++++++++++++
+ config/common_mobile.mk                     |  4 --
+ config/version.mk                           | 13 +++--
+ prebuilt/common/bin/backuptool.sh           |  2 +-
+ prebuilt/common/bin/backuptool_ab.sh        |  2 +-
+ 5 files changed, 72 insertions(+), 10 deletions(-)
+ create mode 100644 build/soong/evolution-build-info/Android.bp
+
+diff --git a/build/soong/evolution-build-info/Android.bp b/build/soong/evolution-build-info/Android.bp
+new file mode 100644
+index 0000000000000000000000000000000000000000..f990c4a2b9b9d773f7dee2f14fd088edce6d6bad
+--- /dev/null
++++ b/build/soong/evolution-build-info/Android.bp
+@@ -0,0 +1,61 @@
++// evox20: Evolution X build metadata as compile-time constants for the system apps and
++// recovery that show or use it, instead of ro.evolution* / ro.lineage.device properties.
++// Values: soong_config evolution_build_info, set in vendor/lineage/config/version.mk.
++
++soong_config_module_type {
++    name: "evolution_build_info_genrule",
++    module_type: "genrule",
++    config_namespace: "evolution_build_info",
++    value_variables: ["build_type", "build_version", "device", "version", "display_version"],
++    properties: ["cmd"],
++}
++
++evolution_build_info_genrule {
++    name: "evolution-build-info-build-type",
++    out: ["org/evolution/build/BuildType.java"],
++    soong_config_variables: {
++        build_type: {
++            cmd: "echo 'package org.evolution.build; public final class BuildType { public static final String VALUE = \"%s\"; }' > $(out)",
++        },
++    },
++}
++
++evolution_build_info_genrule {
++    name: "evolution-build-info-device",
++    out: ["org/evolution/build/Device.java"],
++    soong_config_variables: {
++        device: {
++            cmd: "echo 'package org.evolution.build; public final class Device { public static final String VALUE = \"%s\"; }' > $(out)",
++        },
++    },
++}
++
++evolution_build_info_genrule {
++    name: "evolution-build-info-version",
++    out: ["org/evolution/build/Version.java"],
++    soong_config_variables: {
++        version: {
++            cmd: "echo 'package org.evolution.build; public final class Version { public static final String VALUE = \"%s\"; }' > $(out)",
++        },
++    },
++}
++
++evolution_build_info_genrule {
++    name: "evolution-build-info-display-version",
++    out: ["org/evolution/build/DisplayVersion.java"],
++    soong_config_variables: {
++        display_version: {
++            cmd: "echo 'package org.evolution.build; public final class DisplayVersion { public static final String VALUE = \"%s\"; }' > $(out)",
++        },
++    },
++}
++
++evolution_build_info_genrule {
++    name: "evolution-build-info-headers",
++    out: ["evolution/build_info.h"],
++    soong_config_variables: {
++        build_version: {
++            cmd: "echo '#pragma once' > $(out) && echo '#define EVOLUTION_BUILD_VERSION \"%s\"' >> $(out)",
++        },
++    },
++}
+diff --git a/config/common_mobile.mk b/config/common_mobile.mk
+index 246b677318d43f80313aa29648c9e35a8a59d170..4f6195dae2c7ffcc5be5b418f69618746259b2dc 100644
+--- a/config/common_mobile.mk
++++ b/config/common_mobile.mk
+@@ -44,10 +44,6 @@ PRODUCT_PACKAGES += \
+ PRODUCT_COPY_FILES += \
+     frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/android.software.freeform_window_management.xml
+ 
+-# Legal
+-PRODUCT_PRODUCT_PROPERTIES += \
+-    ro.evolutionlegal.url=https://evolution-x.org/legal.php
+-
+ # Media
+ PRODUCT_PRODUCT_PROPERTIES += \
+     media.recorder.show_manufacturer_and_model=true
+diff --git a/config/version.mk b/config/version.mk
+index 0839786dfd034420f3a5a98119d63e17a161df1f..18ebf2c758bbece41729aa8ed2682fea555ed3e7 100644
+--- a/config/version.mk
++++ b/config/version.mk
+@@ -25,8 +25,13 @@ LINEAGE_DISPLAY_VERSION := v$(EVO_VERSION)-$(shell date +%Y%m%d)
+ 
+ # Evolution X version properties
+ PRODUCT_PRODUCT_PROPERTIES += \
+-    ro.evolution.build.type=$(EVO_BUILD_TYPE) \
+-    ro.evolution.build.version=$(LINEAGE_VERSION) \
+-    ro.evolution.display.version=$(LINEAGE_DISPLAY_VERSION) \
+-    ro.evolution.version=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR) \
+     ro.modversion=$(EVO_VERSION)
++
++# evox20: build metadata for the system apps and recovery that show or use it, as
++# compile-time constants (vendor/lineage/build/soong/evolution-build-info), not
++# system properties.
++$(call soong_config_set,evolution_build_info,build_type,$(EVO_BUILD_TYPE))
++$(call soong_config_set,evolution_build_info,build_version,$(LINEAGE_VERSION))
++$(call soong_config_set,evolution_build_info,device,$(LINEAGE_BUILD))
++$(call soong_config_set,evolution_build_info,version,$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR))
++$(call soong_config_set,evolution_build_info,display_version,$(LINEAGE_DISPLAY_VERSION))
+diff --git a/prebuilt/common/bin/backuptool.sh b/prebuilt/common/bin/backuptool.sh
+index 853b8a703a2387a3b8c2edf09840bcf2de9490c7..59ad8edd95665f95f3e404396071e3bfa23f2ac0 100755
+--- a/prebuilt/common/bin/backuptool.sh
++++ b/prebuilt/common/bin/backuptool.sh
+@@ -55,7 +55,7 @@ if [ ! -r $$P/etc/build.prop ] && [ ! -r $S/build.prop ]; then
+   echo "Backup/restore is not possible. Partition is probably empty"
+   return 1
+ fi
+-if ! grep -q "^ro.evolution.version=$V.*" $P/etc/build.prop $S/build.prop; then
++if ! grep -q "^ro.build.version.release=${V%%.*}\$" $P/etc/build.prop $S/build.prop; then
+   echo "Backup/restore is not possible. Incompatible ROM version: $V"
+   return 2
+ fi
+diff --git a/prebuilt/common/bin/backuptool_ab.sh b/prebuilt/common/bin/backuptool_ab.sh
+index cedb10b09d3c962a2d76c782c19bd8223f3c0cc3..db2ceafc645d9b3900b83df1141db7befaf577c4 100755
+--- a/prebuilt/common/bin/backuptool_ab.sh
++++ b/prebuilt/common/bin/backuptool_ab.sh
+@@ -56,7 +56,7 @@ if [ ! -r /product/etc/build.prop ] && [ ! -r /system/build.prop ]; then
+   echo "Backup/restore is not possible. Partition is probably empty"
+   return 1
+ fi
+-if ! grep -q "^ro.evolution.version=$V.*" /product/etc/build.prop /system/build.prop; then
++if ! grep -q "^ro.build.version.release=${V%%.*}\$" /product/etc/build.prop /system/build.prop; then
+   echo "Backup/restore is not possible. Incompatible ROM version: $V"
+   return 2
+ fi

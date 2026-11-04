@@ -1,0 +1,58 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Mon, 19 Oct 2026 20:46:19 -0300
+Subject: [PATCH] sdk: Take the Evolution X versions from build constants
+
+Build.EVOLUTION_VERSION and EVOLUTION_DISPLAY_VERSION read
+ro.evolution.version and ro.evolution.display.version, which are gone.
+Set them from org.evolution.build.Version.VALUE and
+org.evolution.build.DisplayVersion.VALUE (vendor/lineage/build/soong/
+evolution-build-info), added to lineage-sdk-sources. The field names,
+types and values don't change. Drop getString(), which nothing else
+used.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ Android.bp                           | 2 ++
+ sdk/src/java/lineageos/os/Build.java | 8 ++------
+ 2 files changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/Android.bp b/Android.bp
+index b998921ff9cb3dfd4ef8f09ad6334747a7d68229..74d428a013b73ad9ce92b73c6502e3cf7c7b1bbb 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -56,6 +56,8 @@ filegroup {
+     srcs: [
+         "sdk/src/java/lineageos/**/*.java",
+         "sdk/src/java/lineageos/**/I*.aidl",
++        ":evolution-build-info-version",
++        ":evolution-build-info-display-version",
+     ],
+ }
+ 
+diff --git a/sdk/src/java/lineageos/os/Build.java b/sdk/src/java/lineageos/os/Build.java
+index fce7d64ddd11b570933ddee5b8f85839c7da7c4f..a51717f31910d8f28cebaa08c536d27dc047df2b 100644
+--- a/sdk/src/java/lineageos/os/Build.java
++++ b/sdk/src/java/lineageos/os/Build.java
+@@ -17,10 +17,10 @@ public class Build {
+     public static final String UNKNOWN = "unknown";
+ 
+     /** A build ID utilized to distinguish lineageos versions */
+-    public static final String EVOLUTION_VERSION = getString("ro.evolution.version");
++    public static final String EVOLUTION_VERSION = org.evolution.build.Version.VALUE;
+ 
+     /** A build ID string meant for displaying to the user */
+-    public static final String EVOLUTION_DISPLAY_VERSION = getString("ro.evolution.display.version");
++    public static final String EVOLUTION_DISPLAY_VERSION = org.evolution.build.DisplayVersion.VALUE;
+ 
+     private static final SparseArray<String> sdkMap;
+     static
+@@ -182,8 +182,4 @@ public class Build {
+         }
+         return name;
+     }
+-
+-    private static String getString(String property) {
+-        return SystemProperties.get(property, UNKNOWN);
+-    }
+ }
