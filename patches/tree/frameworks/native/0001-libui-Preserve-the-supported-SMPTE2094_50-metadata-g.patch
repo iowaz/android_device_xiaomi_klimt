@@ -1,7 +1,7 @@
-From 38ceb8ad93e474cfaa48ed1b00b299f7d080eda8 Mon Sep 17 00:00:00 2001
+From ea47ef1f57f6c3d5cbba990f57c497581daca6ad Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 15:37:30 -0300
-Subject: [PATCH 1/3] libui: Preserve the supported SMPTE2094_50 metadata guard
+Subject: [PATCH] libui: Preserve the supported SMPTE2094_50 metadata guard
 
 ---
  libs/ui/Gralloc5.cpp | 23 +++++++++++++++++++++++

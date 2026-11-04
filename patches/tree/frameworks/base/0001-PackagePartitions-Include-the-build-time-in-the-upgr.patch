@@ -1,7 +1,7 @@
-From 80fd8f4af7c84c444093c9485fbdb766da7ee25e Mon Sep 17 00:00:00 2001
+From cb95dacaac1aeb02bb0f841df4e7d757ef42e948 Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Thu, 29 Oct 2026 19:47:41 -0300
-Subject: [PATCH 1/2] PackagePartitions: Include the build time in the upgrade
+Subject: [PATCH] PackagePartitions: Include the build time in the upgrade
  fingerprint
 
 PackagePartitions.FINGERPRINT digests the partition fingerprints and

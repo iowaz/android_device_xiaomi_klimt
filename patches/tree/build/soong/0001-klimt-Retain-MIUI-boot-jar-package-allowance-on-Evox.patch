@@ -1,4 +1,4 @@
-From 716bc9f57aaaef13a82d85eb2d4a16f6b4e99f63 Mon Sep 17 00:00:00 2001
+From f596343c76c0ac31b64d85ef72cfd892521d6605 Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 15:37:30 -0300
 Subject: [PATCH 1/2] klimt: Retain MIUI boot jar package allowance on Evox16

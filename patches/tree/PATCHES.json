@@ -3,86 +3,74 @@
   "project": "build/soong",
   "base": "541d7c2ccbb7c6cfdf370da58314a8dd03607a5f",
   "base_tree": "1860d8f87387fa0f2298a6000a842ae133175496",
-  "final_head": "a76b738f90c57025417ffc940cee1f34b4faa673",
+  "final_head": "9c029e9f564ce70ca8ffb97bd94e6d81da3dd059",
   "final_tree": "16f6c1a29c6b28ddaca08f0e8644487da5a1bfaf",
   "patches": [
    {
     "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
-    "sha256": "72fc5ed7817777e165bedcff0a5ff8123ec85ae00e62bb0339457938782939de"
+    "sha256": "970b0a608633bdeb7e8b65b93143754bcdc6daeeb9d1eb82951b9510e9e58d02"
    },
    {
     "file": "build/soong/0002-gen_build_prop-Stop-writing-ro.lineage.device-and-ro.patch",
-    "sha256": "656cec8e6d0c3519ecb2946b3aa97b58f3f844bb57646ca2f499d0cfb93ab97b"
+    "sha256": "d8b7430d026faf035b3d760d7a61ffd51f9f162bc4280f54c3e31f3e0211e698"
    }
   ],
-  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
+  "publication": "evox31 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "frameworks/native",
-  "base": "69f224f8e46d5eb95167a764a7dd2668da838e3d",
-  "base_tree": "5be6c5501d48f27bc07a7de382e27248a6e03a9f",
-  "final_head": "8e5791a58cf8ce90bae8a2aced7a109047da19b0",
-  "final_tree": "f508246cdae658df593a6c88707b7bdde328d09a",
+  "base": "74d98cda5e3deb684c0b9fa7d8cd05256b8df526",
+  "base_tree": "fe52f94677350d5c0df5ac37c1e7ea1c835ea132",
+  "final_head": "ea47ef1f57f6c3d5cbba990f57c497581daca6ad",
+  "final_tree": "6b0f457ea8f8ca536bc6d1dc9c2b5a8fec086f18",
   "patches": [
    {
     "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
-    "sha256": "2f1255ab12406d152f9536fe78825c9fb8ffa9ad8a90b0e7b5ecf1314a964b58"
-   },
-   {
-    "file": "frameworks/native/0002-libgui-GED-KPI-Initialize-the-producer-pid-and-surfa.patch",
-    "sha256": "6560f54cb77a5f4eac46045efa948c2b55b710b8a28e79089c68445817ef2279"
-   },
-   {
-    "file": "frameworks/native/0003-libgui-GED-KPI-Probe-once-per-process-quietly.patch",
-    "sha256": "8f18560dc9134fed45e5a7759ff526c77aa6e8cb99a30a5432754c95882ba105"
+    "sha256": "4bf6194d0815339573701a7d7315f3cc2f18b933d80af82cd50c4b892f4ff6e0"
    }
   ],
-  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
+  "publication": "evox31 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "device/lineage/sepolicy",
   "base": "2472f7e1377924773ec99ddb628247c028d03842",
   "base_tree": "5547940b2d7dbe7f8edc3a1fc6e0e0e7286baa22",
-  "final_head": "be8d74ad7bf957319b7dbd76acb0bc13c1b9bb6d",
+  "final_head": "11e61e1feb5e048529ad8e2624aae60cb64b2ab5",
   "final_tree": "52d9b0c9c46f8a3d164fac06463364824ef1cbfa",
   "patches": [
    {
     "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-to-debuggable-buil.patch",
-    "sha256": "0bb427d3ccff1f7190db1816747cb78fbe094b20dd834fb7999f50e383acca37"
+    "sha256": "1de7c9c3dc2c93aa1c2c1567db37484092d2f5097016f7b694f0f828bb855ace"
    }
   ],
-  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
+  "publication": "evox31 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "frameworks/base",
-  "base": "5f1b9fd7ae52fdc5c845580c90739309355c3026",
-  "base_tree": "c10c4ca2b8d5006460cb4a5058ed1470d1feb265",
-  "final_head": "4c8b728d34f43151b44a6dbaf7b4ad4f72496bff",
-  "final_tree": "c5998f56ff4d44ad59ea4e06ca6efd2789a04d99",
+  "base": "f21ed50bc487ecdd84e95ea67b0555cc68115de8",
+  "base_tree": "85bb730f8225a87a289288f549c99d7112f5bef5",
+  "final_head": "cb95dacaac1aeb02bb0f841df4e7d757ef42e948",
+  "final_tree": "c1a2990b2c54a1ea53bef88db82552d568fdf4c4",
   "patches": [
    {
     "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
-    "sha256": "d73e5718959d72e9f580182dcdbf2a51f7e1b8e677854d0c6c774cc3aff7b6d6"
-   },
-   {
-    "file": "frameworks/base/0002-TrickyStore-Don-t-attest-an-all-zero-verified-boot-k.patch",
-    "sha256": "8913f7dd8e5ec891a7b4489c83742b5638c980c6f2ccab0a535afae3c63b2d1a"
+    "sha256": "75a3b3e957123c7d580a030507985c35ab0079cbb8856478a3b0447fa8961ed8"
    }
   ],
-  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
+  "publication": "evox31 fork series; base is the synced Evolution X cnb head"
  },
  {
   "project": "build/make",
   "base": "75f33f854b8f750c46b5fd666457cea5c3636a65",
   "base_tree": "3ef22273ab3746911a3effa0c9ff3a69c43252d8",
-  "final_head": "33d40d975cb265c814fb9dd80cc64d5238f963fc",
+  "final_head": "d9b92bde8fa9b14054dc440c88813814bdf87b14",
   "final_tree": "eed20eeca5182eebba114236fdc87f5f67fc801d",
   "patches": [
    {
     "file": "build/make/0001-sysprop-Honor-configured-vendor-build-identity-overr.patch",
-    "sha256": "e61077358df7c0d6af11c20aacce8c7b06b502a4a284e961ea6369e8b7b0fbe7"
+    "sha256": "0c977394a6378aa2c026393b3f03f50e829f1ffb3033f9f4cae92095f83216bd"
    }
   ],
-  "publication": "evox30 fork series; base is the synced Evolution X cnb head"
+  "publication": "evox31 fork series; base is the synced Evolution X cnb head"
  }
 ]
