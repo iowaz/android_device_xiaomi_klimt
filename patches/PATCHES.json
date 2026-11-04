@@ -174,10 +174,10 @@
     "project": "frameworks/base",
     "class": "personal",
     "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27).",
-    "base": "f21ed50bc487ecdd84e95ea67b0555cc68115de8",
-    "base_tree": "85bb730f8225a87a289288f549c99d7112f5bef5",
-    "final_tree": "c1a2990b2c54a1ea53bef88db82552d568fdf4c4",
-    "final_head": "bfa7554eee9b61e4baf49acca16297846ab3a915",
+    "base": "639d3621d46e5e2bb73ad846e1f949c22d242f39",
+    "base_tree": "5e87688542fb526617df9229eccea365beee2007",
+    "final_tree": "633cdd69d2e65292ee5afedce3eec3f6adc542e8",
+    "final_head": "497bf3c98017fdc5fd67f6b438d2bb8570de8151",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
