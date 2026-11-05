@@ -3,10 +3,10 @@
     "project": "hardware/interfaces",
     "class": "klimt",
     "purpose": "Drop the light@2.0 HIDL interface, which clashes with the stock vendor light@2.0 blob, and build blank_screen against the AIDL lights HAL only; the build fails without both (evox1, evox3).",
-    "base": "abb0a406a0c7491fb594d05d4309861aa5434057",
-    "base_tree": "30aaaeef6a0158343f0e22df30c3a68a24e9b0ae",
-    "final_tree": "c1e48d7a95c2f84752f34962ad6fa0f45ab3918a",
-    "final_head": "d84f4d7fbbb76f524a5dfc3721789a1a60b6d775",
+    "base": "c626eb9ba04891cb0f7248251b84bd7fbd4afcf2",
+    "base_tree": "e867a4c7132048c3b5b9234c304e97c2254450fe",
+    "final_tree": "ecea97c1387a4e9cc7e0d4c07b335c63b72b3a3e",
+    "final_head": "f6af9d74b8ded588a24956cd1d08217f7093773b",
     "patches": [
       {
         "file": "hardware/interfaces/0001-klimt-local-Drop-the-light-2.0-HIDL-interface.patch",
@@ -26,10 +26,10 @@
     "project": "frameworks/native",
     "class": "klimt",
     "purpose": "libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata instead of failing and logging on every buffer (evox13).",
-    "base": "74d98cda5e3deb684c0b9fa7d8cd05256b8df526",
-    "base_tree": "fe52f94677350d5c0df5ac37c1e7ea1c835ea132",
-    "final_tree": "6b0f457ea8f8ca536bc6d1dc9c2b5a8fec086f18",
-    "final_head": "45485204486204cd3cb5429b2ee59b7aecdbfe85",
+    "base": "cb8303a432fc2eb4ea3bf57ec450501e18f2cced",
+    "base_tree": "b8bb0ab1551ac883f1c1e7d69291fc279d052606",
+    "final_tree": "1384dff63f2ea1123ed88e3885fb574a0b6b6e80",
+    "final_head": "792b9d1c971bdb04ab564f26519ddf5188aa2f9c",
     "patches": [
       {
         "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
@@ -83,10 +83,10 @@
     "project": "vendor/lineage",
     "class": "personal",
     "purpose": "Pass the Evolution X build info to Soong as build constants (evolution-build-info) instead of writing ro.evolution.* props; the lineage-sdk, Settings, Updater, recovery and build/soong personal patches depend on it (evox20).",
-    "base": "5605363f69a8ce456286ea942dd3212d029f7f24",
-    "base_tree": "59dfe5bf262efe1fb41a13cdb10c0712779cf693",
-    "final_tree": "7c6bf0a4d4aa130e2d10ae3f561e8dcf98819971",
-    "final_head": "4d045817f20a34a46e952730f15f9de7e56d04b0",
+    "base": "b1238dbd479aeebe0dcd186db2c85b7079f7726b",
+    "base_tree": "f917b3c375db9fa45494e0fa782b8d2ebb075e1a",
+    "final_tree": "98dc64327b84272c47d0a4332b83fafefaa451ff",
+    "final_head": "d8d3fdab3b81a3f7848282513bd50df44357b56d",
     "patches": [
       {
         "file": "vendor/lineage/0001-evolution-Pass-build-info-to-Soong-instead-of-ro.evo.patch",
@@ -174,10 +174,10 @@
     "project": "frameworks/base",
     "class": "personal",
     "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27).",
-    "base": "639d3621d46e5e2bb73ad846e1f949c22d242f39",
-    "base_tree": "5e87688542fb526617df9229eccea365beee2007",
-    "final_tree": "633cdd69d2e65292ee5afedce3eec3f6adc542e8",
-    "final_head": "497bf3c98017fdc5fd67f6b438d2bb8570de8151",
+    "base": "206f8b09dc58d88a1381ffd34dfb684008aea781",
+    "base_tree": "5f3408f7ebb17d4305e0761248b484161e14603a",
+    "final_tree": "dca5ff5230690e87ca082e55de2453d2d5d53cf7",
+    "final_head": "68cef0922bae9011cf152cc50c3d77d0890e9cb0",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
