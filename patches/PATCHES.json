@@ -173,11 +173,11 @@
  {
   "project": "frameworks/base",
   "class": "personal",
-  "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI holds the charging animation still on the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). SystemUI holds the charging animation still on the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review).",
+  "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI holds the charging animation still on the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review).",
   "base": "206f8b09dc58d88a1381ffd34dfb684008aea781",
   "base_tree": "5f3408f7ebb17d4305e0761248b484161e14603a",
-  "final_tree": "45df029d3828190dff4da39eeb24ab45df9779e0",
-  "final_head": "adb968b6347ddc9c4307d0b84accc21e88d4ed79",
+  "final_tree": "005ea89c83745c0337cb4ab035a1efa8df636504",
+  "final_head": "d9d02bea0985ee6466db3432e794a7bbab1a3675",
   "patches": [
    {
     "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
@@ -186,10 +186,10 @@
     "subject": "PackagePartitions: Include the build time in the upgrade fingerprint"
    },
    {
-    "file": "frameworks/base/0002-SystemUI-Hold-the-charging-animation-still-on-the-al.patch",
-    "sha256": "e54bf4afd7f5b05dcfb72e1547a6b14b60828968eef1d2137700c88804d76e43",
+    "file": "frameworks/base/0002-SystemUI-Keep-the-charging-animation-off-the-always-.patch",
+    "sha256": "385aa881f27b9a6361cde691c47c0a0b5bb68024b66ad0cecda17b52f7b55dd2",
     "class": "klimt",
-    "subject": "SystemUI: Hold the charging animation still on the always-on display"
+    "subject": "SystemUI: Keep the charging animation off the always-on display"
    }
   ]
  }

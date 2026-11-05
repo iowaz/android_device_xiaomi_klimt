@@ -1,0 +1,173 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Thu, 5 Nov 2026 00:08:41 -0300
+Subject: [PATCH] SystemUI: Keep the charging animation off the always-on
+ display
+
+The charging animation's animators invalidate on every vsync. With
+"show on AOD" on and the always-on display kept on while charging,
+SystemUI drew at the panel's 120 Hz for as long as the phone dozed on
+the charger: about half a CPU core in SystemUI, more in SurfaceFlinger
+and the composer, and the ambient-light screen capture ran 15 times as
+often. A still frame instead would sit on the OLED for hours, and the
+styles draw nothing once their animators stop.
+
+Hide the view while dozing and stop its animators at once; show it again
+on the lock screen when the device wakes. ScrimUtils reports doze changes
+on a background executor, so handle them on the main thread, and start
+from the current doze and keyguard state. Track what show() and hide()
+asked for, so that a wake during the hide fade shows the view again.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../charging/ChargingAnimationView.kt         | 30 +++++++++++++++++--
+ .../ChargingAnimationViewController.kt        | 24 ++++++++++++---
+ 2 files changed, 47 insertions(+), 7 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationView.kt b/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationView.kt
+index 5aa2e3c9d5a0c354ab012bacdb5a4baa0ca2cd76..abb591330871bf9ec4c139b166029d5b3a514e94 100644
+--- a/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationView.kt
++++ b/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationView.kt
+@@ -154,6 +154,21 @@ class ChargingAnimationView(context: Context) : FrameLayout(context) {
+             invalidate()
+         }
+ 
++    // The animators invalidate on every vsync; on the always-on display that kept SystemUI drawing at the
++    // panel's 120 Hz for as long as the phone dozed on the charger. The controller hides the view while dozing;
++    // this stops the animators at once and keeps them from starting until the device wakes. Main thread only.
++    var dozing: Boolean = false
++        set(value) {
++            if (field == value) return
++            field = value
++            if (value) {
++                stopAllAnimations()
++                invalidate()
++            } else if (visible && fadeAnimator == null) {
++                startAnimations()
++            }
++        }
++
+     private var bubbleAnimator: ValueAnimator? = null
+     private var neonAnimator: ValueAnimator? = null
+     private var beamAnimator: ValueAnimator? = null
+@@ -293,6 +308,10 @@ class ChargingAnimationView(context: Context) : FrameLayout(context) {
+         get() = isVisible
+         set(value) { isVisible = value }
+ 
++    // What show() or hide() asked for last; `visible` changes only when their posted work and fade run.
++    @Volatile var shown: Boolean = false
++        private set
++
+     init {
+         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+         importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+@@ -537,6 +556,7 @@ class ChargingAnimationView(context: Context) : FrameLayout(context) {
+     }
+ 
+     fun show() {
++        shown = true
+         post {
+             visible = true
+             fadeAnimator?.cancel()
+@@ -559,6 +579,7 @@ class ChargingAnimationView(context: Context) : FrameLayout(context) {
+     }
+ 
+     fun hide() {
++        shown = false
+         post {
+             fadeAnimator?.cancel()
+             stopAllAnimations()
+@@ -572,8 +593,11 @@ class ChargingAnimationView(context: Context) : FrameLayout(context) {
+                 addListener(object : AnimatorListenerAdapter() {
+                     override fun onAnimationEnd(animation: Animator) {
+                         post {
+-                            visible = false
+-                            fadeAnimator = null
++                            // A show() after this hide() has already replaced the fade.
++                            if (!shown) {
++                                visible = false
++                                fadeAnimator = null
++                            }
+                         }
+                     }
+                 })
+@@ -583,7 +607,7 @@ class ChargingAnimationView(context: Context) : FrameLayout(context) {
+     }
+ 
+     private fun startAnimations() {
+-        if (!visible) return
++        if (!visible || dozing) return
+ 
+         if (colorMode == COLOR_MODE_RAINBOW) {
+             startRainbowAnimation()
+diff --git a/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationViewController.kt b/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationViewController.kt
+index 4a6933a8533116d38aad15ac577975944bcd24f3..90294c5284950a38e252d77fad8ee613c934bbd4 100644
+--- a/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationViewController.kt
++++ b/packages/SystemUI/src/com/android/systemui/charging/ChargingAnimationViewController.kt
+@@ -20,6 +20,8 @@ import android.content.Context
+ import android.content.Intent
+ import android.content.IntentFilter
+ import android.os.BatteryManager
++import android.os.Handler
++import android.os.Looper
+ import android.util.Log
+ import android.widget.FrameLayout
+ import com.android.settingslib.Utils
+@@ -39,6 +41,7 @@ constructor(
+     private val chargingView = ChargingAnimationView(context)
+     private val settingsRepo = ChargingAnimationSettingsRepository(context)
+     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
++    private val mainHandler = Handler(Looper.getMainLooper())
+ 
+     private var currentSettings = settingsRepo.currentSettings()
+     private var settingsJob: Job? = null
+@@ -83,6 +86,13 @@ constructor(
+         } catch (e: Exception) {
+             Log.e(TAG, "Error adding ScrimUtils listener", e)
+         }
++
++        // The listener only hears later changes: start from the current state.
++        ScrimUtils.get()?.let {
++            isDozing = it.isDozing()
++            isKeyguardShowing = it.isKeyguardShowing()
++        }
++        chargingView.dozing = isDozing
+         
+         observeSettings()
+         registerBatteryReceiver()
+@@ -200,7 +210,9 @@ constructor(
+ 
+         val shouldShow = when {
+             !isPanelCollapsed -> false
+-            isDozing -> currentSettings.showOnAod
++            // Never on the always-on display: a running animation keeps the panel drawing at 120 Hz, a still
++            // frame would stay on the OLED for hours. charging_show_on_aod is not used on klimt.
++            isDozing -> false
+             isKeyguardShowing -> currentSettings.showOnLockscreen
+             else -> false
+         }
+@@ -209,7 +221,7 @@ constructor(
+             chargingView.show()
+             animationShownThisChargingSession = true
+         } else if (shouldShow && animationShownThisChargingSession) {
+-            if (!chargingView.visible) {
++            if (!chargingView.shown) {
+                 chargingView.show()
+             }
+         } else if (!shouldShow) {
+@@ -232,9 +244,13 @@ constructor(
+         updateVisibility()
+     }
+ 
++    // ScrimUtils delivers this one on its background executor; animators may only be touched on the main thread.
+     override fun onDozingChanged(dozing: Boolean) {
+-        isDozing = dozing
+-        updateVisibility()
++        mainHandler.post {
++            isDozing = dozing
++            chargingView.dozing = dozing
++            updateVisibility()
++        }
+     }
+ 
+     override fun setPulsing(pulsing: Boolean) {
