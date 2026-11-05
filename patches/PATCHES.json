@@ -173,7 +173,7 @@
  {
   "project": "frameworks/base",
   "class": "personal",
-  "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI holds the charging animation still on the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). The frozen vendor.evo.duckrkp V1 API hash is corrected: upstream's does not match its file and stops the build (20261105).",
+  "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review).",
   "base": "206f8b09dc58d88a1381ffd34dfb684008aea781",
   "base_tree": "5f3408f7ebb17d4305e0761248b484161e14603a",
   "final_tree": "ccf4b374df12a2694ae988ab87c3b6cd78fc5dd7",
@@ -190,12 +190,6 @@
     "sha256": "385aa881f27b9a6361cde691c47c0a0b5bb68024b66ad0cecda17b52f7b55dd2",
     "class": "klimt",
     "subject": "SystemUI: Keep the charging animation off the always-on display"
-   },
-   {
-    "file": "frameworks/base/0003-duck_rkp-Fix-the-frozen-vendor.evo.duckrkp-V1-hash.patch",
-    "sha256": "b5549635ae16d1a040d305d42c757b54cd6c8429cd15b1b7b7e9cc4dde3c2ec7",
-    "class": "klimt",
-    "subject": "duck_rkp: Fix the frozen vendor.evo.duckrkp V1 hash"
    }
   ]
  },
