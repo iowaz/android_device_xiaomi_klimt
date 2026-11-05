@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Thu, 5 Nov 2026 01:11:50 -0300
+Subject: [PATCH] duck_rkp: Fix the frozen vendor.evo.duckrkp V1 hash
+
+The hash recorded for the frozen V1 API does not match its file, so
+aidl_hash_tool verify_hash fails and the build stops ("Modification
+detected of stable AIDL API file"). V1 is identical to current; record
+the hash aidl_hash_tool gen_hash gives for it.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ services/duck_rkp/aidl_api/vendor.evo.duckrkp/1/.hash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/duck_rkp/aidl_api/vendor.evo.duckrkp/1/.hash b/services/duck_rkp/aidl_api/vendor.evo.duckrkp/1/.hash
+index feb7adaa52278b9a53f913029227cb3d672dccb1..d1a0f6177d4588277cd3e1fbde2010dbc047cd26 100644
+--- a/services/duck_rkp/aidl_api/vendor.evo.duckrkp/1/.hash
++++ b/services/duck_rkp/aidl_api/vendor.evo.duckrkp/1/.hash
+@@ -1 +1 @@
+-b2cc7e75cef57e9672477132c11c5d3343018aa9
++cd81fee8f3ef4a488c0020e2e0e4fd6e5e1f0bf4
