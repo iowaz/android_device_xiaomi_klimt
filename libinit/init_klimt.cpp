@@ -40,8 +40,8 @@ void vendor_load_properties() {
         product = "klimt_tr";
     }
 
-    // Mobile FeliCa sends Build.MODEL to its server. Publish the hardware model
-    // before init derives product properties and before zygote starts.
+    // Publish the hardware model (Build.MODEL) before init derives product
+    // properties and before zygote starts.
     override_property("ro.product.model", model);
 
     // Derive ro.product.name from the build's partition properties. The build

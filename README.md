@@ -78,6 +78,6 @@ done
 cd device/xiaomi/klimt && ./extract-files.py /path/to/dump
 ```
 
-The four `MobileFeliCa*` APKs come from the Japanese build
-(`klimt_jp OS3.0.302.0.WOSJPXM`) and must be placed in the dump under
-`mi_ext/product/app/<name>/` first; every other entry is in the global OTA.
+Every entry is in the global OTA. Mobile FeliCa (Osaifu-Keitai) is not shipped: its apps come only from the
+Japanese build and were removed on 2026-11-05. The NFC HAL's JP configuration (`odm/etc/felica`) stays; the
+HAL reads it only on JP units.

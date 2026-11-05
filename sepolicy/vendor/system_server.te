@@ -4,9 +4,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# The touch HAL and the FeliCa init script are reached from system_server.
+# The touch HAL is reached from system_server.
 allow system_server hal_touchfeature:binder { call transfer };
-allow system_server klimt_felica:binder call;
-allow system_server klimt_felica:fd use;
-allow system_server klimt_felica:fifo_file write;
 allow system_server mtk_hal_mali_platform_default_service:service_manager find;

@@ -14,16 +14,6 @@ on early-init
     # SVC_DISABLED, so class_start main leaves it alone.
     stop vendor.ril-daemon
 
-service klimt_felica /vendor/bin/init.felica.sh
-    class late_start
-    user system
-    group system
-    disabled
-    oneshot
-
-on property:sys.boot_completed=1
-    start klimt_felica
-
 # Modem
 # import /vendor/etc/init/hw/init.modem_factory_err.rc
 

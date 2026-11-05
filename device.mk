@@ -184,7 +184,6 @@ PRODUCT_COPY_FILES += \
     device/xiaomi/klimt/rootdir/etc/ueventd.odm.rc:$(TARGET_COPY_OUT_ODM)/etc/ueventd.rc
 
 PRODUCT_PACKAGES += \
-    init.felica.sh \
     init.insmod.sh \
     init.pstore_blk.sh \
     vendor_mdota_symlink
