@@ -41,7 +41,7 @@ COMMITTER_EMAIL = '4793368+iowaz@users.noreply.github.com'
 # on the user's git configuration.
 AM_CONFIG = [
     '-c', 'core.autocrlf=false',
-    '-c', 'am.keepcr=false',
+    '-c', 'am.keepcr=true',  # keep CRLF files' line endings (SystemUI's charging files are CRLF)
     '-c', 'am.threeWay=false',
     '-c', 'am.messageid=false',
     '-c', 'apply.whitespace=nowarn',

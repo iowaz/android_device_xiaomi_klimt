@@ -1,190 +1,196 @@
 [
-  {
-    "project": "hardware/interfaces",
+ {
+  "project": "hardware/interfaces",
+  "class": "klimt",
+  "purpose": "Drop the light@2.0 HIDL interface, which clashes with the stock vendor light@2.0 blob, and build blank_screen against the AIDL lights HAL only; the build fails without both (evox1, evox3).",
+  "base": "c626eb9ba04891cb0f7248251b84bd7fbd4afcf2",
+  "base_tree": "e867a4c7132048c3b5b9234c304e97c2254450fe",
+  "final_tree": "ecea97c1387a4e9cc7e0d4c07b335c63b72b3a3e",
+  "final_head": "f6af9d74b8ded588a24956cd1d08217f7093773b",
+  "patches": [
+   {
+    "file": "hardware/interfaces/0001-klimt-local-Drop-the-light-2.0-HIDL-interface.patch",
+    "sha256": "4cd4add944e451299c9af9ced18b4ca70aec6cab1db7af3b451b879b95cce393",
     "class": "klimt",
-    "purpose": "Drop the light@2.0 HIDL interface, which clashes with the stock vendor light@2.0 blob, and build blank_screen against the AIDL lights HAL only; the build fails without both (evox1, evox3).",
-    "base": "c626eb9ba04891cb0f7248251b84bd7fbd4afcf2",
-    "base_tree": "e867a4c7132048c3b5b9234c304e97c2254450fe",
-    "final_tree": "ecea97c1387a4e9cc7e0d4c07b335c63b72b3a3e",
-    "final_head": "f6af9d74b8ded588a24956cd1d08217f7093773b",
-    "patches": [
-      {
-        "file": "hardware/interfaces/0001-klimt-local-Drop-the-light-2.0-HIDL-interface.patch",
-        "sha256": "4cd4add944e451299c9af9ced18b4ca70aec6cab1db7af3b451b879b95cce393",
-        "class": "klimt",
-        "subject": "klimt (local): Drop the light@2.0 HIDL interface"
-      },
-      {
-        "file": "hardware/interfaces/0002-klimt-local-blank_screen-Use-only-the-AIDL-lights-HA.patch",
-        "sha256": "e620744a56709886fc06e6803207182934d1d83f76888a5fd6489d9b298afb95",
-        "class": "klimt",
-        "subject": "klimt (local): blank_screen: Use only the AIDL lights HAL"
-      }
-    ]
-  },
-  {
-    "project": "frameworks/native",
+    "subject": "klimt (local): Drop the light@2.0 HIDL interface"
+   },
+   {
+    "file": "hardware/interfaces/0002-klimt-local-blank_screen-Use-only-the-AIDL-lights-HA.patch",
+    "sha256": "e620744a56709886fc06e6803207182934d1d83f76888a5fd6489d9b298afb95",
     "class": "klimt",
-    "purpose": "libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata instead of failing and logging on every buffer (evox13).",
-    "base": "cb8303a432fc2eb4ea3bf57ec450501e18f2cced",
-    "base_tree": "b8bb0ab1551ac883f1c1e7d69291fc279d052606",
-    "final_tree": "1384dff63f2ea1123ed88e3885fb574a0b6b6e80",
-    "final_head": "792b9d1c971bdb04ab564f26519ddf5188aa2f9c",
-    "patches": [
-      {
-        "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
-        "sha256": "74f871172d2193aac5066c373719b9be4b70e223c92b44aad69dbbd02677c0b0",
-        "class": "klimt",
-        "subject": "libui: Preserve the supported SMPTE2094_50 metadata guard"
-      }
-    ]
-  },
-  {
-    "project": "build/soong",
+    "subject": "klimt (local): blank_screen: Use only the AIDL lights HAL"
+   }
+  ]
+ },
+ {
+  "project": "frameworks/native",
+  "class": "klimt",
+  "purpose": "libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata instead of failing and logging on every buffer (evox13).",
+  "base": "cb8303a432fc2eb4ea3bf57ec450501e18f2cced",
+  "base_tree": "b8bb0ab1551ac883f1c1e7d69291fc279d052606",
+  "final_tree": "1384dff63f2ea1123ed88e3885fb574a0b6b6e80",
+  "final_head": "792b9d1c971bdb04ab564f26519ddf5188aa2f9c",
+  "patches": [
+   {
+    "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
+    "sha256": "74f871172d2193aac5066c373719b9be4b70e223c92b44aad69dbbd02677c0b0",
     "class": "klimt",
-    "purpose": "Allow the MIUI boot jar packages (miui, miui.*) on the boot class path (klimt, since evox15) and stop gen_build_prop.py writing ro.lineage.device and ro.evolution.device (personal, evox20).",
-    "base": "541d7c2ccbb7c6cfdf370da58314a8dd03607a5f",
-    "base_tree": "1860d8f87387fa0f2298a6000a842ae133175496",
-    "final_tree": "16f6c1a29c6b28ddaca08f0e8644487da5a1bfaf",
-    "final_head": "463bdc3cea0169c04ce6c72ec5de80c30d2f393f",
-    "patches": [
-      {
-        "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
-        "sha256": "443d5c89e7f79168056b2badd61141c02e47573b88fdcf1c665a146a3f29f157",
-        "class": "klimt",
-        "subject": "klimt: Retain MIUI boot jar package allowance on Evox16"
-      },
-      {
-        "file": "build/soong/0002-gen_build_prop-Stop-writing-ro.lineage.device-and-ro.patch",
-        "sha256": "5ca623f59df7b2aec385cce2478c550e0adc3a778b5ffd88fe17019bcd3a0e2f",
-        "class": "personal",
-        "subject": "gen_build_prop: Stop writing ro.lineage.device and ro.evolution.device"
-      }
-    ]
-  },
-  {
-    "project": "build/make",
+    "subject": "libui: Preserve the supported SMPTE2094_50 metadata guard"
+   }
+  ]
+ },
+ {
+  "project": "build/soong",
+  "class": "klimt",
+  "purpose": "Allow the MIUI boot jar packages (miui, miui.*) on the boot class path (klimt, since evox15) and stop gen_build_prop.py writing ro.lineage.device and ro.evolution.device (personal, evox20).",
+  "base": "541d7c2ccbb7c6cfdf370da58314a8dd03607a5f",
+  "base_tree": "1860d8f87387fa0f2298a6000a842ae133175496",
+  "final_tree": "16f6c1a29c6b28ddaca08f0e8644487da5a1bfaf",
+  "final_head": "463bdc3cea0169c04ce6c72ec5de80c30d2f393f",
+  "patches": [
+   {
+    "file": "build/soong/0001-klimt-Retain-MIUI-boot-jar-package-allowance-on-Evox.patch",
+    "sha256": "443d5c89e7f79168056b2badd61141c02e47573b88fdcf1c665a146a3f29f157",
+    "class": "klimt",
+    "subject": "klimt: Retain MIUI boot jar package allowance on Evox16"
+   },
+   {
+    "file": "build/soong/0002-gen_build_prop-Stop-writing-ro.lineage.device-and-ro.patch",
+    "sha256": "5ca623f59df7b2aec385cce2478c550e0adc3a778b5ffd88fe17019bcd3a0e2f",
     "class": "personal",
-    "purpose": "The vendor build.prop honours the same build ID and incremental overrides as Soong, so the vendor props carry the Xiaomi identity too (evox26).",
-    "base": "75f33f854b8f750c46b5fd666457cea5c3636a65",
-    "base_tree": "3ef22273ab3746911a3effa0c9ff3a69c43252d8",
-    "final_tree": "eed20eeca5182eebba114236fdc87f5f67fc801d",
-    "final_head": "31e85df6eacb408d15d9b92012a1a273810a0a7c",
-    "patches": [
-      {
-        "file": "build/make/0001-sysprop-Honor-configured-vendor-build-identity-overr.patch",
-        "sha256": "cc1eb1a5acc56c397f92a123399d6968aa47904c94f6d00ac44928673e0c36ba",
-        "class": "personal",
-        "subject": "sysprop: Honor configured vendor build identity overrides"
-      }
-    ]
-  },
-  {
-    "project": "vendor/lineage",
+    "subject": "gen_build_prop: Stop writing ro.lineage.device and ro.evolution.device"
+   }
+  ]
+ },
+ {
+  "project": "build/make",
+  "class": "personal",
+  "purpose": "The vendor build.prop honours the same build ID and incremental overrides as Soong, so the vendor props carry the Xiaomi identity too (evox26).",
+  "base": "75f33f854b8f750c46b5fd666457cea5c3636a65",
+  "base_tree": "3ef22273ab3746911a3effa0c9ff3a69c43252d8",
+  "final_tree": "eed20eeca5182eebba114236fdc87f5f67fc801d",
+  "final_head": "31e85df6eacb408d15d9b92012a1a273810a0a7c",
+  "patches": [
+   {
+    "file": "build/make/0001-sysprop-Honor-configured-vendor-build-identity-overr.patch",
+    "sha256": "cc1eb1a5acc56c397f92a123399d6968aa47904c94f6d00ac44928673e0c36ba",
     "class": "personal",
-    "purpose": "Pass the Evolution X build info to Soong as build constants (evolution-build-info) instead of writing ro.evolution.* props; the lineage-sdk, Settings, Updater, recovery and build/soong personal patches depend on it (evox20).",
-    "base": "b1238dbd479aeebe0dcd186db2c85b7079f7726b",
-    "base_tree": "f917b3c375db9fa45494e0fa782b8d2ebb075e1a",
-    "final_tree": "98dc64327b84272c47d0a4332b83fafefaa451ff",
-    "final_head": "d8d3fdab3b81a3f7848282513bd50df44357b56d",
-    "patches": [
-      {
-        "file": "vendor/lineage/0001-evolution-Pass-build-info-to-Soong-instead-of-ro.evo.patch",
-        "sha256": "d2280b798fd7ab56ccc47a238851c5d6bbf74bf0a71b328019e23e01be170304",
-        "class": "personal",
-        "subject": "evolution: Pass build info to Soong instead of ro.evolution props"
-      }
-    ]
-  },
-  {
-    "project": "lineage-sdk",
+    "subject": "sysprop: Honor configured vendor build identity overrides"
+   }
+  ]
+ },
+ {
+  "project": "vendor/lineage",
+  "class": "personal",
+  "purpose": "Pass the Evolution X build info to Soong as build constants (evolution-build-info) instead of writing ro.evolution.* props; the lineage-sdk, Settings, Updater, recovery and build/soong personal patches depend on it (evox20).",
+  "base": "b1238dbd479aeebe0dcd186db2c85b7079f7726b",
+  "base_tree": "f917b3c375db9fa45494e0fa782b8d2ebb075e1a",
+  "final_tree": "98dc64327b84272c47d0a4332b83fafefaa451ff",
+  "final_head": "d8d3fdab3b81a3f7848282513bd50df44357b56d",
+  "patches": [
+   {
+    "file": "vendor/lineage/0001-evolution-Pass-build-info-to-Soong-instead-of-ro.evo.patch",
+    "sha256": "d2280b798fd7ab56ccc47a238851c5d6bbf74bf0a71b328019e23e01be170304",
     "class": "personal",
-    "purpose": "Build.EVOLUTION_VERSION and EVOLUTION_DISPLAY_VERSION come from the evolution-build-info constants instead of the removed ro.evolution.* props (evox20).",
-    "base": "a870f420bd1495160c83e0dcf0309c2a366b196f",
-    "base_tree": "a5b9aca15f4665fed7d4988f1e54095f4b44e056",
-    "final_tree": "eef1c06954c9c829ac9aac6c06f9d511d2848b60",
-    "final_head": "d534c1789b1864144fd8f44bb8487eaffbaaaaa5",
-    "patches": [
-      {
-        "file": "lineage-sdk/0001-sdk-Take-the-Evolution-X-versions-from-build-constan.patch",
-        "sha256": "61e63bd9d84207e086d8cbb32f063e68450300be7ccedf3e2e19187211e01ff7",
-        "class": "personal",
-        "subject": "sdk: Take the Evolution X versions from build constants"
-      },
-      {
-        "file": "lineage-sdk/0002-sdk-Say-where-the-Evolution-X-versions-come-from.patch",
-        "sha256": "ece5a6b3dda121f674c8e64fcdebeb4fb83a252382456d98a00e4554594468b9",
-        "class": "personal",
-        "subject": "sdk: Say where the Evolution X versions come from"
-      }
-    ]
-  },
-  {
-    "project": "packages/apps/Settings",
+    "subject": "evolution: Pass build info to Soong instead of ro.evolution props"
+   }
+  ]
+ },
+ {
+  "project": "lineage-sdk",
+  "class": "personal",
+  "purpose": "Build.EVOLUTION_VERSION and EVOLUTION_DISPLAY_VERSION come from the evolution-build-info constants instead of the removed ro.evolution.* props (evox20).",
+  "base": "a870f420bd1495160c83e0dcf0309c2a366b196f",
+  "base_tree": "a5b9aca15f4665fed7d4988f1e54095f4b44e056",
+  "final_tree": "eef1c06954c9c829ac9aac6c06f9d511d2848b60",
+  "final_head": "d534c1789b1864144fd8f44bb8487eaffbaaaaa5",
+  "patches": [
+   {
+    "file": "lineage-sdk/0001-sdk-Take-the-Evolution-X-versions-from-build-constan.patch",
+    "sha256": "61e63bd9d84207e086d8cbb32f063e68450300be7ccedf3e2e19187211e01ff7",
     "class": "personal",
-    "purpose": "The model page takes the build type and device name from the evolution-build-info constants instead of the removed props (evox20, ported to ModelPageController in evox27).",
-    "base": "24e49b5feedded23ab3f1dad054a862b2948637f",
-    "base_tree": "7d912ce9e0afb8e4240f8b73d1b19b14dcf48773",
-    "final_tree": "99ab01d6e09f9a6c17868c4eea3fdc007503c21d",
-    "final_head": "cd007b3a243bf687c35b13dfe19d1c79edd7cada",
-    "patches": [
-      {
-        "file": "packages/apps/Settings/0001-ModelPageController-Take-the-build-type-and-device-f.patch",
-        "sha256": "6abec3eab8bcbee8a39f93e63ab9eac8b9690fe2ded65f7fc769eee7a287aa7e",
-        "class": "personal",
-        "subject": "ModelPageController: Take the build type and device from build constants"
-      }
-    ]
-  },
-  {
-    "project": "packages/apps/Updater",
+    "subject": "sdk: Take the Evolution X versions from build constants"
+   },
+   {
+    "file": "lineage-sdk/0002-sdk-Say-where-the-Evolution-X-versions-come-from.patch",
+    "sha256": "ece5a6b3dda121f674c8e64fcdebeb4fb83a252382456d98a00e4554594468b9",
     "class": "personal",
-    "purpose": "The Updater takes the device name for its OTA and changelog URLs from the evolution-build-info constant instead of ro.evolution.device (evox20, ported to the Kotlin Updater in evox27).",
-    "base": "7488b92dda943658dbaa095af8ea3cc67fd1fa79",
-    "base_tree": "c96abdc1a64b414b6a7cce11edd1cc9ba2e0b5de",
-    "final_tree": "73619c4ffaa737e795f09c22861a6d9a63150458",
-    "final_head": "3828687e7fab03146b7c39391feadf14c8e6ccc0",
-    "patches": [
-      {
-        "file": "packages/apps/Updater/0001-Updater-Take-the-device-name-from-a-build-constant.patch",
-        "sha256": "2e36e623b1469bdb923e977e67ca7e5251ef0ba5ff25f9573fa8e3d52e4a9f42",
-        "class": "personal",
-        "subject": "Updater: Take the device name from a build constant"
-      }
-    ]
-  },
-  {
-    "project": "bootable/recovery",
+    "subject": "sdk: Say where the Evolution X versions come from"
+   }
+  ]
+ },
+ {
+  "project": "packages/apps/Settings",
+  "class": "personal",
+  "purpose": "The model page takes the build type and device name from the evolution-build-info constants instead of the removed props (evox20, ported to ModelPageController in evox27).",
+  "base": "24e49b5feedded23ab3f1dad054a862b2948637f",
+  "base_tree": "7d912ce9e0afb8e4240f8b73d1b19b14dcf48773",
+  "final_tree": "99ab01d6e09f9a6c17868c4eea3fdc007503c21d",
+  "final_head": "cd007b3a243bf687c35b13dfe19d1c79edd7cada",
+  "patches": [
+   {
+    "file": "packages/apps/Settings/0001-ModelPageController-Take-the-build-type-and-device-f.patch",
+    "sha256": "6abec3eab8bcbee8a39f93e63ab9eac8b9690fe2ded65f7fc769eee7a287aa7e",
     "class": "personal",
-    "purpose": "The recovery menu title takes the Evolution X version from <evolution/build_info.h> instead of the removed ro.evolution.build.version (evox20).",
-    "base": "fbfd88cd338311e59a9c132485d63f9ec77fd9f3",
-    "base_tree": "53c81343bd35e757d6d0558ec8e93aea3dc96067",
-    "final_tree": "1542ad6a1abeb8b81a438aec671028fc17e6c1bc",
-    "final_head": "f8fd419ade7262be3d79c647a40c3b17dea10af0",
-    "patches": [
-      {
-        "file": "bootable/recovery/0001-recovery-Take-the-Evolution-X-version-from-a-build-c.patch",
-        "sha256": "688fce6ba038f124e13c595e3836e0aa10be5f00643f45dc3a58e4e95f1536e5",
-        "class": "personal",
-        "subject": "recovery: Take the Evolution X version from a build constant"
-      }
-    ]
-  },
-  {
-    "project": "frameworks/base",
+    "subject": "ModelPageController: Take the build type and device from build constants"
+   }
+  ]
+ },
+ {
+  "project": "packages/apps/Updater",
+  "class": "personal",
+  "purpose": "The Updater takes the device name for its OTA and changelog URLs from the evolution-build-info constant instead of ro.evolution.device (evox20, ported to the Kotlin Updater in evox27).",
+  "base": "7488b92dda943658dbaa095af8ea3cc67fd1fa79",
+  "base_tree": "c96abdc1a64b414b6a7cce11edd1cc9ba2e0b5de",
+  "final_tree": "73619c4ffaa737e795f09c22861a6d9a63150458",
+  "final_head": "3828687e7fab03146b7c39391feadf14c8e6ccc0",
+  "patches": [
+   {
+    "file": "packages/apps/Updater/0001-Updater-Take-the-device-name-from-a-build-constant.patch",
+    "sha256": "2e36e623b1469bdb923e977e67ca7e5251ef0ba5ff25f9573fa8e3d52e4a9f42",
     "class": "personal",
-    "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27).",
-    "base": "206f8b09dc58d88a1381ffd34dfb684008aea781",
-    "base_tree": "5f3408f7ebb17d4305e0761248b484161e14603a",
-    "final_tree": "dca5ff5230690e87ca082e55de2453d2d5d53cf7",
-    "final_head": "68cef0922bae9011cf152cc50c3d77d0890e9cb0",
-    "patches": [
-      {
-        "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
-        "sha256": "705be21faddc3b18fe7df71860db9512c39c6a17bd5737575cd4328097b5ba07",
-        "class": "personal",
-        "subject": "PackagePartitions: Include the build time in the upgrade fingerprint"
-      }
-    ]
-  }
+    "subject": "Updater: Take the device name from a build constant"
+   }
+  ]
+ },
+ {
+  "project": "bootable/recovery",
+  "class": "personal",
+  "purpose": "The recovery menu title takes the Evolution X version from <evolution/build_info.h> instead of the removed ro.evolution.build.version (evox20).",
+  "base": "fbfd88cd338311e59a9c132485d63f9ec77fd9f3",
+  "base_tree": "53c81343bd35e757d6d0558ec8e93aea3dc96067",
+  "final_tree": "1542ad6a1abeb8b81a438aec671028fc17e6c1bc",
+  "final_head": "f8fd419ade7262be3d79c647a40c3b17dea10af0",
+  "patches": [
+   {
+    "file": "bootable/recovery/0001-recovery-Take-the-Evolution-X-version-from-a-build-c.patch",
+    "sha256": "688fce6ba038f124e13c595e3836e0aa10be5f00643f45dc3a58e4e95f1536e5",
+    "class": "personal",
+    "subject": "recovery: Take the Evolution X version from a build constant"
+   }
+  ]
+ },
+ {
+  "project": "frameworks/base",
+  "class": "personal",
+  "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI holds the charging animation still on the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). SystemUI holds the charging animation still on the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review).",
+  "base": "206f8b09dc58d88a1381ffd34dfb684008aea781",
+  "base_tree": "5f3408f7ebb17d4305e0761248b484161e14603a",
+  "final_tree": "45df029d3828190dff4da39eeb24ab45df9779e0",
+  "final_head": "adb968b6347ddc9c4307d0b84accc21e88d4ed79",
+  "patches": [
+   {
+    "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
+    "sha256": "705be21faddc3b18fe7df71860db9512c39c6a17bd5737575cd4328097b5ba07",
+    "class": "personal",
+    "subject": "PackagePartitions: Include the build time in the upgrade fingerprint"
+   },
+   {
+    "file": "frameworks/base/0002-SystemUI-Hold-the-charging-animation-still-on-the-al.patch",
+    "sha256": "e54bf4afd7f5b05dcfb72e1547a6b14b60828968eef1d2137700c88804d76e43",
+    "class": "klimt",
+    "subject": "SystemUI: Hold the charging animation still on the always-on display"
+   }
+  ]
+ }
 ]
