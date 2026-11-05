@@ -198,5 +198,22 @@
     "subject": "duck_rkp: Fix the frozen vendor.evo.duckrkp V1 hash"
    }
   ]
+ },
+ {
+  "project": "device/lineage/sepolicy",
+  "class": "personal",
+  "purpose": "A user build drops the adbroot domain and its rules, which only serve the adb_root binary that user builds do not ship; Duck Detector flags adbd -> adbroot and the valid u:r:adbroot:s0 context otherwise (20261105 scan).",
+  "base": "2472f7e1377924773ec99ddb628247c028d03842",
+  "base_tree": "5547940b2d7dbe7f8edc3a1fc6e0e0e7286baa22",
+  "final_tree": "e220b69b0180cfbb72bf80a6765c8bcf86556073",
+  "final_head": "b565dbe358ba1dd9329b81aba549acf87e422a68",
+  "patches": [
+   {
+    "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-and-domain-to-debu.patch",
+    "sha256": "a3f18581b56f1a2889062c8941427bea28f16fb2489cf79bf2abafc50c4907fc",
+    "class": "personal",
+    "subject": "sepolicy: Keep the adb root policy and domain to debuggable builds"
+   }
+  ]
  }
 ]

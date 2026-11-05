@@ -12,8 +12,9 @@ them gives.
 
 Only klimt-specific patches, and only when the owner asks for them. The personal identity layer
 (class `personal` below) is kept because the owner explicitly asked for it. Generic changes that
-are not about klimt are not carried here: the adb root sepolicy gate (`device/lineage/sepolicy`)
-and the init spoof-marker changes (`system/core`) were dropped when the forks were retired.
+are not about klimt are not carried here: the init spoof-marker changes (`system/core`) were dropped
+when the forks were retired. The adb root sepolicy gate (`device/lineage/sepolicy`) was dropped with
+them and is back since 2026-11-05 at the owner's request, as a `personal` patch (below).
 
 ## The patches
 
@@ -40,6 +41,7 @@ the lineage-sdk, Settings, Updater, recovery and build/soong patches read, so th
 | packages/apps/Settings | ModelPageController: Take the build type and device from build constants | Same values on the model page |
 | packages/apps/Updater | Updater: Take the device name from a build constant | Same OTA and changelog URLs |
 | bootable/recovery | recovery: Take the Evolution X version from a build constant | Same menu title |
+| device/lineage/sepolicy | sepolicy: Keep the adb root policy and domain to debuggable builds | A user build ships no `adb_root` (vendor/lineage installs it only with `WITH_SU`), yet its policy declared the `adbroot` domain and allowed `adbd -> adbroot` binder calls. Duck Detector's SELinux check reads both from an app (20261105 scan). The domain and its rules go into userdebug and eng builds only; the exec, data and service types stay for the contexts files. Not part of the identity layer and independent of the other patches |
 | frameworks/base | PackagePartitions: Include the build time in the upgrade fingerprint | klimt reports a fixed stock Xiaomi fingerprint, so without `ro.build.date.utc` in the digest a new build does not count as an upgrade and keeps a stale package parser cache. Keep it while the device keeps the fixed fingerprint |
 
 ## Layout

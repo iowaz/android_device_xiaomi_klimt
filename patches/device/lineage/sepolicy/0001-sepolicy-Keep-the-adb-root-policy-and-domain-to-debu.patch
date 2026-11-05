@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
+Date: Thu, 5 Nov 2026 12:01:34 -0300
+Subject: [PATCH] sepolicy: Keep the adb root policy and domain to debuggable
+ builds
+
+vendor/lineage installs adb_root only with WITH_SU, which a user build
+doesn't set. Its policy still went into every build, so a user build
+knew an adbroot domain that nothing runs in and allowed adbd to call
+into it. An app can see both: a policy access query reports
+adbd -> adbroot binder call as allowed, and writing u:r:adbroot:s0 to
+/proc/self/attr/current fails with EACCES instead of the EINVAL an
+unknown context gives. A stock user build has neither.
+
+Declare the adbroot domain and wrap its rules, adbd's access to it and
+system_server's find on adbroot_service in userdebug_or_eng, as
+system/sepolicy does for su. The exec, data and service types stay,
+because file_contexts and service_contexts label with them. Userdebug
+and eng builds are unchanged.
+
+On a user build adbd already refuses adb root before it would use the
+service, and with no adb_root binary the service never registers.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ common/private/adbd.te          | 3 +++
+ common/private/adbroot.te       | 8 +++++++-
+ common/private/system_server.te | 2 +-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/common/private/adbd.te b/common/private/adbd.te
+index e5ef5875eb34de1f56ef9ecac9b1f0f093604574..bc28ea27611564e975fa8d0a7962965fb11b93b2 100644
+--- a/common/private/adbd.te
++++ b/common/private/adbd.te
+@@ -1,2 +1,5 @@
++# adb_root is only installed with WITH_SU, which user builds don't set
++userdebug_or_eng(`
+ allow adbd adbroot:binder call;
+ allow adbd adbroot_service:service_manager find;
++')
+diff --git a/common/private/adbroot.te b/common/private/adbroot.te
+index 828ce905d3c4df89f99a35598003b67b343a439e..28d21200178b06be4e083c769a9555fa984decfb 100644
+--- a/common/private/adbroot.te
++++ b/common/private/adbroot.te
+@@ -1,6 +1,11 @@
+-type adbroot, domain, coredomain;
+ type adbroot_exec, exec_type, file_type, system_file_type;
+ 
++# adb_root is only installed with WITH_SU, which user builds don't set. The
++# adbroot domain and its rules exist only in userdebug and eng builds; the
++# exec, data and service types stay for the file and service contexts.
++userdebug_or_eng(`
++type adbroot, domain, coredomain;
++
+ init_daemon_domain(adbroot)
+ 
+ binder_use(adbroot)
+@@ -15,3 +20,4 @@ allow adbroot adbroot_data_file:file create_file_perms;
+ 
+ set_prop(adbroot, shell_prop)
+ set_prop(adbroot, ctl_adbd_prop)
++')
+diff --git a/common/private/system_server.te b/common/private/system_server.te
+index 02001296d08f93c3be8361705e00b475dcb3d3fe..b34330d0730af46140b7ab542ffbd1e75e600b0c 100644
+--- a/common/private/system_server.te
++++ b/common/private/system_server.te
+@@ -1,6 +1,6 @@
+ allow system_server storage_stub_file:dir getattr;
+ 
+-allow system_server adbroot_service:service_manager find;
++userdebug_or_eng(`allow system_server adbroot_service:service_manager find;')
+ 
+ add_service(system_server, ax_sandbox_service);
+ 
