@@ -168,3 +168,8 @@ vendor.af.threshold.src_and_effect_count=5
 vendor.mtk_thumbnail_optimization=true
 vendor.rild.libargs=-d /dev/ttyC0
 vendor.rild.libpath=libmtk-ril.so
+
+# Vendor ambient-light and display-capture debug traces: several lines per light sample.
+log.tag.libsensor-displayalgo=W
+log.tag.libsensor-parseRGB=W
+log.tag.libcomposer_ext=I
