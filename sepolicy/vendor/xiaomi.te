@@ -258,7 +258,9 @@ init_daemon_domain(xiaomi_misys_common)
 add_service(xiaomi_misys_common, mtkblackbox_service)
 allow xiaomi_misys_common xiaomi_misys_core_service:service_manager find;
 get_prop(xiaomi_misys_common, boot_status_prop)
-get_prop(xiaomi_misys_common, vendor_mtkcam_prop)
+# hypsys_vendor's HardWareInfo thread reads vendor.camera.* (171 denials per boot). Stock does not
+# grant it either (only mtk_hal_camera reads vendor_mtkcam_prop there): keep it denied, unlogged.
+dontaudit xiaomi_misys_common vendor_mtkcam_prop:file { getattr map open read };
 userdebug_or_eng(`allow xiaomi_misys_common aee_exp_vendor_file:dir { add_name remove_name search write };')
 userdebug_or_eng(`allow xiaomi_misys_common aee_exp_vendor_file:file { create getattr read unlink watch };')
 allow xiaomi_misys_common expdb_block_device:blk_file { getattr };
