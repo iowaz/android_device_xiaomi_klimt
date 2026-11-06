@@ -123,10 +123,10 @@
     "project": "packages/apps/Settings",
     "class": "personal",
     "purpose": "The model page takes the build type and device name from the evolution-build-info constants instead of the removed props (evox20, ported to ModelPageController in evox27).",
-    "base": "dfb59207f3488aaa7a24c3bf3691459eda6d0ef4",
-    "base_tree": "4d93bcce8b8d559a7241b6348bacb445edc33623",
-    "final_tree": "b85f8643c19ae677085e5638bec9778c714e5c17",
-    "final_head": "b136097475f937aaf3544b86ec447a77df35a743",
+    "base": "5c06ba92f51c0cd8f6d80d32f1f1b3185a9460f6",
+    "base_tree": "064763626dae9194031946dbbd49934749b14882",
+    "final_tree": "125d1865cd88789f2ab5a7b36dcf1b603bfdbdf3",
+    "final_head": "6f6138af592438c7309b8ad543d02624b3182c39",
     "patches": [
       {
         "file": "packages/apps/Settings/0001-ModelPageController-Take-the-build-type-and-device-f.patch",
@@ -174,10 +174,10 @@
     "project": "frameworks/base",
     "class": "personal",
     "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review).",
-    "base": "51ac35e7217bb78c7d01884e63d990898b19116d",
-    "base_tree": "eb477c7705cfc38d1efe90145179100f7ed0f353",
-    "final_tree": "a802d160bbf73a5917519632197afd493370b075",
-    "final_head": "ea471344692bb76e36f8676918621cdcb94ff747",
+    "base": "e342c40557ccca67742d52969dea93e0ab0337cf",
+    "base_tree": "0318dec0b39021b216cfd5addb1cee995de60e4e",
+    "final_tree": "14cbf488bdc71f38ad4913dc8fd037bf1b0f61b3",
+    "final_head": "5ebfde6a5f5d1c937cb621de04c9f55557c681ee",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
