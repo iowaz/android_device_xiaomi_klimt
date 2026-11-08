@@ -83,10 +83,10 @@
     "project": "vendor/lineage",
     "class": "personal",
     "purpose": "Pass the Evolution X build info to Soong as build constants (evolution-build-info) instead of writing ro.evolution.* props; the lineage-sdk, Settings, Updater, recovery and build/soong personal patches depend on it (evox20).",
-    "base": "cda547177491b2921aed502ad1fafe28d511ef22",
-    "base_tree": "d7440fc9ec7d21c34d97e72cc185bee8cef1ee69",
-    "final_tree": "10a82755378ae08069729a2ce4cbb4dd13f888dd",
-    "final_head": "4edb1e9b7ab885cff095be81b850128ead75a1f0",
+    "base": "4d2922ad10997b31aaa6bec9eada2222e1b96e4a",
+    "base_tree": "cf2ba5537bd56dd472992c9eda16edac5b6dd9d1",
+    "final_tree": "ab253743ae984f4c2e341ba84218a0a8169c17a9",
+    "final_head": "d4102cf186acc398862787d60f113f4fb3f4b7fc",
     "patches": [
       {
         "file": "vendor/lineage/0001-evolution-Pass-build-info-to-Soong-instead-of-ro.evo.patch",
@@ -123,10 +123,10 @@
     "project": "packages/apps/Settings",
     "class": "personal",
     "purpose": "The model page takes the build type and device name from the evolution-build-info constants instead of the removed props (evox20, ported to ModelPageController in evox27).",
-    "base": "8bc15d4521c4fba28f7dcc1d126cfecb13ec7716",
-    "base_tree": "7ecbd2f408b3df4d96da0b319cb788f8519cd542",
-    "final_tree": "84764e7e087b9b45eddecc62ad76f26b2705b301",
-    "final_head": "62c6487a4029284c66e3362c81891760244dae77",
+    "base": "2b1b584855717b32dff2e3b33fb422b1adede1c6",
+    "base_tree": "fb1771b9d395f82d029679463b4f35f7a9fe967e",
+    "final_tree": "5eea91e178706fe07026c7eab716031612aa8fc2",
+    "final_head": "e684c5a73e430193bb785a64e4e4f76083944f3f",
     "patches": [
       {
         "file": "packages/apps/Settings/0001-ModelPageController-Take-the-build-type-and-device-f.patch",
@@ -174,10 +174,10 @@
     "project": "frameworks/base",
     "class": "personal",
     "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review).",
-    "base": "c4d6da49784924d7f553199ad9f38beb72c8dac8",
-    "base_tree": "35ecad177afb034b51973a2d0db8d4d9a49082d4",
-    "final_tree": "48f9bb4ff5a1f14b98bc50f0b168c9dd6b647381",
-    "final_head": "00a0e724fd5c61996110b933d564f81cd93a6a90",
+    "base": "f26dcde78ba7121194ecea1a58fa046f234fdadd",
+    "base_tree": "e05816539dbc00c273000c569ca7cc5df2d64ee3",
+    "final_tree": "75a80b9dc00c07af3b2df411a0d3428d2a42f27a",
+    "final_head": "e345aea65de68309993264355f482fe90950b0e2",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
@@ -197,10 +197,10 @@
     "project": "device/lineage/sepolicy",
     "class": "personal",
     "purpose": "A user build drops the adbroot domain and its rules, which only serve the adb_root binary that user builds do not ship; Duck Detector flags adbd -> adbroot and the valid u:r:adbroot:s0 context otherwise (20261105 scan).",
-    "base": "2472f7e1377924773ec99ddb628247c028d03842",
-    "base_tree": "5547940b2d7dbe7f8edc3a1fc6e0e0e7286baa22",
-    "final_tree": "e220b69b0180cfbb72bf80a6765c8bcf86556073",
-    "final_head": "b565dbe358ba1dd9329b81aba549acf87e422a68",
+    "base": "4b8d3e4437e40df5eed0e3c6013bde2161f2d424",
+    "base_tree": "813494cbb315dc2e56c03c6d872c457003f4b271",
+    "final_tree": "2a5adb36eae83f708ef37f5479c9ac7e531ec9d8",
+    "final_head": "b26c652f4f1c80ebee7a9073b94a5c68e4638680",
     "patches": [
       {
         "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-and-domain-to-debu.patch",
