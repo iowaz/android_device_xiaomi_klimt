@@ -87,7 +87,7 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
     CONFIG_UNUSED_KSYMS_WHITELIST=$(KLIMT_KMI_SYMBOL_LIST)
 
 # evox26: reproducible metadata for the owner's Xiaomi reference profile.
-# Kernel source is unchanged; metadata.config records its real revision and
+# Kernel source follows the audited Android15-6.6 LTS baseline; metadata.config records its real revision and
 # the local build number (-ab<n> in CONFIG_LOCALVERSION). This is not a Xiaomi build-farm provenance claim.
 TARGET_KERNEL_ADDITIONAL_FLAGS += \
     KBUILD_BUILD_USER=builder \
