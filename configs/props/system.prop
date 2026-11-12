@@ -3,6 +3,8 @@ ro.audio.flinger_standbytime_ms=2000
 ro.audio.ihaladaptervendorextension_enabled=true
 ro.audio.silent=0
 ro.audio.usb.period_us=16000
+# Match the 30 steps advertised by the Xiaomi audio configuration.
+ro.config.media_vol_steps=30
 ro.vendor.audio.notification.single=true
 
 # Bluetooth
