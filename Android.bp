@@ -7,3 +7,16 @@
 soong_namespace {
     imports: ["hardware/xiaomi"],
 }
+
+// Keep the A2DP routing workaround product-scoped; no framework source fork.
+aconfig_values {
+    name: "klimt_media_routing_values",
+    package: "com.android.media.flags",
+    srcs: ["configs/aconfig/media-routing.textproto"],
+}
+
+aconfig_value_set {
+    name: "klimt_media_routing_aconfig",
+    values: ["klimt_media_routing_values"],
+    visibility: ["//visibility:public"],
+}

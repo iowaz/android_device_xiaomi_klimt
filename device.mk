@@ -24,6 +24,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_SHIPPING_API_LEVEL := 35
 
 # Audio
+# The owner-observed Android Auto alert repeatedly forces media off A2DP (2026-11-12).
+# Enable the existing upstream safeguard only for this product/release.
+PRODUCT_RELEASE_CONFIG_MAPS += $(LOCAL_PATH)/configs/release/release_config_map.textproto
+
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth.audio-impl \
     android.hardware.bluetooth.audio@2.0-impl \

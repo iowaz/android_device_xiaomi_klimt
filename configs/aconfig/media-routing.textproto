@@ -1,0 +1,7 @@
+# Existing upstream bugfix for b/294968421, tested as a klimt candidate.
+flag_value {
+  package: "com.android.media.flags"
+  name: "disable_set_bluetooth_ad2p_on_calls"
+  state: ENABLED
+  permission: READ_ONLY
+}
