@@ -47,6 +47,12 @@ the lineage-sdk, Settings, Updater, recovery and build/soong patches read, so th
 | frameworks/base | TrickyStore: Add scheduled keybox monitoring and validated recovery | Owner-requested exact-interval checks, certificate/revocation status notifications, private backup and validated official replacement using the manual activation path (2026-11-13) |
 | packages/apps/Evolver | Evolver: Add scheduled keybox monitoring controls | Opt-in switch, 15/30/45 minute and 1/2/12 hour choices, next check and shared manual/system-service operations; must ship with the framework patch |
 
+The 20261113.2 follow-up adds one framework and one Evolver patch. It restores manual
+loading feedback, reanchors the schedule after manual checks, shares the configured deadline
+with the upstream screen-resume check, adds 4h/24h intervals and three notification policies
+(default: failed recovery only), and supplies en-US/pt-BR resources. The first 17 patches
+are unchanged. Both ROM patch series must ship together.
+
 ## Layout
 
     patches/<project path>/NNNN-<subject>.patch   git format-patch output, one folder per project
