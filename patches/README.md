@@ -27,7 +27,7 @@ Class `klimt`: the device needs them.
 | frameworks/native | libui: Preserve the supported SMPTE2094_50 metadata guard | The MediaTek mapper does not list SMPTE 2094-50; libui asks once instead of failing and logging on every buffer (evox13) |
 | build/soong | Retain MIUI boot jar package allowance | The MIUI jars on the boot class path (`miui`, `miui.*`, since evox15). Can go once klimt uses LineageOS `hardware/xiaomi`'s shared eSIM and drops `miui-stub/` |
 
-Class `personal`: the owner's identity layer (evox20, evox26, evox27). The Evolution X build info
+Class `personal`: owner-requested changes, including the identity layer (evox20, evox26, evox27). The Evolution X build info
 moves from `ro.evolution.*` / `*.device` props to build constants, and the vendor props carry the
 Xiaomi identity. The `vendor/lineage` patch generates the constants (`evolution-build-info`) that
 the lineage-sdk, Settings, Updater, recovery and build/soong patches read, so these go together.
@@ -43,6 +43,9 @@ the lineage-sdk, Settings, Updater, recovery and build/soong patches read, so th
 | bootable/recovery | recovery: Take the Evolution X version from a build constant | Same menu title |
 | device/lineage/sepolicy | sepolicy: Keep the adb root policy and domain to debuggable builds | A user build ships no `adb_root` (vendor/lineage installs it only with `WITH_SU`), yet its policy declared the `adbroot` domain and allowed `adbd -> adbroot` binder calls. Duck Detector's SELinux check reads both from an app (20261105 scan). The domain and its rules go into userdebug and eng builds only; the exec, data and service types stay for the contexts files. Not part of the identity layer and independent of the other patches |
 | frameworks/base | PackagePartitions: Include the build time in the upgrade fingerprint | klimt reports a fixed stock Xiaomi fingerprint, so without `ro.build.date.utc` in the digest a new build does not count as an upgrade and keeps a stale package parser cache. Keep it while the device keeps the fixed fingerprint |
+
+| frameworks/base | TrickyStore: Add scheduled keybox monitoring and validated recovery | Owner-requested exact-interval checks, certificate/revocation status notifications, private backup and validated official replacement using the manual activation path (2026-11-13) |
+| packages/apps/Evolver | Evolver: Add scheduled keybox monitoring controls | Opt-in switch, 15/30/45 minute and 1/2/12 hour choices, next check and shared manual/system-service operations; must ship with the framework patch |
 
 ## Layout
 

@@ -173,11 +173,11 @@
   {
     "project": "frameworks/base",
     "class": "personal",
-    "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review).",
+    "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). Owner-requested scheduled keybox monitoring, validated official recovery and notifications (2026-11-13).",
     "base": "c51e18250230cba3de5708e8034ae3d3c92e26f4",
     "base_tree": "62651f03410f5170284dfdb283ae89cd900d5338",
-    "final_tree": "f38809b9bd6cd54944717faa8d6035878a87c985",
-    "final_head": "49fbac9c7a3b9b8a9429ef70532a84b56a48f531",
+    "final_tree": "8172d784705db7efe0da0860067296815dc508fb",
+    "final_head": "519697248281e9987773e573ff68feff14fbd6eb",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
@@ -190,6 +190,12 @@
         "sha256": "385aa881f27b9a6361cde691c47c0a0b5bb68024b66ad0cecda17b52f7b55dd2",
         "class": "klimt",
         "subject": "SystemUI: Keep the charging animation off the always-on display"
+      },
+      {
+        "file": "frameworks/base/0003-TrickyStore-Add-scheduled-keybox-monitoring-and-vali.patch",
+        "sha256": "ffa6b08428e7c2319998ab4811ef356d95726be7115016da29f077ce77eb6599",
+        "class": "personal",
+        "subject": "TrickyStore: Add scheduled keybox monitoring and validated recovery"
       }
     ]
   },
@@ -207,6 +213,23 @@
         "sha256": "a3f18581b56f1a2889062c8941427bea28f16fb2489cf79bf2abafc50c4907fc",
         "class": "personal",
         "subject": "sepolicy: Keep the adb root policy and domain to debuggable builds"
+      }
+    ]
+  },
+  {
+    "project": "packages/apps/Evolver",
+    "class": "personal",
+    "purpose": "Owner-requested TrickyStore monitoring toggle, 15/30/45 minute and 1/2/12 hour intervals, and shared system-owned manual/background keybox operations.",
+    "base": "bb1d4dc8d6f9875779a08b7105e9c6710743b279",
+    "base_tree": "a0a5d6d2e266fe0d0fcd138209c0cc7cd503a2e3",
+    "final_tree": "012a35e592b9e65627445992861cd8f8d110fa6b",
+    "final_head": "115c50f401e37944b438c40f4d5568e88eaad8f7",
+    "patches": [
+      {
+        "file": "packages/apps/Evolver/0001-Evolver-Add-scheduled-keybox-monitoring-controls.patch",
+        "sha256": "5568c172872df19d9440a6ff09f3064617ca49fe36bf4cc0f365e1e00727ddf2",
+        "class": "personal",
+        "subject": "Evolver: Add scheduled keybox monitoring controls"
       }
     ]
   }
