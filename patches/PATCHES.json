@@ -173,11 +173,11 @@
   {
     "project": "frameworks/base",
     "class": "personal",
-    "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). Owner-requested scheduled keybox monitoring, validated official recovery and notifications (2026-11-13). The 20261113.2 follow-up adds configurable notification policy, shared/manual deadline handling, bounded isolated cleanup, a read-only operation engine and en-US/pt-BR resources.",
+    "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). Owner-requested scheduled keybox monitoring, validated official recovery and notifications (2026-11-13). The 20261113.2 follow-up adds configurable notification policy, shared/manual deadline handling, bounded isolated cleanup, a read-only operation engine and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
     "base": "c51e18250230cba3de5708e8034ae3d3c92e26f4",
     "base_tree": "62651f03410f5170284dfdb283ae89cd900d5338",
     "final_tree": "ba0d3f58b6495c35e617df1d026092d25191f998",
-    "final_head": "1f6ac1d343be020de5a4cd00e3c89fde13b0c4d4",
+    "final_head": "5471726e8c0a16088acb5a557b6146347b43d373",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
@@ -193,15 +193,9 @@
       },
       {
         "file": "frameworks/base/0003-TrickyStore-Add-scheduled-keybox-monitoring-and-vali.patch",
-        "sha256": "ffa6b08428e7c2319998ab4811ef356d95726be7115016da29f077ce77eb6599",
+        "sha256": "e67ba4c2cf1f3ac409841bff8d41db7f9d4c47595d7eeafec3b164ee57427d49",
         "class": "personal",
         "subject": "TrickyStore: Add scheduled keybox monitoring and validated recovery"
-      },
-      {
-        "file": "frameworks/base/0004-TrickyStore-Refine-scheduled-checks-and-notification.patch",
-        "sha256": "0ba5d180532e26f327dabd39d861a8b7875aadad128d8a183600b5d33034a218",
-        "class": "personal",
-        "subject": "TrickyStore: Refine scheduled checks and notification policy"
       }
     ]
   },
@@ -225,23 +219,17 @@
   {
     "project": "packages/apps/Evolver",
     "class": "personal",
-    "purpose": "Owner-requested TrickyStore monitor controls: opt-in, 15/30/45 minute and 1/4/12/24 hour intervals, three notification policies, visible manual verification and schedule reset, shared system-owned operations, and en-US/pt-BR resources.",
+    "purpose": "Owner-requested TrickyStore monitor controls: opt-in, 15/30/45 minute and 1/4/12/24 hour intervals, three notification policies, visible manual verification and schedule reset, shared system-owned operations, and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
     "base": "bb1d4dc8d6f9875779a08b7105e9c6710743b279",
     "base_tree": "a0a5d6d2e266fe0d0fcd138209c0cc7cd503a2e3",
     "final_tree": "0df31165dc151e1c9f5574f16104f30b20e18531",
-    "final_head": "231fa8246f7f3c32532f462f238445455b2140c8",
+    "final_head": "98cc19712212a3e0eb33613adc44454b1edeb3d1",
     "patches": [
       {
         "file": "packages/apps/Evolver/0001-Evolver-Add-scheduled-keybox-monitoring-controls.patch",
-        "sha256": "5568c172872df19d9440a6ff09f3064617ca49fe36bf4cc0f365e1e00727ddf2",
+        "sha256": "b209319894d7c9a7be77830e736443d0cbc743b55e22eca3c18a318b1216fd61",
         "class": "personal",
         "subject": "Evolver: Add scheduled keybox monitoring controls"
-      },
-      {
-        "file": "packages/apps/Evolver/0002-Evolver-Restore-manual-keybox-feedback-and-configure.patch",
-        "sha256": "5c47979b57ed695d8250962fd479806d50cdc89147489b10e7969f85cd8c7eb5",
-        "class": "personal",
-        "subject": "Evolver: Restore manual keybox feedback and configure monitor alerts"
       }
     ]
   }

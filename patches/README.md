@@ -53,6 +53,14 @@ with the upstream screen-resume check, adds 4h/24h intervals and three notificat
 (default: failed recovery only), and supplies en-US/pt-BR resources. The first 17 patches
 are unchanged. Both ROM patch series must ship together.
 
+The keybox feature is now consolidated into **two patches total**: one in
+`frameworks/base` and one in `packages/apps/Evolver`. The complete bundle has 17 patches
+in 12 projects; the other 15 patches are unchanged. Both resulting source trees are
+identical to the reviewed 20261113.2 source. Each consolidated series was replayed twice
+with the canonical apply code using a sparse checkout. Historical release tags/snapshots
+retain their original patch series. The cancelled build is not resumed; a future build
+needs fresh preparation for the consolidated commit identities.
+
 ## Layout
 
     patches/<project path>/NNNN-<subject>.patch   git format-patch output, one folder per project

@@ -1,25 +1,33 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Diogo Casteluber Laass <4793368+iowaz@users.noreply.github.com>
-Date: Fri, 13 Nov 2026 17:29:37 +0000
+Date: Sat, 14 Nov 2026 01:04:57 +0000
 Subject: [PATCH] Evolver: Add scheduled keybox monitoring controls
 
+Owner-requested opt-in keybox monitoring and recovery.
+Intervals: 15/30/45 minutes and 1/4/12/24 hours.
+Shared manual/background operations, configurable notifications and en-US/pt-BR.
+Includes the reviewed follow-up fixes; source tree unchanged by consolidation.
 ---
- res/values/klimt_keybox_monitor.xml           |  19 +
- .../fragments/miscellaneous/TrickyStore.kt    | 882 +++---------------
- .../miscellaneous/TrickyStoreContent.kt       |  62 ++
- 3 files changed, 211 insertions(+), 752 deletions(-)
+ res/values-en-rUS/klimt_keybox_monitor.xml    |  31 +
+ res/values-pt-rBR/klimt_keybox_monitor.xml    |  31 +
+ res/values/klimt_keybox_monitor.xml           |  31 +
+ .../fragments/miscellaneous/TrickyStore.kt    | 953 ++++--------------
+ .../miscellaneous/TrickyStoreContent.kt       | 115 ++-
+ 5 files changed, 400 insertions(+), 761 deletions(-)
+ create mode 100644 res/values-en-rUS/klimt_keybox_monitor.xml
+ create mode 100644 res/values-pt-rBR/klimt_keybox_monitor.xml
  create mode 100644 res/values/klimt_keybox_monitor.xml
 
-diff --git a/res/values/klimt_keybox_monitor.xml b/res/values/klimt_keybox_monitor.xml
+diff --git a/res/values-en-rUS/klimt_keybox_monitor.xml b/res/values-en-rUS/klimt_keybox_monitor.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..7980354dcab180cf979094cd0574363d9b6efeb3
+index 0000000000000000000000000000000000000000..a427910a3908f4a024a77b38a13c1434122b9d46
 --- /dev/null
-+++ b/res/values/klimt_keybox_monitor.xml
-@@ -0,0 +1,19 @@
++++ b/res/values-en-rUS/klimt_keybox_monitor.xml
+@@ -0,0 +1,31 @@
 +<resources>
 +    <string name="ts_monitor_title">Scheduled keybox monitoring</string>
 +    <string name="ts_monitor_enabled">Automatically check and recover keybox</string>
-+    <string name="ts_monitor_description">Check during standby, quietly notify when valid, and fetch an official replacement if expired or revoked. A replacement also reloads Google processes. Frequent checks use more battery.</string>
++    <string name="ts_monitor_description">Check during standby and fetch an official replacement if expired, revoked or suspended. A replacement reloads Google processes without clearing app data. Frequent checks use more battery.</string>
 +    <string name="ts_monitor_interval">Check interval</string>
 +    <string name="ts_monitor_schedule">Schedule</string>
 +    <string name="ts_monitor_minutes">%1$d minutes</string>
@@ -34,9 +42,95 @@ index 0000000000000000000000000000000000000000..7980354dcab180cf979094cd0574363d
 +    <string name="ts_monitor_unknown">Unable to verify keybox</string>
 +    <string name="ts_monitor_one_hour">1 hour</string>
 +    <string name="ts_monitor_last_confirmed">Last confirmed: %1$s at %2$s</string>
++    <string name="ts_monitor_notifications">Notifications</string>
++    <string name="ts_monitor_notify_every">Every check, whatever the result</string>
++    <string name="ts_monitor_notify_unusable">Expired, revoked or suspended, including successful recovery</string>
++    <string name="ts_monitor_notify_failed">Only when an expired, revoked or suspended keybox cannot be recovered (default)</string>
++    <string name="ts_monitor_operation_failed">Unable to complete the keybox operation. Check your connection and try again.</string>
++    <string name="ts_monitor_bad_file">The keybox file is invalid or could not be verified. The installed keybox was kept.</string>
++    <string name="ts_monitor_disabled_operation">Keybox operations require TrickyStore to be enabled and device RKP to be disabled.</string>
++    <string name="ts_monitor_busy">A keybox operation is already running. Try again shortly.</string>
++    <string name="ts_monitor_state_changed">The keybox or its configuration changed. Check the current status and try again.</string>
++    <string name="ts_monitor_reload_incomplete">The keybox was installed, but some Google processes could not be reloaded. Restart the phone when convenient.</string>
++    <string name="ts_monitor_storage_failed">The keybox could not be saved safely. Check available storage and try again.</string>
++    <string name="ts_monitor_no_replacement">No valid official replacement is available right now. The installed keybox was kept.</string>
++</resources>
+diff --git a/res/values-pt-rBR/klimt_keybox_monitor.xml b/res/values-pt-rBR/klimt_keybox_monitor.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..c89adf3b4b999e541967c9b422be16ca57dd5250
+--- /dev/null
++++ b/res/values-pt-rBR/klimt_keybox_monitor.xml
+@@ -0,0 +1,31 @@
++<resources>
++    <string name="ts_monitor_title">Verificação programada da keybox</string>
++    <string name="ts_monitor_enabled">Verificar e recuperar a keybox automaticamente</string>
++    <string name="ts_monitor_description">Verifica em espera e busca uma substituta oficial se a keybox estiver expirada, revogada ou suspensa. A substituição reinicia os processos do Google sem apagar dados dos apps. Verificações frequentes consomem mais bateria.</string>
++    <string name="ts_monitor_interval">Intervalo de verificação</string>
++    <string name="ts_monitor_schedule">Agendamento</string>
++    <string name="ts_monitor_minutes">%1$d minutos</string>
++    <string name="ts_monitor_hours">%1$d horas</string>
++    <string name="ts_monitor_next_check">Próxima verificação: %1$s</string>
++    <string name="ts_monitor_off">A verificação automática está desativada</string>
++    <string name="ts_monitor_paused">Pausada enquanto o TrickyStore estiver desativado</string>
++    <string name="ts_monitor_rkp_paused">Pausada enquanto o RKP do dispositivo estiver ativado</string>
++    <string name="ts_monitor_starting">Iniciando as verificações automáticas…</string>
++    <string name="ts_monitor_missing">Aguardando a importação ou o download de uma keybox</string>
++    <string name="ts_monitor_expired">Expirada</string>
++    <string name="ts_monitor_unknown">Não foi possível verificar a keybox</string>
++    <string name="ts_monitor_one_hour">1 hora</string>
++    <string name="ts_monitor_last_confirmed">Última confirmação: %1$s em %2$s</string>
++    <string name="ts_monitor_notifications">Notificações</string>
++    <string name="ts_monitor_notify_every">Em todas as verificações, qualquer que seja o resultado</string>
++    <string name="ts_monitor_notify_unusable">Se estiver expirada, revogada ou suspensa, mesmo após recuperação bem-sucedida</string>
++    <string name="ts_monitor_notify_failed">Somente se estiver expirada, revogada ou suspensa e a recuperação falhar (padrão)</string>
++    <string name="ts_monitor_operation_failed">Não foi possível concluir a operação da keybox. Verifique a conexão e tente novamente.</string>
++    <string name="ts_monitor_bad_file">O arquivo de keybox é inválido ou não pôde ser verificado. A keybox instalada foi mantida.</string>
++    <string name="ts_monitor_disabled_operation">As operações de keybox exigem o TrickyStore ativado e o RKP do dispositivo desativado.</string>
++    <string name="ts_monitor_busy">Uma operação de keybox já está em andamento. Tente novamente em instantes.</string>
++    <string name="ts_monitor_state_changed">A keybox ou sua configuração mudou. Verifique o status atual e tente novamente.</string>
++    <string name="ts_monitor_reload_incomplete">A keybox foi instalada, mas alguns processos do Google não puderam ser reiniciados. Reinicie o telefone quando for conveniente.</string>
++    <string name="ts_monitor_storage_failed">Não foi possível salvar a keybox com segurança. Verifique o espaço disponível e tente novamente.</string>
++    <string name="ts_monitor_no_replacement">Nenhuma substituta oficial válida está disponível no momento. A keybox instalada foi mantida.</string>
++</resources>
+diff --git a/res/values/klimt_keybox_monitor.xml b/res/values/klimt_keybox_monitor.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..a427910a3908f4a024a77b38a13c1434122b9d46
+--- /dev/null
++++ b/res/values/klimt_keybox_monitor.xml
+@@ -0,0 +1,31 @@
++<resources>
++    <string name="ts_monitor_title">Scheduled keybox monitoring</string>
++    <string name="ts_monitor_enabled">Automatically check and recover keybox</string>
++    <string name="ts_monitor_description">Check during standby and fetch an official replacement if expired, revoked or suspended. A replacement reloads Google processes without clearing app data. Frequent checks use more battery.</string>
++    <string name="ts_monitor_interval">Check interval</string>
++    <string name="ts_monitor_schedule">Schedule</string>
++    <string name="ts_monitor_minutes">%1$d minutes</string>
++    <string name="ts_monitor_hours">%1$d hours</string>
++    <string name="ts_monitor_next_check">Next check: %1$s</string>
++    <string name="ts_monitor_off">Automatic monitoring is off</string>
++    <string name="ts_monitor_paused">Paused while TrickyStore is off</string>
++    <string name="ts_monitor_rkp_paused">Paused while device RKP is enabled</string>
++    <string name="ts_monitor_starting">Starting automatic checks…</string>
++    <string name="ts_monitor_missing">Waiting for a keybox to be imported or fetched</string>
++    <string name="ts_monitor_expired">Expired</string>
++    <string name="ts_monitor_unknown">Unable to verify keybox</string>
++    <string name="ts_monitor_one_hour">1 hour</string>
++    <string name="ts_monitor_last_confirmed">Last confirmed: %1$s at %2$s</string>
++    <string name="ts_monitor_notifications">Notifications</string>
++    <string name="ts_monitor_notify_every">Every check, whatever the result</string>
++    <string name="ts_monitor_notify_unusable">Expired, revoked or suspended, including successful recovery</string>
++    <string name="ts_monitor_notify_failed">Only when an expired, revoked or suspended keybox cannot be recovered (default)</string>
++    <string name="ts_monitor_operation_failed">Unable to complete the keybox operation. Check your connection and try again.</string>
++    <string name="ts_monitor_bad_file">The keybox file is invalid or could not be verified. The installed keybox was kept.</string>
++    <string name="ts_monitor_disabled_operation">Keybox operations require TrickyStore to be enabled and device RKP to be disabled.</string>
++    <string name="ts_monitor_busy">A keybox operation is already running. Try again shortly.</string>
++    <string name="ts_monitor_state_changed">The keybox or its configuration changed. Check the current status and try again.</string>
++    <string name="ts_monitor_reload_incomplete">The keybox was installed, but some Google processes could not be reloaded. Restart the phone when convenient.</string>
++    <string name="ts_monitor_storage_failed">The keybox could not be saved safely. Check available storage and try again.</string>
++    <string name="ts_monitor_no_replacement">No valid official replacement is available right now. The installed keybox was kept.</string>
 +</resources>
 diff --git a/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt b/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt
-index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff169d15c1 100644
+index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92ecd9796fc 100644
 --- a/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt
 +++ b/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt
 @@ -9,6 +9,10 @@ import android.app.Activity
@@ -83,7 +177,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
  import kotlinx.coroutines.Dispatchers
  import kotlinx.coroutines.delay
  import kotlinx.coroutines.isActive
-@@ -63,7 +55,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -63,14 +55,16 @@ class TrickyStore : SettingsPreferenceFragment() {
  
      private enum class RevocationStatus {
          UNKNOWN, CHECKING, VALID, REVOKED, SUSPENDED, EXPIRING_SOON,
@@ -92,15 +186,16 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
      }
  
      // ---- State --------------------------------------------------------------
-@@ -72,6 +64,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+ 
+     private var currentRevocationStatus: RevocationStatus = RevocationStatus.UNKNOWN
      private var currentRevocationReason: String = ""   // e.g. "KEY_COMPROMISE"
-     private var isCheckInProgress = false
+-    private var isCheckInProgress = false
++    private var pendingKeyboxOperations = 0
++    private var pendingKeyboxFetches = 0
++    private val isCheckInProgress: Boolean get() = pendingKeyboxOperations > 0
      private var isKeyboxPickerOpen = false
-+    private var lastMonitorReport = ""
-+    private var lastMonitorHash = ""
  
      // Set by a manual keybox import; consumed once the revocation check that follows it
-     // finishes, so the Play Store wipe prompt never competes with a keep/replace dialog.
 @@ -85,7 +79,6 @@ class TrickyStore : SettingsPreferenceFragment() {
      // ---- Trust anchors (SHA-256 of DER-encoded cert) ------------------------
  
@@ -171,8 +266,12 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
  
          /**
           * Puts the spoofing settings back to a fresh-install state: the PIF
-@@ -201,30 +155,8 @@ class TrickyStore : SettingsPreferenceFragment() {
-                         ctx.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+@@ -198,33 +152,15 @@ class TrickyStore : SettingsPreferenceFragment() {
+             lifecycleScope.launch {
+                 try {
+                     val bytes = withContext(Dispatchers.IO) {
+-                        ctx.contentResolver.openInputStream(uri)?.use { it.readBytes() }
++                        ctx.contentResolver.openInputStream(uri)?.use { it.readNBytes(KeyboxMonitor.MAX_PAYLOAD_BYTES + 1) }
                              ?: ByteArray(0)
                      }
 -                    // Dry run of the framework's own loader: refuse a keybox it would reject
@@ -183,8 +282,10 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
                      if (!isAdded) return@launch
 -                    if (problem != null) {
 -                        toast(getString(R.string.ts_fetch_keybox_failed, problem))
--                        return@launch
--                    }
++                    if (bytes.size > KeyboxMonitor.MAX_PAYLOAD_BYTES) {
++                        toast(getString(R.string.ts_monitor_bad_file))
+                         return@launch
+                     }
 -                    val encoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
 -                    Settings.Secure.putString(ctx.contentResolver, KEYBOX_KEY, encoded)
 -                    Settings.Secure.putString(
@@ -203,7 +304,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
                  } catch (e: Exception) {
                      if (isAdded) toast(getString(R.string.ts_failed, e.message ?: ""))
                  }
-@@ -298,6 +230,21 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -298,6 +234,31 @@ class TrickyStore : SettingsPreferenceFragment() {
  
          override fun onFetchKeybox() = fetchOfficialKeybox()
  
@@ -215,6 +316,16 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 +
 +        override fun onMonitorInterval() { ui.dialog = TsDialog.MonitorInterval }
 +
++        override fun onMonitorNotifications() { ui.dialog = TsDialog.MonitorNotifications }
++
++        override fun onMonitorNotificationMode(mode: Int) {
++            Settings.Secure.putIntForUser(requireContext().contentResolver,
++                KeyboxMonitor.NOTIFICATIONS, KeyboxMonitor.normalizeNotifications(mode),
++                UserHandle.USER_SYSTEM)
++            ui.dialog = null
++            refreshMonitorStatus()
++        }
++
 +        override fun onMonitorMinutes(minutes: Int) {
 +            Settings.Secure.putIntForUser(requireContext().contentResolver,
 +                KeyboxMonitor.INTERVAL, minutes, UserHandle.USER_SYSTEM)
@@ -225,7 +336,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
          override fun onImportKeybox() {
              val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                  addCategory(Intent.CATEGORY_OPENABLE)
-@@ -392,6 +339,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -392,6 +353,8 @@ class TrickyStore : SettingsPreferenceFragment() {
              "EXPIRING_SOON"  -> RevocationStatus.EXPIRING_SOON
              "CHAIN_INVALID"  -> RevocationStatus.CHAIN_INVALID
              "UNTRUSTED_ROOT" -> RevocationStatus.UNTRUSTED_ROOT
@@ -234,16 +345,36 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
              else             -> RevocationStatus.UNKNOWN
          }
          currentRevocationReason = Settings.Secure.getString(
-@@ -404,7 +353,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -404,12 +367,23 @@ class TrickyStore : SettingsPreferenceFragment() {
      override fun onResume() {
          super.onResume()
          refreshStatus()
 -        if (!isTrickyStoreEnabled) return
-+        if (!isTrickyStoreEnabled || ui.monitorEnabled) return
++        if (!isTrickyStoreEnabled || !ui.monitorOwner) return
++        if (!ui.keyboxExists) {
++            autoFetchIfNoKeybox()
++            return
++        }
  
-         val lastChecked = Settings.Secure.getLong(
-             requireContext().contentResolver, LAST_REVOCATION_CHECK_KEY, 0L)
-@@ -428,6 +377,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+-        val lastChecked = Settings.Secure.getLong(
+-            requireContext().contentResolver, LAST_REVOCATION_CHECK_KEY, 0L)
+-        val overADay = System.currentTimeMillis() - lastChecked > TimeUnit.HOURS.toMillis(24)
+-        if (overADay && !isCheckInProgress && !isDuckRkpEnabled()) {
++        // Keep upstream's check-on-resume behavior. With monitoring enabled, use the
++        // same persisted deadline as system_server instead of a second 24-hour clock.
++        val resolver = requireContext().contentResolver
++        val now = System.currentTimeMillis()
++        val lastChecked = Settings.Secure.getLong(resolver, LAST_REVOCATION_CHECK_KEY, 0L)
++        val due = if (ui.monitorEnabled) {
++            val next = Settings.Secure.getLongForUser(resolver,
++                KeyboxMonitor.NEXT, 0L, UserHandle.USER_SYSTEM)
++            next > 0 && now >= next
++        } else now - lastChecked > TimeUnit.HOURS.toMillis(24)
++        if (due && !isKeyboxPickerOpen && !isCheckInProgress && !isDuckRkpEnabled()) {
+             checkKeyboxRevocation()
+         } else {
+             autoFetchIfNoKeybox()
+@@ -428,6 +402,7 @@ class TrickyStore : SettingsPreferenceFragment() {
              requireContext().packageManager,
              TrickyStoreAppSettings.parseTargetList(Settings.Secure.getString(resolver, TARGET_KEY)),
          )
@@ -251,7 +382,22 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
          ui.enabled = isTrickyStoreEnabled
          ui.keyboxExists = keyboxExists
          ui.targetCount = targets.size
-@@ -455,6 +405,12 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -444,8 +419,12 @@ class TrickyStore : SettingsPreferenceFragment() {
+ 
+         ui.verificationSummary = buildVerificationSummary(targets)
+ 
+-        applyRevocationUi(currentRevocationStatus, currentRevocationReason)
+-        updateFetchButtonState(keyboxExists)
++        // Polling must not overwrite the loading state with the previous verdict.
++        if (isCheckInProgress) {
++            applyRevocationUi(RevocationStatus.CHECKING)
++        } else {
++            updateFetchButtonState(keyboxExists)
++        }
+     }
+ 
+     private fun applyRevocationUi(status: RevocationStatus, reason: String = "") {
+@@ -455,6 +434,12 @@ class TrickyStore : SettingsPreferenceFragment() {
  
          // Chip label, chip tone and the descriptive summary for each status.
          val (chip, tone, summary) = when (status) {
@@ -264,7 +410,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
              RevocationStatus.VALID -> Triple(
                  getString(R.string.ts_chip_valid), ExpressiveTone.Positive,
                  getString(R.string.ts_revocation_valid))
-@@ -478,7 +434,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -478,7 +463,8 @@ class TrickyStore : SettingsPreferenceFragment() {
                  getString(R.string.ts_revocation_checking))
              RevocationStatus.UNKNOWN -> Triple(
                  getString(R.string.ts_chip_unchecked), ExpressiveTone.Neutral,
@@ -274,7 +420,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
                          requireContext().contentResolver, KEYBOX_KEY).isNullOrEmpty())
                      getString(R.string.ts_revocation_not_yet_checked)
                  else
-@@ -488,7 +445,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -488,7 +474,8 @@ class TrickyStore : SettingsPreferenceFragment() {
          ui.revocationChip = chip
          ui.revocationTone = tone
          ui.revocationChecking = status == RevocationStatus.CHECKING
@@ -284,7 +430,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
          ui.revocationSummary = if (status == RevocationStatus.CHECKING || lastChecked == null)
              summary
          else
-@@ -512,642 +470,114 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -512,642 +499,143 @@ class TrickyStore : SettingsPreferenceFragment() {
          }
      }
  
@@ -309,7 +455,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -        applyRevocationUi(RevocationStatus.CHECKING)
 -        updateFetchButtonState(keyboxExists = true)
 +    private fun fetchOfficialKeybox(silent: Boolean = false) =
-+        requestKeyboxOperation(KeyboxMonitor.FETCH)
++        requestKeyboxOperation(KeyboxMonitor.FETCH, silent = silent)
  
 -        lifecycleScope.launch {
 -            val result = withContext(Dispatchers.IO) {
@@ -346,28 +492,34 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -                    ui.revocationChecking = false
 -                    ui.revocationSummary = getString(R.string.ts_revocation_error, e.message)
 -                    offerWipeIfPending(null)
-+    private fun requestKeyboxOperation(operation: Int, payload: String? = null) {
-+        if (isCheckInProgress) return
-+        isCheckInProgress = true
-+        ui.fetching = operation == KeyboxMonitor.FETCH
-+        ui.revocationChecking = true
++    private fun requestKeyboxOperation(operation: Int, payload: String? = null, silent: Boolean = false) {
++        // Imports/deletes must reach the service even when another operation is pending.
++        // The service serializes them; a boolean guard used to discard the selected file.
++        pendingKeyboxOperations++
++        if (operation == KeyboxMonitor.FETCH) pendingKeyboxFetches++
++        ui.fetching = pendingKeyboxFetches > 0
++        applyRevocationUi(RevocationStatus.CHECKING)
++        ui.fetchEnabled = false
 +        try {
 +            KeyboxMonitor.request(operation, payload, RemoteCallback({ response ->
 +                val result = response ?: Bundle.EMPTY
-+                isCheckInProgress = false
-+                ui.fetching = false
-+                ui.revocationChecking = false
++                pendingKeyboxOperations--
++                if (operation == KeyboxMonitor.FETCH) pendingKeyboxFetches--
++                ui.fetching = pendingKeyboxFetches > 0
++                ui.revocationChecking = isCheckInProgress
 +                if (!isAdded) return@RemoteCallback
-+                if (!result.getBoolean("success")) {
-+                    toast(getString(R.string.ts_fetch_keybox_failed,
-+                        result.getString("failure") ?: "UNKNOWN"))
++                val installedImport = operation == KeyboxMonitor.IMPORT &&
++                    result.getString("recovery") == "reload_incomplete"
++                if (!result.getBoolean("success") && !installedImport) {
++                    if (!silent) toast(keyboxFailureMessage(result.getString("failure") ?: ""))
 +                } else if (operation == KeyboxMonitor.IMPORT) {
-+                    toast(getString(R.string.ts_keybox_imported))
++                    toast(if (installedImport) getString(R.string.ts_monitor_reload_incomplete)
++                        else getString(R.string.ts_keybox_imported))
 +                    offerWipeAfterCheck = true
 +                    checkKeyboxRevocation()
 +                    return@RemoteCallback
 +                } else if (operation == KeyboxMonitor.FETCH) {
-+                    toast(getString(if (result.getString("failure") == "UNCHANGED")
++                    if (!silent) toast(getString(if (result.getString("failure") == "UNCHANGED")
 +                        R.string.ts_fetch_keybox_same_file else R.string.ts_fetch_keybox_success))
 +                } else if (operation == KeyboxMonitor.DELETE) {
 +                    toast(getString(R.string.ts_keybox_deleted))
@@ -459,13 +611,8 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -                        cacheRevokedSerial(serial)
 -                        return Pair(RevocationStatus.SUSPENDED, reason)
 -                    }
-+                lastMonitorReport = ""
-+                refreshStatus()
-+                when (currentRevocationStatus) {
-+                    RevocationStatus.EXPIRING_SOON -> showExpiringSoonDialog()
-+                    RevocationStatus.CHAIN_INVALID -> if (isUserImportedKeybox()) showChainInvalidDialog()
-+                    RevocationStatus.UNTRUSTED_ROOT -> if (isUserImportedKeybox()) showUntrustedRootDialog()
-+                    else -> Unit
++                if (operation == KeyboxMonitor.CHECK && result.getString("recovery") == "replaced") {
++                    toast(getString(R.string.ts_fetch_keybox_success))
                  }
 -            }
 -        }
@@ -633,16 +780,9 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -            null
 -        } finally {
 -            conn?.disconnect()
-+                offerWipeIfPending(currentRevocationStatus)
-+            }, Handler(Looper.getMainLooper())))
-+        } catch (e: Exception) {
-+            isCheckInProgress = false
-+            ui.fetching = false
-+            ui.revocationChecking = false
-+            toast(getString(R.string.ts_failed, e.message ?: ""))
-         }
-     }
- 
+-        }
+-    }
+-
 -    /**
 -     * Opens a connection with cache-busting so a stale CDN-cached 200 isn't
 -     * mistaken for a fresh answer. The android.googleapis.com/attestation
@@ -667,8 +807,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -     * FALLBACK_ROOT_*_SHA256 fingerprints.
 -     */
 -    private fun getTrustAnchors(): Set<X509Certificate> {
-+    private fun refreshMonitorStatus() {
-         val resolver = requireContext().contentResolver
+-        val resolver = requireContext().contentResolver
 -        val cached = Settings.Secure.getString(resolver, ROOTS_CACHE_KEY)
 -        val cachedAt = Settings.Secure.getLong(resolver, ROOTS_CACHED_AT_KEY, 0L)
 -        val now = System.currentTimeMillis()
@@ -707,59 +846,28 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -                } else {
 -                    Log.w(TAG, "roots fetch: response parsed to zero valid certs")
 -                    null
--                }
++                refreshStatus()
++                if (isCheckInProgress) return@RemoteCallback
++                when (currentRevocationStatus) {
++                    RevocationStatus.EXPIRING_SOON -> showExpiringSoonDialog()
++                    RevocationStatus.CHAIN_INVALID -> if (isUserImportedKeybox()) showChainInvalidDialog()
++                    RevocationStatus.UNTRUSTED_ROOT -> if (isUserImportedKeybox()) showUntrustedRootDialog()
++                    else -> Unit
+                 }
 -            } else {
 -                Log.w(TAG, "roots fetch failed: HTTP ${conn.responseCode}")
 -                null
-+        ui.monitorOwner = UserHandle.myUserId() == UserHandle.USER_SYSTEM
-+        ui.monitorEnabled = Settings.Secure.getIntForUser(resolver,
-+            KeyboxMonitor.ENABLED, 0, UserHandle.USER_SYSTEM) == 1
-+        ui.monitorMinutes = Settings.Secure.getIntForUser(resolver,
-+            KeyboxMonitor.INTERVAL, 60, UserHandle.USER_SYSTEM)
-+        val next = Settings.Secure.getLongForUser(resolver,
-+            KeyboxMonitor.NEXT, 0L, UserHandle.USER_SYSTEM)
-+        ui.monitorSummary = when {
-+            !ui.monitorEnabled -> getString(R.string.ts_monitor_off)
-+            isDuckRkpEnabled() -> getString(R.string.ts_monitor_rkp_paused)
-+            !isTrickyStoreEnabled -> getString(R.string.ts_monitor_paused)
-+            Settings.Secure.getString(resolver, KEYBOX_KEY).isNullOrEmpty() ->
-+                getString(R.string.ts_monitor_missing)
-+            next > 0 -> getString(R.string.ts_monitor_next_check, formatTime(next))
-+            else -> getString(R.string.ts_monitor_starting)
-+        }
-+        val rawReport = Settings.Secure.getString(resolver, KeyboxMonitor.REPORT) ?: ""
-+        val rawKeybox = Settings.Secure.getString(resolver, KEYBOX_KEY)
-+        val currentHash = KeyboxMonitor.keyboxHash(rawKeybox)
-+        if (rawReport == lastMonitorReport && currentHash == lastMonitorHash) return
-+        lastMonitorReport = rawReport
-+        lastMonitorHash = currentHash
-+        val report = runCatching { JSONObject(rawReport) }.getOrNull()
-+        currentRevocationStatus = if (report != null &&
-+            report.optString("hash") == currentHash) {
-+            runCatching { RevocationStatus.valueOf(report.optString("status")) }
-+                .getOrDefault(RevocationStatus.UNKNOWN)
-+        } else RevocationStatus.UNKNOWN
-+        currentRevocationReason = report?.optString("reason") ?: ""
-+        if (currentRevocationStatus == RevocationStatus.EXPIRING_SOON &&
-+            (report?.optLong("expiry") ?: 0) > 0) {
-+            currentRevocationReason = formatTime(report!!.optLong("expiry"))
-+        }
-+        if (!isCheckInProgress) {
-+            applyRevocationUi(currentRevocationStatus, currentRevocationReason)
-+            if (currentRevocationStatus == RevocationStatus.UNKNOWN && report != null &&
-+                report.optString("hash") == currentHash && report.optLong("confirmedAt") > 0) {
-+                ui.revocationSummary += "\n" + getString(R.string.ts_monitor_last_confirmed,
-+                    report.optString("confirmedStatus"), formatTime(report.optLong("confirmedAt")))
-             }
--        } catch (e: Exception) {
+-            }
++                offerWipeIfPending(currentRevocationStatus)
++            }, Handler(Looper.getMainLooper())))
+         } catch (e: Exception) {
 -            Log.w(TAG, "roots fetch failed", e)
 -            null
 -        } finally {
 -            conn?.disconnect()
-+            updateFetchButtonState(!rawKeybox.isNullOrEmpty())
-         }
-     }
- 
+-        }
+-    }
+-
 -    private fun parseRootsJson(raw: String): Set<X509Certificate>? = try {
 -        val array = org.json.JSONArray(raw)
 -        val factory = CertificateFactory.getInstance("X.509")
@@ -825,7 +933,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -
 -    // ---- Auto-fetch ---------------------------------------------------------
 -
-     private fun autoFetchIfNoKeybox() {
+-    private fun autoFetchIfNoKeybox() {
 -        if (!isTrickyStoreEnabled) return
 -        if (isDuckRkpEnabled()) return
 -        if (isKeyboxPickerOpen) return
@@ -840,12 +948,28 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -                fetchOfficialKeybox(silent = true)
 -            }
 -            return
--        }
++            pendingKeyboxOperations--
++            if (operation == KeyboxMonitor.FETCH) pendingKeyboxFetches--
++            ui.fetching = pendingKeyboxFetches > 0
++            ui.revocationChecking = isCheckInProgress
++            if (!silent) toast(getString(R.string.ts_monitor_operation_failed))
++            refreshStatus()
+         }
 -        fetchOfficialKeybox(silent = true)
--    }
--
+     }
+ 
 -    // ---- Official keybox fetch ----------------------------------------------
--
++    private fun keyboxFailureMessage(failure: String): String = getString(when {
++        failure == "INVALID_KEYBOX" -> R.string.ts_monitor_bad_file
++        failure.startsWith("CANDIDATE_") -> R.string.ts_monitor_no_replacement
++        failure == "DISABLED" -> R.string.ts_monitor_disabled_operation
++        failure == "BUSY" || failure == "WORKER_BUSY" -> R.string.ts_monitor_busy
++        failure == "STATE_CHANGED" -> R.string.ts_monitor_state_changed
++        failure == "ACTIVATION_FAILED" -> R.string.ts_monitor_reload_incomplete
++        failure == "BACKUP_OR_INSTALL_FAILED" || failure == "STATE_WRITE_FAILED" -> R.string.ts_monitor_storage_failed
++        else -> R.string.ts_monitor_operation_failed
++    })
+ 
 -    private fun fetchOfficialKeybox(silent: Boolean = false) {
 -        if (isDuckRkpEnabled()) {
 -            if (!silent) toast(getString(R.string.ts_rkp_fetch_disabled))
@@ -871,7 +995,55 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -                        conn.disconnect()
 -                    }
 -                }
--            }
++    private fun refreshMonitorStatus() {
++        val resolver = requireContext().contentResolver
++        ui.monitorOwner = UserHandle.myUserId() == UserHandle.USER_SYSTEM
++        ui.monitorEnabled = Settings.Secure.getIntForUser(resolver,
++            KeyboxMonitor.ENABLED, 0, UserHandle.USER_SYSTEM) == 1
++        ui.monitorMinutes = KeyboxMonitor.normalizeMinutes(Settings.Secure.getIntForUser(resolver,
++            KeyboxMonitor.INTERVAL, KeyboxMonitor.DEFAULT_MINUTES, UserHandle.USER_SYSTEM))
++        ui.monitorNotifications = KeyboxMonitor.normalizeNotifications(Settings.Secure.getIntForUser(
++            resolver, KeyboxMonitor.NOTIFICATIONS, KeyboxMonitor.DEFAULT_NOTIFICATIONS,
++            UserHandle.USER_SYSTEM))
++        val next = Settings.Secure.getLongForUser(resolver,
++            KeyboxMonitor.NEXT, 0L, UserHandle.USER_SYSTEM)
++        ui.monitorSummary = when {
++            !ui.monitorEnabled -> getString(R.string.ts_monitor_off)
++            isDuckRkpEnabled() -> getString(R.string.ts_monitor_rkp_paused)
++            !isTrickyStoreEnabled -> getString(R.string.ts_monitor_paused)
++            Settings.Secure.getString(resolver, KEYBOX_KEY).isNullOrEmpty() ->
++                getString(R.string.ts_monitor_missing)
++            next > 0 -> getString(R.string.ts_monitor_next_check, formatTime(next))
++            else -> getString(R.string.ts_monitor_starting)
++        }
++        val rawReport = Settings.Secure.getString(resolver, KeyboxMonitor.REPORT) ?: ""
++        val rawKeybox = Settings.Secure.getString(resolver, KEYBOX_KEY)
++        val currentHash = KeyboxMonitor.keyboxHash(rawKeybox)
++        val report = runCatching { JSONObject(rawReport) }.getOrNull()
++        currentRevocationStatus = if (report != null &&
++            report.optString("hash") == currentHash) {
++            runCatching { RevocationStatus.valueOf(report.optString("status")) }
++                .getOrDefault(RevocationStatus.UNKNOWN)
++        } else RevocationStatus.UNKNOWN
++        currentRevocationReason = report?.optString("reason") ?: ""
++        if (currentRevocationStatus == RevocationStatus.EXPIRING_SOON &&
++            (report?.optLong("expiry") ?: 0) > 0) {
++            currentRevocationReason = formatTime(report!!.optLong("expiry"))
++        }
++        if (!isCheckInProgress) {
++            applyRevocationUi(currentRevocationStatus, currentRevocationReason)
++            if (currentRevocationStatus == RevocationStatus.UNKNOWN && report != null &&
++                report.optString("hash") == currentHash && report.optLong("confirmedAt") > 0) {
++                ui.revocationSummary += "\n" + getString(R.string.ts_monitor_last_confirmed,
++                    when (report.optString("confirmedStatus")) {
++                        "VALID" -> getString(R.string.ts_chip_valid)
++                        "EXPIRING_SOON" -> getString(R.string.ts_chip_expiring)
++                        "EXPIRED" -> getString(R.string.ts_monitor_expired)
++                        "REVOKED" -> getString(R.string.ts_revocation_revoked, "")
++                        "SUSPENDED" -> getString(R.string.ts_revocation_suspended, "")
++                        else -> getString(R.string.ts_monitor_unknown)
++                    }, formatTime(report.optLong("confirmedAt")))
+             }
 -
 -            if (!silent) updateFetchButtonState(keyboxExists = true)
 -            if (!isAdded) return@launch
@@ -977,9 +1149,10 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -                    }
 -                }
 -            )
--        }
--    }
--
++            updateFetchButtonState(!rawKeybox.isNullOrEmpty())
+         }
+     }
+ 
 -    // ---- Cooldown helpers ---------------------------------------------------
 -
 -    private fun isNoValidCooldownActive(): Boolean {
@@ -998,7 +1171,8 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -    private fun clearNoValidKeyboxCooldown() {
 -        Settings.Secure.putLong(
 -            requireContext().contentResolver, LAST_NO_VALID_KEY, 0L)
-+        if (ui.monitorEnabled || !isTrickyStoreEnabled || isDuckRkpEnabled() ||
++    private fun autoFetchIfNoKeybox() {
++        if (!ui.monitorOwner || ui.monitorEnabled || !isTrickyStoreEnabled || isDuckRkpEnabled() ||
 +            isKeyboxPickerOpen || isCheckInProgress) return
 +        val resolver = requireContext().contentResolver
 +        val failedAt = Settings.Secure.getLong(resolver, LAST_NO_VALID_KEY, 0L)
@@ -1017,7 +1191,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
      private fun getLastFetchedFormatted(): String? {
          val millis = Settings.Secure.getLong(
              requireContext().contentResolver, LAST_FETCHED_KEY, 0L)
-@@ -1181,29 +611,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -1181,29 +669,7 @@ class TrickyStore : SettingsPreferenceFragment() {
          ui.dialog = TsDialog.DeleteKeybox
      }
  
@@ -1048,7 +1222,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
  
      /**
       * Offers to clear Play Store data once per manual keybox import, after its revocation check.
-@@ -1326,39 +734,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -1326,39 +792,8 @@ class TrickyStore : SettingsPreferenceFragment() {
          Settings.Secure.getString(
              requireContext().contentResolver, KEYBOX_SOURCE_KEY) == KEYBOX_SOURCE_USER
  
@@ -1067,7 +1241,8 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -            // on every keybox import/fetch (including the silent auto-replace) signed users out.
 -        } catch (_: Exception) {}
 -    }
--
++    // ---- Patch-date validation ---------------------------------------------
+ 
 -    // ---- Crypto helpers -----------------------------------------------------
 -
 -    /** SHA-256 of [input] bytes, returned as contiguous uppercase hex. */
@@ -1079,8 +1254,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
 -    /** Strip colons/spaces and uppercase for consistent comparison. */
 -    private fun normalise(fingerprint: String) =
 -        fingerprint.replace(":", "").replace(" ", "").uppercase()
-+    // ---- Patch-date validation ---------------------------------------------
- 
+-
 -    /**
 -     * Returns true if [patchDate] (a single YYYY-MM-DD value, not the
 -     * multi-line per-package block format) is more than 12 months old.
@@ -1089,7 +1263,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
      private fun isPatchDateStale(patchDate: String): Boolean {
          val dateRe = Regex("""\d{4}-\d{2}-\d{2}""")
          val trimmed = patchDate.trim()
-@@ -1386,6 +763,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -1386,6 +821,7 @@ class TrickyStore : SettingsPreferenceFragment() {
              repeatOnLifecycle(Lifecycle.State.RESUMED) {
                  while (isActive) {
                      refreshDuckRkp()
@@ -1097,43 +1271,116 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..4988cdca2c9a644060f154309b0094ff
                      delay(1500)
                  }
              }
+@@ -1499,7 +935,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+     }
+ 
+     private fun formatTime(millis: Long): String =
+-        SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(millis))
++        android.text.format.DateFormat.getDateFormat(requireContext()).format(Date(millis)) + " " +
++            android.text.format.DateFormat.getTimeFormat(requireContext()).format(Date(millis))
+ 
+     // ---- Misc ---------------------------------------------------------------
+ 
 diff --git a/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt b/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt
-index b78b84f00f0b6741349cb003327c062a7aa6be8c..415448d864c41dd6e0b93fab56390048db8dbd8d 100644
+index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40adfd03f7f1 100644
 --- a/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt
 +++ b/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt
-@@ -33,6 +33,7 @@ import com.android.settingslib.spa.widget.ui.Footer
+@@ -5,6 +5,8 @@
+ 
+ package org.evolution.settings.fragments.miscellaneous
+ 
++import android.security.trickystore.KeyboxMonitor
++import androidx.compose.material3.LinearProgressIndicator
+ import android.security.trickystore.TrickyStoreService
+ import androidx.compose.foundation.layout.Column
+ import androidx.compose.foundation.layout.Row
+@@ -33,6 +35,8 @@ import com.android.settingslib.spa.widget.ui.Footer
  
  /** Dialog shown over the TrickyStore screen. The fragment sets it, [TsDialogs] renders it. */
  internal sealed interface TsDialog {
 +    object MonitorInterval : TsDialog
++    object MonitorNotifications : TsDialog
      object DeleteKeybox : TsDialog
      object UntrustedRoot : TsDialog
      object ChainInvalid : TsDialog
-@@ -45,6 +46,10 @@ internal sealed interface TsDialog {
+@@ -45,6 +49,11 @@ internal sealed interface TsDialog {
  internal class TsUiState {
      var dialog by mutableStateOf<TsDialog?>(null)
  
 +    var monitorOwner by mutableStateOf(false)
 +    var monitorEnabled by mutableStateOf(false)
-+    var monitorMinutes by mutableStateOf(60)
++    var monitorMinutes by mutableStateOf(KeyboxMonitor.DEFAULT_MINUTES)
++    var monitorNotifications by mutableStateOf(KeyboxMonitor.DEFAULT_NOTIFICATIONS)
 +    var monitorSummary by mutableStateOf("")
      var enabled by mutableStateOf(true)
      var keyboxExists by mutableStateOf(false)
      var targetCount by mutableStateOf(0)
-@@ -75,6 +80,9 @@ internal class TsUiState {
+@@ -75,6 +84,11 @@ internal class TsUiState {
  
  internal interface TsActions {
      fun onEnabledChange(enabled: Boolean)
 +    fun onMonitorChange(enabled: Boolean)
++    fun onMonitorNotifications()
++    fun onMonitorNotificationMode(mode: Int)
 +    fun onMonitorInterval()
 +    fun onMonitorMinutes(minutes: Int)
      fun onFetchKeybox()
      fun onImportKeybox()
      fun onDeleteKeybox()
-@@ -219,6 +227,34 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+@@ -130,7 +144,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+             Column {
+                 Spacer(Modifier.height(SettingsSpace.extraSmall6))
+ 
+-                if (!state.rkpEnabled) {
++                if (!state.rkpEnabled && state.monitorOwner) {
+                     ExpressivePrimaryAction(
+                         text = stringResource(R.string.ts_fetch_keybox),
+                         icon = Icons.Rounded.CloudDownload,
+@@ -153,6 +167,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+                     }
+                     Spacer(Modifier.height(SettingsSpace.extraSmall2))
+                 }
++                if (state.monitorOwner && !state.rkpEnabled) {
+                 ExpressiveActionRow(
+                     buildList {
+                         add(
+@@ -162,7 +177,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+                                 onClick = actions::onImportKeybox,
+                             ),
+                         )
+-                        if (!state.rkpEnabled) {
++                        if (!state.rkpEnabled && state.monitorOwner) {
+                             add(
+                                 ExpressiveAction(
+                                     stringResource(R.string.action_delete),
+@@ -175,6 +190,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+                     },
+                 )
+ 
++                }
+                 if (state.rkpSupported) {
+                     ExpressiveGroup(title = stringResource(R.string.ts_rkp_title)) {
+                         item {
+@@ -204,7 +220,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
                      }
                  }
  
+-                if (!state.rkpEnabled) {
++                if (!state.rkpEnabled && state.monitorOwner) {
+                     ExpressiveGroup(title = stringResource(R.string.ts_keybox_management)) {
+                         item {
+                             ExpressiveNavRow(
+@@ -215,6 +231,45 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+                                 enabled = !state.revocationChecking,
+                                 onClick = actions::onCheckRevocation,
+                             )
++                            if (state.revocationChecking) {
++                                LinearProgressIndicator(modifier = Modifier.expressiveInset())
++                            }
++                        }
++                    }
++                }
++
 +                if (state.monitorOwner) {
 +                    ExpressiveGroup(title = stringResource(R.string.ts_monitor_title)) {
 +                        item {
@@ -1155,20 +1402,45 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..415448d864c41dd6e0b93fab56390048
 +                        }
 +                        item {
 +                            ExpressiveNavRow(
++                                title = stringResource(R.string.ts_monitor_notifications),
++                                summary = monitorNotificationLabel(state.monitorNotifications),
++                                enabled = state.monitorEnabled && !state.rkpEnabled,
++                                onClick = actions::onMonitorNotifications,
++                            )
++                        }
++                        item {
++                            ExpressiveNavRow(
 +                                title = stringResource(R.string.ts_monitor_schedule),
 +                                summary = state.monitorSummary,
 +                            )
-+                        }
-+                    }
-+                }
-+
-                 ExpressiveGroup(title = stringResource(R.string.ts_target_configuration)) {
-                     item {
-                         ExpressiveNavRow(
-@@ -262,6 +298,26 @@ private fun TsDialogs(state: TsUiState, actions: TsActions) {
+                         }
+                     }
+                 }
+@@ -262,6 +317,47 @@ private fun TsDialogs(state: TsUiState, actions: TsActions) {
      val dismiss = { state.dialog = null }
      when (val dialog = state.dialog) {
          null -> Unit
++        TsDialog.MonitorNotifications -> ExpressiveDialog(
++            onDismissRequest = dismiss,
++            title = { Text(stringResource(R.string.ts_monitor_notifications)) },
++            confirmButton = {
++                androidx.compose.material3.TextButton(onClick = dismiss) {
++                    Text(stringResource(android.R.string.cancel))
++                }
++            },
++            text = {
++                Column {
++                    listOf(KeyboxMonitor.NOTIFY_EVERY_CHECK, KeyboxMonitor.NOTIFY_UNUSABLE,
++                        KeyboxMonitor.NOTIFY_RECOVERY_FAILED).forEach { mode ->
++                        ExpressiveChoiceRow(
++                            title = monitorNotificationLabel(mode),
++                            selected = state.monitorNotifications == mode,
++                            onClick = { actions.onMonitorNotificationMode(mode) },
++                        )
++                    }
++                }
++            },
++        )
 +        TsDialog.MonitorInterval -> ExpressiveDialog(
 +            onDismissRequest = dismiss,
 +            title = { Text(stringResource(R.string.ts_monitor_interval)) },
@@ -1179,7 +1451,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..415448d864c41dd6e0b93fab56390048
 +            },
 +            text = {
 +                Column {
-+                    listOf(15, 30, 45, 60, 120, 720).forEach { minutes ->
++                    KeyboxMonitor.intervalMinutes().forEach { minutes ->
 +                        ExpressiveChoiceRow(
 +                            title = monitorIntervalLabel(minutes),
 +                            selected = state.monitorMinutes == minutes,
@@ -1192,7 +1464,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..415448d864c41dd6e0b93fab56390048
          TsDialog.DeleteKeybox -> ExpressiveConfirmDialog(
              title = stringResource(R.string.ts_delete_keybox_title),
              message = stringResource(R.string.ts_delete_keybox_message),
-@@ -421,3 +477,9 @@ private fun TsPatchDateDialog(
+@@ -421,3 +517,16 @@ private fun TsPatchDateDialog(
          },
      )
  }
@@ -1202,3 +1474,10 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..415448d864c41dd6e0b93fab56390048
 +    if (minutes == 60) stringResource(R.string.ts_monitor_one_hour)
 +    else if (minutes < 60) stringResource(R.string.ts_monitor_minutes, minutes)
 +    else stringResource(R.string.ts_monitor_hours, minutes / 60)
++
++@Composable
++private fun monitorNotificationLabel(mode: Int): String = stringResource(when (mode) {
++    KeyboxMonitor.NOTIFY_EVERY_CHECK -> R.string.ts_monitor_notify_every
++    KeyboxMonitor.NOTIFY_UNUSABLE -> R.string.ts_monitor_notify_unusable
++    else -> R.string.ts_monitor_notify_failed
++})
