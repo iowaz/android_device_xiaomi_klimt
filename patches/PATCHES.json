@@ -203,10 +203,10 @@
     "project": "device/lineage/sepolicy",
     "class": "personal",
     "purpose": "A user build drops the adbroot domain and its rules, which only serve the adb_root binary that user builds do not ship; Duck Detector flags adbd -> adbroot and the valid u:r:adbroot:s0 context otherwise (20261105 scan).",
-    "base": "4a1e432dd5cbf4e0dc2bbc0141da1e3f8651dfae",
-    "base_tree": "fb98284489d25a0d6f215a99c2b769eff33693b0",
-    "final_tree": "f849e538365c1566a0cc446ce3692c188d66bd5d",
-    "final_head": "ea39dfd90039bb87f7fcf1bbb9b3ea1c80554cde",
+    "base": "a6dda9b6771a4911de72abbb0a2bafaf9a30eb4c",
+    "base_tree": "ddd6ddc22ead18a0d6a06f32b3f6a35a14ad2300",
+    "final_tree": "1b52249b6ce49aa97d18b1b87af85545fa3a0a2e",
+    "final_head": "e54ccbf713b2ddfc8a72f9a2b44c7ef73e82b699",
     "patches": [
       {
         "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-and-domain-to-debu.patch",
