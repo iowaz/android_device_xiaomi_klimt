@@ -100,10 +100,10 @@
     "project": "lineage-sdk",
     "class": "personal",
     "purpose": "Build.EVOLUTION_VERSION and EVOLUTION_DISPLAY_VERSION come from the evolution-build-info constants instead of the removed ro.evolution.* props (evox20).",
-    "base": "79ef380941058cc59848dbf368d52c806b384898",
-    "base_tree": "5aaa53761626d57a3b6f7a9fcf573cf36701e83d",
-    "final_tree": "ef04bc3ecfe72e65dc61840d0e397e205b753aef",
-    "final_head": "554ecedfd2b37e4cc6830c7c371af52d0b0d2187",
+    "base": "1b8e843aedb2342485c9fec0059ae30b8ccc8d0c",
+    "base_tree": "f8feb9bf78a59b640a1bf60c0a3202bdfebf6963",
+    "final_tree": "7f6dfc04842fe273ae7a59b113f4e059a478a89b",
+    "final_head": "82b32bb69bbeacda5413574ca251aad6eeff6914",
     "patches": [
       {
         "file": "lineage-sdk/0001-sdk-Take-the-Evolution-X-versions-from-build-constan.patch",
