@@ -174,10 +174,10 @@
     "project": "frameworks/base",
     "class": "personal",
     "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). Owner-requested scheduled keybox monitoring, validated official recovery and notifications (2026-11-13). The 20261113.2 follow-up adds configurable notification policy, shared/manual deadline handling, bounded isolated cleanup, a read-only operation engine and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
-    "base": "bae39ab11971686a839812afbecce2cb773cd021",
-    "base_tree": "b27e4020c5a0b2b0bb4a30af49c27e4824f49a92",
-    "final_tree": "ba67f5df39c51204e22b891cc93b2dcc045d1943",
-    "final_head": "1709432aa770d413a877a525aa59a16c4054e7b4",
+    "base": "c147be9fc6f490e2876dbfe7af4f9bb688a89ba2",
+    "base_tree": "f518f4c67c442d1eb4882caafc649493da16f069",
+    "final_tree": "ab5ffbcf5f877d16f36446c2b87db6ef79def892",
+    "final_head": "4727f532dd394297081a3b6d0dc6b63ed0976697",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
@@ -193,7 +193,7 @@
       },
       {
         "file": "frameworks/base/0003-TrickyStore-Add-scheduled-keybox-monitoring-and-vali.patch",
-        "sha256": "44cdae9722a789e8cd332824a01524ece658483c193d20a20526954345654b0d",
+        "sha256": "feb217c04af5713195fb8437e45831b487d40734486e6d6c836549c1b66ff527",
         "class": "personal",
         "subject": "TrickyStore: Add scheduled keybox monitoring and validated recovery"
       }
