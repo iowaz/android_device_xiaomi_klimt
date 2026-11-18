@@ -26,10 +26,10 @@
     "project": "frameworks/native",
     "class": "klimt",
     "purpose": "libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata instead of failing and logging on every buffer (evox13).",
-    "base": "4375f0eb6ad237f707374a1eb93996bdf24283a9",
-    "base_tree": "755c31458d80d211c58a19598307dc62844b375d",
-    "final_tree": "cc6239f512d9bcf2bc9877dc4af9fc8c7ed3159b",
-    "final_head": "0916b3b4a4fce54bceefd1f58a30a146858ff25a",
+    "base": "540e7976a44076f728d9bdb0d14e4af4a462393d",
+    "base_tree": "90cccc70ea569406a4713d7dbd3e05a61339c84d",
+    "final_tree": "d2fc09a95734bef5220873f84682565e14c2a41f",
+    "final_head": "acd60f9ce47cf5f32728b2a5c1ed1883d2c2498f",
     "patches": [
       {
         "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
@@ -123,10 +123,10 @@
     "project": "packages/apps/Settings",
     "class": "personal",
     "purpose": "The model page takes the build type and device name from the evolution-build-info constants instead of the removed props (evox20, ported to ModelPageController in evox27).",
-    "base": "89cf6264e6e97464bca9b203530272be8394d3b9",
-    "base_tree": "ed261b474ed59c368d922c2df7c5b75dff1e3d35",
-    "final_tree": "ab7bdcc13113137ccdf41ec1461ed7121054140f",
-    "final_head": "64f4703d5fac8e23bdd045c5b8d2f68b1b8dfa28",
+    "base": "ea2ede56f48a1019c0ea580c004b009b0016e290",
+    "base_tree": "016d0b227bea46b96e5c1af28fa59c4a95b11742",
+    "final_tree": "d829ddead4535fdd85354a116779061582263973",
+    "final_head": "8ab9f443e2296b77bd12885b86cf54075d6ce5f8",
     "patches": [
       {
         "file": "packages/apps/Settings/0001-ModelPageController-Take-the-build-type-and-device-f.patch",
@@ -140,10 +140,10 @@
     "project": "packages/apps/Updater",
     "class": "personal",
     "purpose": "The Updater takes the device name for its OTA and changelog URLs from the evolution-build-info constant instead of ro.evolution.device (evox20, ported to the Kotlin Updater in evox27).",
-    "base": "1ca3c51bf538cdba729bbddcbc93ee2c42c1bd7d",
-    "base_tree": "73898845d4d2d0b664a4271bd6b6c6a6e6e10ebe",
-    "final_tree": "6d51faae022fe1b4ee01a45f51fb86571aacfaf8",
-    "final_head": "64af6cbeff385f6a8229877fc75392db93abe8e3",
+    "base": "2dedc20cffbb0cffbf4c4c3f36dd4405ec083d5f",
+    "base_tree": "d5bbe4b1129ce72ec1575d6ca768e853d308e98a",
+    "final_tree": "047e2310a2a6598070ff3e49574bb7214baccc9a",
+    "final_head": "f4195979e2fecf1b16376ea77d22277fe3f5c7d3",
     "patches": [
       {
         "file": "packages/apps/Updater/0001-Updater-Take-the-device-name-from-a-build-constant.patch",
@@ -157,14 +157,14 @@
     "project": "bootable/recovery",
     "class": "personal",
     "purpose": "The recovery menu title takes the Evolution X version from <evolution/build_info.h> instead of the removed ro.evolution.build.version (evox20).",
-    "base": "509af2be4587cfe57ed89b0ddc7fe76bcfa25f63",
-    "base_tree": "e6eb9305475c841d7d3db90b20454e2b89d2a541",
-    "final_tree": "776f0f4d14b4b6551e5b2c37e29676f9c61bc935",
-    "final_head": "6b0e2c230c6f2bad8470e846f89a2eb940811aa3",
+    "base": "65c99a82880b04a98923819293b3f31a5b7f02ee",
+    "base_tree": "e2ae3965fc6bc7fd7ff8d44b98b6234f43a0246d",
+    "final_tree": "449af5b8328e8c57e434e31524c6e3c80356f5b4",
+    "final_head": "45fcb8334127d97669157e9194394861604bba87",
     "patches": [
       {
         "file": "bootable/recovery/0001-recovery-Take-the-Evolution-X-version-from-a-build-c.patch",
-        "sha256": "688fce6ba038f124e13c595e3836e0aa10be5f00643f45dc3a58e4e95f1536e5",
+        "sha256": "d4c004c43498a82a154213764adb886ab149764fd6e7b50cc2879b698698814f",
         "class": "personal",
         "subject": "recovery: Take the Evolution X version from a build constant"
       }
@@ -174,10 +174,10 @@
     "project": "frameworks/base",
     "class": "personal",
     "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). Owner-requested scheduled keybox monitoring, validated official recovery and notifications (2026-11-13). The 20261113.2 follow-up adds configurable notification policy, shared/manual deadline handling, bounded isolated cleanup, a read-only operation engine and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
-    "base": "c147be9fc6f490e2876dbfe7af4f9bb688a89ba2",
-    "base_tree": "f518f4c67c442d1eb4882caafc649493da16f069",
-    "final_tree": "ab5ffbcf5f877d16f36446c2b87db6ef79def892",
-    "final_head": "4727f532dd394297081a3b6d0dc6b63ed0976697",
+    "base": "ee7dc98a459d49ad2f0e7f24e280157345d08979",
+    "base_tree": "232f1a0e351cd51cb3eea80693baf1db94c3fd92",
+    "final_tree": "5f72ef0a71003356f346d994d9e9c5d8003bc576",
+    "final_head": "ce1e8f55b8199e97423af4e57d03233b3c0ea903",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
@@ -203,10 +203,10 @@
     "project": "device/lineage/sepolicy",
     "class": "personal",
     "purpose": "A user build drops the adbroot domain and its rules, which only serve the adb_root binary that user builds do not ship; Duck Detector flags adbd -> adbroot and the valid u:r:adbroot:s0 context otherwise (20261105 scan).",
-    "base": "a6dda9b6771a4911de72abbb0a2bafaf9a30eb4c",
-    "base_tree": "ddd6ddc22ead18a0d6a06f32b3f6a35a14ad2300",
-    "final_tree": "1b52249b6ce49aa97d18b1b87af85545fa3a0a2e",
-    "final_head": "e54ccbf713b2ddfc8a72f9a2b44c7ef73e82b699",
+    "base": "6244b3b03fda22d64cbdf610ae66c37ff5e538eb",
+    "base_tree": "a04bc98772a22fce705d8c1d82e1d8a1b57ab085",
+    "final_tree": "888a54f6cae759d40dc098170bcd52f2cf709929",
+    "final_head": "b2c01ebd74e9bfc799c56f8b84add757aec2cf70",
     "patches": [
       {
         "file": "device/lineage/sepolicy/0001-sepolicy-Keep-the-adb-root-policy-and-domain-to-debu.patch",
@@ -220,10 +220,10 @@
     "project": "packages/apps/Evolver",
     "class": "personal",
     "purpose": "Owner-requested TrickyStore monitor controls: opt-in, 15/30/45 minute and 1/4/12/24 hour intervals, three notification policies, visible manual verification and schedule reset, shared system-owned operations, and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
-    "base": "71aff8d3cb1873e884436b6df06783f5bc4fb16e",
-    "base_tree": "47f9ad23a9c111904651c492c10cacf7f376fca5",
-    "final_tree": "8d4fe44fcea3b3a6ba62b29fd40e3dbb968cce2c",
-    "final_head": "505be929e7022eb79226cf94bad1accdff691cb7",
+    "base": "b42e5735f42692635b9641dd6ae0098899568428",
+    "base_tree": "fcc5a677ab7f956a17a8cc6f5f578f0d73dcc898",
+    "final_tree": "5d3c7cdbaa0ae1ee6764c13deeeb662f0e81b15a",
+    "final_head": "47b1769e1f3098f728de2987cc732c68cb5fd473",
     "patches": [
       {
         "file": "packages/apps/Evolver/0001-Evolver-Add-scheduled-keybox-monitoring-controls.patch",

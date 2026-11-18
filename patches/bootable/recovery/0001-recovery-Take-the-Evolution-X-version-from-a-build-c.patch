@@ -29,7 +29,7 @@ index 490fe0c8b890f2b04247049f7d3c7fd7229cb7d5..0259c3230ee19d2c906ef429fe0f62fa
          "librecovery_ui",
      ],
 diff --git a/recovery.cpp b/recovery.cpp
-index 16ef05851dc4178f704487c7d2001becedfca2bb..79726dade83b52195751fd11eefb476deab0e443 100644
+index 859e60caecc3af42a6524359b5aa84007ecea69b..275d5f427dc26e9087bc07171619e612ccfc8edd 100644
 --- a/recovery.cpp
 +++ b/recovery.cpp
 @@ -43,6 +43,7 @@
@@ -40,7 +40,7 @@ index 16ef05851dc4178f704487c7d2001becedfca2bb..79726dade83b52195751fd11eefb476d
  #include <fs_mgr/roots.h>
  #include <volume_manager/VolumeManager.h>
  #include <ziparchive/zip_archive.h>
-@@ -936,7 +937,7 @@ Device::BuiltinAction start_recovery(Device* device, const std::vector<std::stri
+@@ -952,7 +953,7 @@ Device::BuiltinAction start_recovery(Device* device, const std::vector<std::stri
    std::string ver = android::base::GetProperty("ro.modversion", "");
  
    std::vector<std::string> title_lines = {
