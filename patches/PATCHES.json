@@ -26,10 +26,10 @@
     "project": "frameworks/native",
     "class": "klimt",
     "purpose": "libui asks the MediaTek mapper once whether it lists SMPTE 2094-50 metadata instead of failing and logging on every buffer (evox13).",
-    "base": "540e7976a44076f728d9bdb0d14e4af4a462393d",
-    "base_tree": "90cccc70ea569406a4713d7dbd3e05a61339c84d",
-    "final_tree": "d2fc09a95734bef5220873f84682565e14c2a41f",
-    "final_head": "acd60f9ce47cf5f32728b2a5c1ed1883d2c2498f",
+    "base": "dfe5f014b7b2f38af8318edb8704c175f8ba6bc2",
+    "base_tree": "863da187d3f258cdd75786530ccf7650d3611b45",
+    "final_tree": "905077f6e145e961f08ea8f4473c00bb7e0576b0",
+    "final_head": "47c9cdd07e6af62aaccc9db8219628f3def6807c",
     "patches": [
       {
         "file": "frameworks/native/0001-libui-Preserve-the-supported-SMPTE2094_50-metadata-g.patch",
@@ -100,10 +100,10 @@
     "project": "lineage-sdk",
     "class": "personal",
     "purpose": "Build.EVOLUTION_VERSION and EVOLUTION_DISPLAY_VERSION come from the evolution-build-info constants instead of the removed ro.evolution.* props (evox20).",
-    "base": "1b8e843aedb2342485c9fec0059ae30b8ccc8d0c",
-    "base_tree": "f8feb9bf78a59b640a1bf60c0a3202bdfebf6963",
-    "final_tree": "7f6dfc04842fe273ae7a59b113f4e059a478a89b",
-    "final_head": "82b32bb69bbeacda5413574ca251aad6eeff6914",
+    "base": "11cdf5957c4f86419e69f2905a47343412e71ce3",
+    "base_tree": "6636ed46641fae956269353fb34f8f74dd06165f",
+    "final_tree": "91295f7e351f71862a4e33e1cc3ef79ff2e9c90f",
+    "final_head": "d8d584f05d064f98c97b135d6edece57fe0ab55b",
     "patches": [
       {
         "file": "lineage-sdk/0001-sdk-Take-the-Evolution-X-versions-from-build-constan.patch",
@@ -123,10 +123,10 @@
     "project": "packages/apps/Settings",
     "class": "personal",
     "purpose": "The model page takes the build type and device name from the evolution-build-info constants instead of the removed props (evox20, ported to ModelPageController in evox27).",
-    "base": "ea2ede56f48a1019c0ea580c004b009b0016e290",
-    "base_tree": "016d0b227bea46b96e5c1af28fa59c4a95b11742",
-    "final_tree": "d829ddead4535fdd85354a116779061582263973",
-    "final_head": "8ab9f443e2296b77bd12885b86cf54075d6ce5f8",
+    "base": "2ab1636a600c626fa7a55ef058ed840b019cfed5",
+    "base_tree": "51e4cde5c405240d453eeb0a175bf799f5e01acc",
+    "final_tree": "c672ddcca077ba1f04d2a5fbf003a357bdd5d3bf",
+    "final_head": "01ce452a2483be9be724fc9044fc244044a5639c",
     "patches": [
       {
         "file": "packages/apps/Settings/0001-ModelPageController-Take-the-build-type-and-device-f.patch",
@@ -140,10 +140,10 @@
     "project": "packages/apps/Updater",
     "class": "personal",
     "purpose": "The Updater takes the device name for its OTA and changelog URLs from the evolution-build-info constant instead of ro.evolution.device (evox20, ported to the Kotlin Updater in evox27).",
-    "base": "2dedc20cffbb0cffbf4c4c3f36dd4405ec083d5f",
-    "base_tree": "d5bbe4b1129ce72ec1575d6ca768e853d308e98a",
-    "final_tree": "047e2310a2a6598070ff3e49574bb7214baccc9a",
-    "final_head": "f4195979e2fecf1b16376ea77d22277fe3f5c7d3",
+    "base": "0bc42378f4a35c8f0b80ff50e8b4525ae3504778",
+    "base_tree": "609b673960a0aa18fee21c04397ffb7dfdde1ff9",
+    "final_tree": "84def55fb4aac289b6f8f462b593a3adf4f9109c",
+    "final_head": "d2afe9080ef97db5fa92df0aa387cda2ae65934a",
     "patches": [
       {
         "file": "packages/apps/Updater/0001-Updater-Take-the-device-name-from-a-build-constant.patch",
@@ -174,10 +174,10 @@
     "project": "frameworks/base",
     "class": "personal",
     "purpose": "The package manager's upgrade digest (PackagePartitions.FINGERPRINT) also includes ro.build.date.utc, because klimt reports a fixed stock Xiaomi fingerprint; without it a new build is not an upgrade and keeps a stale package parser cache (evox27). SystemUI keeps the charging animation off the always-on display instead of drawing at 120 Hz while the phone dozes on the charger (owner's request after the 2026-11-04 log review). Owner-requested scheduled keybox monitoring, validated official recovery and notifications (2026-11-13). The 20261113.2 follow-up adds configurable notification policy, shared/manual deadline handling, bounded isolated cleanup, a read-only operation engine and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
-    "base": "ee7dc98a459d49ad2f0e7f24e280157345d08979",
-    "base_tree": "232f1a0e351cd51cb3eea80693baf1db94c3fd92",
-    "final_tree": "5f72ef0a71003356f346d994d9e9c5d8003bc576",
-    "final_head": "ce1e8f55b8199e97423af4e57d03233b3c0ea903",
+    "base": "da39dc543780a6afdd7a61be3ea737ec3cd236a0",
+    "base_tree": "e449b2e0013c9361a78dec0abca1a33b5ad65fa1",
+    "final_tree": "f4c4e6ca1725870ea3e49b0825f3ff03a7070331",
+    "final_head": "4f612fe50d3b4c82f7a3d65f62772d441d18e10b",
     "patches": [
       {
         "file": "frameworks/base/0001-PackagePartitions-Include-the-build-time-in-the-upgr.patch",
@@ -193,7 +193,7 @@
       },
       {
         "file": "frameworks/base/0003-TrickyStore-Add-scheduled-keybox-monitoring-and-vali.patch",
-        "sha256": "feb217c04af5713195fb8437e45831b487d40734486e6d6c836549c1b66ff527",
+        "sha256": "e95b2d8048a9fb5ffb974a040ff1f4893a90526f3e2b2f1f1e83d4b6cc2da4b3",
         "class": "personal",
         "subject": "TrickyStore: Add scheduled keybox monitoring and validated recovery"
       }
@@ -220,10 +220,10 @@
     "project": "packages/apps/Evolver",
     "class": "personal",
     "purpose": "Owner-requested TrickyStore monitor controls: opt-in, 15/30/45 minute and 1/4/12/24 hour intervals, three notification policies, visible manual verification and schedule reset, shared system-owned operations, and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
-    "base": "b42e5735f42692635b9641dd6ae0098899568428",
-    "base_tree": "fcc5a677ab7f956a17a8cc6f5f578f0d73dcc898",
-    "final_tree": "5d3c7cdbaa0ae1ee6764c13deeeb662f0e81b15a",
-    "final_head": "47b1769e1f3098f728de2987cc732c68cb5fd473",
+    "base": "45aa14db1b862ecb7c84ff28525990a324d64cc8",
+    "base_tree": "8fe32b8a367d45d4b7dc6f541f86e97191e03fbe",
+    "final_tree": "7d412dbc534b802e62d4b022710be7fa8d7d9f8f",
+    "final_head": "917bda8312b443f911fe027f89e33b82f8dec816",
     "patches": [
       {
         "file": "packages/apps/Evolver/0001-Evolver-Add-scheduled-keybox-monitoring-controls.patch",
