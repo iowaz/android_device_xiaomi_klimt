@@ -8,12 +8,12 @@ Intervals: 15/30/45 minutes and 1/4/12/24 hours.
 Shared manual/background operations, configurable notifications and en-US/pt-BR.
 Includes the reviewed follow-up fixes; source tree unchanged by consolidation.
 ---
- res/values-en-rUS/klimt_keybox_monitor.xml    |  31 +
- res/values-pt-rBR/klimt_keybox_monitor.xml    |  31 +
- res/values/klimt_keybox_monitor.xml           |  31 +
- .../fragments/miscellaneous/TrickyStore.kt    | 953 ++++--------------
- .../miscellaneous/TrickyStoreContent.kt       | 115 ++-
- 5 files changed, 400 insertions(+), 761 deletions(-)
+ res/values-en-rUS/klimt_keybox_monitor.xml    |   31 +
+ res/values-pt-rBR/klimt_keybox_monitor.xml    |   31 +
+ res/values/klimt_keybox_monitor.xml           |   31 +
+ .../fragments/miscellaneous/TrickyStore.kt    | 1007 ++++-------------
+ .../miscellaneous/TrickyStoreContent.kt       |  142 ++-
+ 5 files changed, 432 insertions(+), 810 deletions(-)
  create mode 100644 res/values-en-rUS/klimt_keybox_monitor.xml
  create mode 100644 res/values-pt-rBR/klimt_keybox_monitor.xml
  create mode 100644 res/values/klimt_keybox_monitor.xml
@@ -130,13 +130,13 @@ index 0000000000000000000000000000000000000000..a427910a3908f4a024a77b38a13c1434
 +    <string name="ts_monitor_no_replacement">No valid official replacement is available right now. The installed keybox was kept.</string>
 +</resources>
 diff --git a/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt b/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt
-index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92ecd9796fc 100644
+index 837be7f45a03b637ef90cd8222cd6fa9ef65e833..7482f843b9cefbf67021e0d8c39fe3b21a141840 100644
 --- a/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt
 +++ b/src/org/evolution/settings/fragments/miscellaneous/TrickyStore.kt
-@@ -9,6 +9,10 @@ import android.app.Activity
- import android.app.ActivityManager
+@@ -10,6 +10,10 @@ import android.app.ActivityManager
  import android.content.Context
  import android.content.Intent
+ import android.net.Uri
 +import android.os.Handler
 +import android.os.Looper
 +import android.os.RemoteCallback
@@ -144,22 +144,21 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
  import android.os.Bundle
  import android.os.UserHandle
  import android.view.LayoutInflater
-@@ -18,9 +22,7 @@ import androidx.compose.ui.platform.ComposeView
- import androidx.compose.ui.platform.ViewCompositionStrategy
- import com.android.settings.core.SubSettingLauncher
+@@ -21,7 +25,6 @@ import com.android.settings.core.SubSettingLauncher
  import android.provider.Settings
--import android.security.trickystore.KeyBoxManager
+ import android.security.trickystore.KeyBoxManager
  import android.security.trickystore.TrickyStoreService
 -import android.util.Base64
  import android.util.JsonReader
  import android.util.JsonToken
  import android.widget.Toast
-@@ -31,22 +33,12 @@ import androidx.lifecycle.repeatOnLifecycle
+@@ -32,23 +35,13 @@ import androidx.lifecycle.repeatOnLifecycle
  import com.android.internal.logging.nano.MetricsProto
  import com.android.settings.R
  import com.android.settings.SettingsPreferenceFragment
 -import java.io.BufferedReader
 -import java.io.ByteArrayInputStream
+-import java.io.ByteArrayOutputStream
 -import java.io.InputStreamReader
  import java.io.StringReader
 -import java.net.HttpURLConnection
@@ -174,10 +173,11 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
  import java.util.concurrent.TimeUnit
 -import java.util.regex.Pattern
 -import android.util.Log
++import kotlinx.coroutines.CancellationException
  import kotlinx.coroutines.Dispatchers
  import kotlinx.coroutines.delay
  import kotlinx.coroutines.isActive
-@@ -63,14 +55,16 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -65,14 +58,16 @@ class TrickyStore : SettingsPreferenceFragment() {
  
      private enum class RevocationStatus {
          UNKNOWN, CHECKING, VALID, REVOKED, SUSPENDED, EXPIRING_SOON,
@@ -196,7 +196,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
      private var isKeyboxPickerOpen = false
  
      // Set by a manual keybox import; consumed once the revocation check that follows it
-@@ -85,7 +79,6 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -87,7 +82,6 @@ class TrickyStore : SettingsPreferenceFragment() {
      // ---- Trust anchors (SHA-256 of DER-encoded cert) ------------------------
  
      companion object {
@@ -204,7 +204,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
  
          private val PACKAGE_REGEX = Regex("""[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)*""")
          private val TARGET_LINE_REGEX = Regex("""[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)*\s*[?!-]?""")
-@@ -94,30 +87,9 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -96,30 +90,9 @@ class TrickyStore : SettingsPreferenceFragment() {
          // falls back to AUTO, so the UI refuses it rather than let it degrade silently.
          private val VALID_TARGET_MODES = setOf("AUTO", "LEAF_HACK", "GENERATE", "SKIP")
  
@@ -235,7 +235,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
          private const val KEYBOX_SOURCE_USER         = "user"
          private const val TARGET_KEY                 = TrickyStoreAppSettings.TARGET_KEY
          internal const val PATCH_KEY                 = "spoof_trickystore_patch"
-@@ -129,30 +101,12 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -131,30 +104,12 @@ class TrickyStore : SettingsPreferenceFragment() {
          private const val LAST_REVOCATION_STATUS_KEY = "spoof_trickystore_last_revocation_status"
          private const val LAST_REVOCATION_REASON_KEY = "spoof_trickystore_last_revocation_reason"
  
@@ -266,45 +266,128 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
  
          /**
           * Puts the spoofing settings back to a fresh-install state: the PIF
-@@ -198,33 +152,15 @@ class TrickyStore : SettingsPreferenceFragment() {
-             lifecycleScope.launch {
-                 try {
-                     val bytes = withContext(Dispatchers.IO) {
--                        ctx.contentResolver.openInputStream(uri)?.use { it.readBytes() }
-+                        ctx.contentResolver.openInputStream(uri)?.use { it.readNBytes(KeyboxMonitor.MAX_PAYLOAD_BYTES + 1) }
-                             ?: ByteArray(0)
-                     }
--                    // Dry run of the framework's own loader: refuse a keybox it would reject
--                    // instead of storing something that silently never takes effect.
--                    val problem = withContext(Dispatchers.IO) {
--                        KeyBoxManager.validate(bytes.toString(Charsets.UTF_8))
--                    }
-                     if (!isAdded) return@launch
--                    if (problem != null) {
--                        toast(getString(R.string.ts_fetch_keybox_failed, problem))
-+                    if (bytes.size > KeyboxMonitor.MAX_PAYLOAD_BYTES) {
-+                        toast(getString(R.string.ts_monitor_bad_file))
-                         return@launch
-                     }
--                    val encoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
--                    Settings.Secure.putString(ctx.contentResolver, KEYBOX_KEY, encoded)
--                    Settings.Secure.putString(
--                        ctx.contentResolver, KEYBOX_SOURCE_KEY, KEYBOX_SOURCE_USER)
--                    saveLastFetchedTimestamp()
--                    killGms()
--                    toast(getString(R.string.ts_keybox_imported))
--                    currentRevocationStatus = RevocationStatus.UNKNOWN
--                    currentRevocationReason = ""
--                    Settings.Secure.putString(
--                        ctx.contentResolver, LAST_REVOCATION_STATUS_KEY, "")
--                    refreshStatus()
--                    offerWipeAfterCheck = true
--                    checkKeyboxRevocation()
-+                    requestKeyboxOperation(KeyboxMonitor.IMPORT, bytes.toString(Charsets.UTF_8))
-                 } catch (e: Exception) {
-                     if (isAdded) toast(getString(R.string.ts_failed, e.message ?: ""))
+@@ -194,25 +149,32 @@ class TrickyStore : SettingsPreferenceFragment() {
+         ActivityResultContracts.StartActivityForResult()
+     ) { result ->
+         isKeyboxPickerOpen = false
+-        if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
++        if (result.resultCode != Activity.RESULT_OK || !canManageKeybox()) {
++            return@registerForActivityResult
++        }
+         result.data?.data?.let { uri -> importKeybox(uri) }
+     }
+ 
+     private val keyboxExport = registerForActivityResult(
+         ActivityResultContracts.StartActivityForResult()
+     ) { result ->
+-        if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
++        if (result.resultCode != Activity.RESULT_OK || !canManageKeybox()) {
++            return@registerForActivityResult
++        }
+         val uri = result.data?.data ?: return@registerForActivityResult
+         val ctx = requireContext()
+         lifecycleScope.launch {
+             try {
+                 val xml = withContext(Dispatchers.IO) { exportableKeybox(ctx) }
++                if (!canManageKeybox()) return@launch
+                 withContext(Dispatchers.IO) {
+                     ctx.contentResolver.openOutputStream(uri)?.use { stream ->
+                         stream.write(xml.toByteArray(Charsets.UTF_8))
+                     } ?: throw IllegalArgumentException("Could not save the keybox")
                  }
-@@ -298,6 +234,31 @@ class TrickyStore : SettingsPreferenceFragment() {
+                 if (isAdded) toast(getString(R.string.ts_keybox_exported))
++            } catch (e: CancellationException) {
++                throw e
+             } catch (e: Exception) {
+                 if (isAdded) {
+                     toast(getString(R.string.ts_keybox_extract_failed, e.message ?: ""))
+@@ -235,69 +197,34 @@ class TrickyStore : SettingsPreferenceFragment() {
+         return xml
+     }
+ 
+-    /**
+-     * Keybox management and Duck RKP share this importer. A plain keybox XML file
+-     * is stored as that document. A capture is reduced to the keybox XML inside it,
+-     * or to a keybox built from PEM keys and certificates, before the framework
+-     * loader checks it.
+-     */
++    private fun canManageKeybox(): Boolean =
++        isAdded && UserHandle.myUserId() == UserHandle.USER_SYSTEM && !isDuckRkpEnabled()
++
+     private fun importKeybox(uri: Uri) {
+         val ctx = requireContext()
+         lifecycleScope.launch {
+             try {
+-                val xml = withContext(Dispatchers.IO) {
+-                    KeyBoxManager.extract(readCapture(ctx, uri))
++                val bytes = withContext(Dispatchers.IO) {
++                    ctx.contentResolver.openInputStream(uri)?.use {
++                        it.readNBytes(KeyboxMonitor.MAX_PAYLOAD_BYTES + 1)
++                    } ?: ByteArray(0)
+                 }
+-                // Dry run of the framework's own loader: refuse a keybox it would reject
+-                // instead of storing something that silently never takes effect.
+-                val problem = withContext(Dispatchers.IO) { KeyBoxManager.validate(xml) }
+-                if (!isAdded) return@launch
+-                if (problem != null) {
+-                    toast(getString(R.string.ts_keybox_extract_failed, problem))
++                if (bytes.size > KeyboxMonitor.MAX_PAYLOAD_BYTES) {
++                    if (isAdded) toast(getString(R.string.ts_monitor_bad_file))
+                     return@launch
+                 }
+-                val encoded = Base64.encodeToString(
+-                    xml.toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
+-                Settings.Secure.putString(ctx.contentResolver, KEYBOX_KEY, encoded)
+-                Settings.Secure.putString(
+-                    ctx.contentResolver, KEYBOX_SOURCE_KEY, KEYBOX_SOURCE_USER)
+-                saveLastFetchedTimestamp()
+-                killGms()
+-                toast(getString(R.string.ts_keybox_imported))
+-                currentRevocationStatus = RevocationStatus.UNKNOWN
+-                currentRevocationReason = ""
+-                Settings.Secure.putString(
+-                    ctx.contentResolver, LAST_REVOCATION_STATUS_KEY, "")
+-                refreshStatus()
+-                offerWipeAfterCheck = true
+-                checkKeyboxRevocation()
++                val xml = withContext(Dispatchers.IO) { KeyBoxManager.extract(bytes) }
++                if (!canManageKeybox()) return@launch
++                // The monitor validates and installs the extracted XML as one operation.
++                requestKeyboxOperation(KeyboxMonitor.IMPORT, xml)
++            } catch (e: CancellationException) {
++                throw e
+             } catch (e: Exception) {
+-                if (isAdded) {
+-                    toast(getString(R.string.ts_keybox_extract_failed, e.message ?: ""))
+-                }
++                if (isAdded) toast(getString(R.string.ts_keybox_extract_failed, e.message ?: ""))
+             }
+         }
+     }
+ 
+-    private fun readCapture(context: Context, uri: Uri): ByteArray {
+-        context.contentResolver.openInputStream(uri)?.use { input ->
+-            val out = ByteArrayOutputStream()
+-            val chunk = ByteArray(8192)
+-            var total = 0
+-            while (true) {
+-                val n = input.read(chunk)
+-                if (n < 0) break
+-                total += n
+-                if (total > 256 * 1024) {
+-                    throw IllegalArgumentException("Capture is larger than 256 KiB")
+-                }
+-                out.write(chunk, 0, n)
+-            }
+-            return out.toByteArray()
+-        }
+-        return ByteArray(0)
+-    }
+-
+     private val targetPicker = registerForActivityResult(
+         ActivityResultContracts.StartActivityForResult()
+     ) { result ->
+@@ -364,6 +291,31 @@ class TrickyStore : SettingsPreferenceFragment() {
  
          override fun onFetchKeybox() = fetchOfficialKeybox()
  
@@ -336,7 +419,15 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
          override fun onImportKeybox() {
              val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                  addCategory(Intent.CATEGORY_OPENABLE)
-@@ -392,6 +353,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -374,6 +326,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+         }
+ 
+         override fun onExportKeybox() {
++            if (!canManageKeybox()) return
+             val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                 addCategory(Intent.CATEGORY_OPENABLE)
+                 type = "text/xml"
+@@ -467,6 +420,8 @@ class TrickyStore : SettingsPreferenceFragment() {
              "EXPIRING_SOON"  -> RevocationStatus.EXPIRING_SOON
              "CHAIN_INVALID"  -> RevocationStatus.CHAIN_INVALID
              "UNTRUSTED_ROOT" -> RevocationStatus.UNTRUSTED_ROOT
@@ -345,7 +436,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
              else             -> RevocationStatus.UNKNOWN
          }
          currentRevocationReason = Settings.Secure.getString(
-@@ -404,12 +367,23 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -479,12 +434,23 @@ class TrickyStore : SettingsPreferenceFragment() {
      override fun onResume() {
          super.onResume()
          refreshStatus()
@@ -374,7 +465,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
              checkKeyboxRevocation()
          } else {
              autoFetchIfNoKeybox()
-@@ -428,6 +402,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -503,6 +469,7 @@ class TrickyStore : SettingsPreferenceFragment() {
              requireContext().packageManager,
              TrickyStoreAppSettings.parseTargetList(Settings.Secure.getString(resolver, TARGET_KEY)),
          )
@@ -382,7 +473,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
          ui.enabled = isTrickyStoreEnabled
          ui.keyboxExists = keyboxExists
          ui.targetCount = targets.size
-@@ -444,8 +419,12 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -519,8 +486,12 @@ class TrickyStore : SettingsPreferenceFragment() {
  
          ui.verificationSummary = buildVerificationSummary(targets)
  
@@ -397,7 +488,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
      }
  
      private fun applyRevocationUi(status: RevocationStatus, reason: String = "") {
-@@ -455,6 +434,12 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -530,6 +501,12 @@ class TrickyStore : SettingsPreferenceFragment() {
  
          // Chip label, chip tone and the descriptive summary for each status.
          val (chip, tone, summary) = when (status) {
@@ -410,7 +501,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
              RevocationStatus.VALID -> Triple(
                  getString(R.string.ts_chip_valid), ExpressiveTone.Positive,
                  getString(R.string.ts_revocation_valid))
-@@ -478,7 +463,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -553,7 +530,8 @@ class TrickyStore : SettingsPreferenceFragment() {
                  getString(R.string.ts_revocation_checking))
              RevocationStatus.UNKNOWN -> Triple(
                  getString(R.string.ts_chip_unchecked), ExpressiveTone.Neutral,
@@ -420,7 +511,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
                          requireContext().contentResolver, KEYBOX_KEY).isNullOrEmpty())
                      getString(R.string.ts_revocation_not_yet_checked)
                  else
-@@ -488,7 +474,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -563,7 +541,8 @@ class TrickyStore : SettingsPreferenceFragment() {
          ui.revocationChip = chip
          ui.revocationTone = tone
          ui.revocationChecking = status == RevocationStatus.CHECKING
@@ -430,7 +521,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
          ui.revocationSummary = if (status == RevocationStatus.CHECKING || lastChecked == null)
              summary
          else
-@@ -512,642 +499,143 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -587,642 +566,143 @@ class TrickyStore : SettingsPreferenceFragment() {
          }
      }
  
@@ -448,22 +539,20 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
 -            autoFetchIfNoKeybox()
 -            return
 -        }
-+    private fun checkKeyboxRevocation() = requestKeyboxOperation(KeyboxMonitor.CHECK)
- 
+-
 -        isCheckInProgress = true
 -        currentRevocationStatus = RevocationStatus.CHECKING
 -        applyRevocationUi(RevocationStatus.CHECKING)
 -        updateFetchButtonState(keyboxExists = true)
-+    private fun fetchOfficialKeybox(silent: Boolean = false) =
-+        requestKeyboxOperation(KeyboxMonitor.FETCH, silent = silent)
- 
+-
 -        lifecycleScope.launch {
 -            val result = withContext(Dispatchers.IO) {
 -                runCatching { performRevocationCheck(raw) }
 -            }
 -            isCheckInProgress = false
 -            if (!isAdded) return@launch
--
++    private fun checkKeyboxRevocation() = requestKeyboxOperation(KeyboxMonitor.CHECK)
+ 
 -            result.fold(
 -                onSuccess = { (status, reason) ->
 -                    currentRevocationStatus = status
@@ -480,7 +569,9 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
 -                            requireContext().contentResolver,
 -                            LAST_REVOCATION_REASON_KEY, reason)
 -                    }
--
++    private fun fetchOfficialKeybox(silent: Boolean = false) =
++        requestKeyboxOperation(KeyboxMonitor.FETCH, silent = silent)
+ 
 -                    applyRevocationUi(status, reason)
 -                    updateFetchButtonState(keyboxExists = true)
 -                    refreshStatus()  // update keybox-info row too
@@ -1191,7 +1282,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
      private fun getLastFetchedFormatted(): String? {
          val millis = Settings.Secure.getLong(
              requireContext().contentResolver, LAST_FETCHED_KEY, 0L)
-@@ -1181,29 +669,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -1256,29 +736,7 @@ class TrickyStore : SettingsPreferenceFragment() {
          ui.dialog = TsDialog.DeleteKeybox
      }
  
@@ -1222,7 +1313,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
  
      /**
       * Offers to clear Play Store data once per manual keybox import, after its revocation check.
-@@ -1326,39 +792,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -1401,39 +859,8 @@ class TrickyStore : SettingsPreferenceFragment() {
          Settings.Secure.getString(
              requireContext().contentResolver, KEYBOX_SOURCE_KEY) == KEYBOX_SOURCE_USER
  
@@ -1263,7 +1354,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
      private fun isPatchDateStale(patchDate: String): Boolean {
          val dateRe = Regex("""\d{4}-\d{2}-\d{2}""")
          val trimmed = patchDate.trim()
-@@ -1386,6 +821,7 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -1461,6 +888,7 @@ class TrickyStore : SettingsPreferenceFragment() {
              repeatOnLifecycle(Lifecycle.State.RESUMED) {
                  while (isActive) {
                      refreshDuckRkp()
@@ -1271,7 +1362,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
                      delay(1500)
                  }
              }
-@@ -1499,7 +935,8 @@ class TrickyStore : SettingsPreferenceFragment() {
+@@ -1576,7 +1004,8 @@ class TrickyStore : SettingsPreferenceFragment() {
      }
  
      private fun formatTime(millis: Long): String =
@@ -1282,7 +1373,7 @@ index d160e1a942c7f8af0c6daf3a96de1a4c56b35cb5..dc8109b9ba85fd443f161c3fb606b92e
      // ---- Misc ---------------------------------------------------------------
  
 diff --git a/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt b/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt
-index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40adfd03f7f1 100644
+index de2ad9bf3c21895d3796d8c2c5b8153913138ff9..61ef108d3124acff9a1e65eca0161be8d4d45f52 100644
 --- a/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt
 +++ b/src/org/evolution/settings/fragments/miscellaneous/TrickyStoreContent.kt
 @@ -5,6 +5,8 @@
@@ -1294,7 +1385,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
  import android.security.trickystore.TrickyStoreService
  import androidx.compose.foundation.layout.Column
  import androidx.compose.foundation.layout.Row
-@@ -33,6 +35,8 @@ import com.android.settingslib.spa.widget.ui.Footer
+@@ -34,6 +36,8 @@ import com.android.settingslib.spa.widget.ui.Footer
  
  /** Dialog shown over the TrickyStore screen. The fragment sets it, [TsDialogs] renders it. */
  internal sealed interface TsDialog {
@@ -1303,7 +1394,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
      object DeleteKeybox : TsDialog
      object UntrustedRoot : TsDialog
      object ChainInvalid : TsDialog
-@@ -45,6 +49,11 @@ internal sealed interface TsDialog {
+@@ -46,6 +50,11 @@ internal sealed interface TsDialog {
  internal class TsUiState {
      var dialog by mutableStateOf<TsDialog?>(null)
  
@@ -1315,7 +1406,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
      var enabled by mutableStateOf(true)
      var keyboxExists by mutableStateOf(false)
      var targetCount by mutableStateOf(0)
-@@ -75,6 +84,11 @@ internal class TsUiState {
+@@ -76,6 +85,11 @@ internal class TsUiState {
  
  internal interface TsActions {
      fun onEnabledChange(enabled: Boolean)
@@ -1326,8 +1417,8 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
 +    fun onMonitorMinutes(minutes: Int)
      fun onFetchKeybox()
      fun onImportKeybox()
-     fun onDeleteKeybox()
-@@ -130,7 +144,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+     fun onExportKeybox()
+@@ -132,7 +146,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
              Column {
                  Spacer(Modifier.height(SettingsSpace.extraSmall6))
  
@@ -1336,32 +1427,56 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
                      ExpressivePrimaryAction(
                          text = stringResource(R.string.ts_fetch_keybox),
                          icon = Icons.Rounded.CloudDownload,
-@@ -153,6 +167,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+@@ -155,36 +169,29 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
                      }
                      Spacer(Modifier.height(SettingsSpace.extraSmall2))
                  }
+-                ExpressiveActionRow(
+-                    buildList {
+-                        add(
 +                if (state.monitorOwner && !state.rkpEnabled) {
-                 ExpressiveActionRow(
-                     buildList {
-                         add(
-@@ -162,7 +177,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
++                    ExpressiveActionRow(
++                        listOf(
+                             ExpressiveAction(
+                                 stringResource(R.string.action_import),
+                                 Icons.Rounded.FileOpen,
                                  onClick = actions::onImportKeybox,
                              ),
-                         )
+-                        )
+-                        add(
+                             ExpressiveAction(
+                                 stringResource(R.string.action_export),
+                                 Icons.Rounded.Save,
+                                 enabled = state.keyboxExists,
+                                 onClick = actions::onExportKeybox,
+                             ),
+-                        )
 -                        if (!state.rkpEnabled) {
-+                        if (!state.rkpEnabled && state.monitorOwner) {
-                             add(
-                                 ExpressiveAction(
-                                     stringResource(R.string.action_delete),
-@@ -175,6 +190,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
-                     },
-                 )
- 
+-                            add(
+-                                ExpressiveAction(
+-                                    stringResource(R.string.action_delete),
+-                                    Icons.Rounded.DeleteOutline,
+-                                    enabled = state.keyboxExists,
+-                                    onClick = actions::onDeleteKeybox,
+-                                ),
+-                            )
+-                        }
+-                    },
+-                )
+-
++                            ExpressiveAction(
++                                stringResource(R.string.action_delete),
++                                Icons.Rounded.DeleteOutline,
++                                enabled = state.keyboxExists,
++                                onClick = actions::onDeleteKeybox,
++                            ),
++                        ),
++                    )
 +                }
                  if (state.rkpSupported) {
                      ExpressiveGroup(title = stringResource(R.string.ts_rkp_title)) {
                          item {
-@@ -204,7 +220,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+@@ -214,7 +221,7 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
                      }
                  }
  
@@ -1370,7 +1485,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
                      ExpressiveGroup(title = stringResource(R.string.ts_keybox_management)) {
                          item {
                              ExpressiveNavRow(
-@@ -215,6 +231,45 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
+@@ -225,6 +232,45 @@ internal fun TrickyStoreContent(state: TsUiState, actions: TsActions) {
                                  enabled = !state.revocationChecking,
                                  onClick = actions::onCheckRevocation,
                              )
@@ -1416,7 +1531,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
                          }
                      }
                  }
-@@ -262,6 +317,47 @@ private fun TsDialogs(state: TsUiState, actions: TsActions) {
+@@ -272,6 +318,47 @@ private fun TsDialogs(state: TsUiState, actions: TsActions) {
      val dismiss = { state.dialog = null }
      when (val dialog = state.dialog) {
          null -> Unit
@@ -1464,7 +1579,7 @@ index b78b84f00f0b6741349cb003327c062a7aa6be8c..6f3c9da2f1f23dbf14ebb39b7e1c40ad
          TsDialog.DeleteKeybox -> ExpressiveConfirmDialog(
              title = stringResource(R.string.ts_delete_keybox_title),
              message = stringResource(R.string.ts_delete_keybox_message),
-@@ -421,3 +517,16 @@ private fun TsPatchDateDialog(
+@@ -431,3 +518,16 @@ private fun TsPatchDateDialog(
          },
      )
  }

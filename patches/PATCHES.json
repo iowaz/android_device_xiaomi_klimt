@@ -220,14 +220,14 @@
     "project": "packages/apps/Evolver",
     "class": "personal",
     "purpose": "Owner-requested TrickyStore monitor controls: opt-in, 15/30/45 minute and 1/4/12/24 hour intervals, three notification policies, visible manual verification and schedule reset, shared system-owned operations, and en-US/pt-BR resources. Feature history consolidated to one keybox patch; final source tree unchanged.",
-    "base": "45aa14db1b862ecb7c84ff28525990a324d64cc8",
-    "base_tree": "8fe32b8a367d45d4b7dc6f541f86e97191e03fbe",
-    "final_tree": "7d412dbc534b802e62d4b022710be7fa8d7d9f8f",
-    "final_head": "917bda8312b443f911fe027f89e33b82f8dec816",
+    "base": "11fd4809147c77f6953f1d5002285ff5977c094d",
+    "base_tree": "3e8bc1a72edaeed70f1e05f2c3b0ea4aa2104b5f",
+    "final_tree": "545065ce3dd1aecabd86876fe3ad9653beb2aa24",
+    "final_head": "384f6983fa63a7d5b94679168c64e2d2da5521c3",
     "patches": [
       {
         "file": "packages/apps/Evolver/0001-Evolver-Add-scheduled-keybox-monitoring-controls.patch",
-        "sha256": "b209319894d7c9a7be77830e736443d0cbc743b55e22eca3c18a318b1216fd61",
+        "sha256": "799321167ca1e7e63a3c5ec28edc38adb9d17d5df6ebfeeeb3202e174589a8a7",
         "class": "personal",
         "subject": "Evolver: Add scheduled keybox monitoring controls"
       }
