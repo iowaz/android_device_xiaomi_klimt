@@ -266,7 +266,7 @@ index 79025774c32ddc50c497b3d0a399c99577846fa5..acafed05cc60629294a066b32d4ab0ff
          mContext.enforceCallingOrSelfPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS,
                  "Device RKP requires WRITE_SECURE_SETTINGS");
 diff --git a/services/core/java/com/android/server/spoof/AxSpoofManager.java b/services/core/java/com/android/server/spoof/AxSpoofManager.java
-index c4d3c282b3b2737ad4f0a8144a480d569802dbac..62f0dd2b7da711b7ec0237806173e5a4bea73d53 100644
+index f2f5abea2a25059b1e7fe21618bc5628ab7238f4..343d7cf3e861d0126cdbc67034ebb24093f13bc1 100644
 --- a/services/core/java/com/android/server/spoof/AxSpoofManager.java
 +++ b/services/core/java/com/android/server/spoof/AxSpoofManager.java
 @@ -103,8 +103,6 @@ public class AxSpoofManager implements IAxSpoofManager {
@@ -278,7 +278,7 @@ index c4d3c282b3b2737ad4f0a8144a480d569802dbac..62f0dd2b7da711b7ec0237806173e5a4
  
      private static final String VENDING_PACKAGE = "com.android.vending";
      private static final String[] GMS_FAMILY = {
-@@ -169,6 +167,10 @@ public class AxSpoofManager implements IAxSpoofManager {
+@@ -170,6 +168,10 @@ public class AxSpoofManager implements IAxSpoofManager {
      private ContentObserver mObserver;
      private volatile boolean mReady = false;
      private volatile DuckRkpManager mDuckRkp;
@@ -289,7 +289,7 @@ index c4d3c282b3b2737ad4f0a8144a480d569802dbac..62f0dd2b7da711b7ec0237806173e5a4
  
      public AxSpoofManager() {
          mHandlerThread = new HandlerThread("AxSpoofManager");
-@@ -184,6 +186,8 @@ public class AxSpoofManager implements IAxSpoofManager {
+@@ -185,6 +187,8 @@ public class AxSpoofManager implements IAxSpoofManager {
              return;
          }
          mResolver = mContext.getContentResolver();
@@ -298,7 +298,7 @@ index c4d3c282b3b2737ad4f0a8144a480d569802dbac..62f0dd2b7da711b7ec0237806173e5a4
  
          mDuckRkp = new DuckRkpManager(mContext, mHandler, this::onDuckRkpChanged);
          for (String key : WATCHED_KEYS) {
-@@ -260,6 +264,7 @@ public class AxSpoofManager implements IAxSpoofManager {
+@@ -263,6 +267,7 @@ public class AxSpoofManager implements IAxSpoofManager {
          scheduleTensorSpoofExpiry();
  
          mReady = true;
@@ -306,7 +306,7 @@ index c4d3c282b3b2737ad4f0a8144a480d569802dbac..62f0dd2b7da711b7ec0237806173e5a4
          Log.i(TAG, "AxSpoofManager ready");
      }
  
-@@ -629,77 +634,9 @@ public class AxSpoofManager implements IAxSpoofManager {
+@@ -636,77 +641,9 @@ public class AxSpoofManager implements IAxSpoofManager {
          Log.i(TAG, "Auto-refreshed Pixel fingerprint: " + matched.model);
      }
  
@@ -387,7 +387,7 @@ index c4d3c282b3b2737ad4f0a8144a480d569802dbac..62f0dd2b7da711b7ec0237806173e5a4
      }
  
      /**
-@@ -731,21 +668,15 @@ public class AxSpoofManager implements IAxSpoofManager {
+@@ -738,21 +675,15 @@ public class AxSpoofManager implements IAxSpoofManager {
          }
      }
  

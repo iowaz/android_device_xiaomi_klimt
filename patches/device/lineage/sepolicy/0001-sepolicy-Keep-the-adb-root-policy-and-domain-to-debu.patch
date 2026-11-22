@@ -61,7 +61,7 @@ index 828ce905d3c4df89f99a35598003b67b343a439e..28d21200178b06be4e083c769a9555fa
  set_prop(adbroot, ctl_adbd_prop)
 +')
 diff --git a/common/private/system_server.te b/common/private/system_server.te
-index 02001296d08f93c3be8361705e00b475dcb3d3fe..b34330d0730af46140b7ab542ffbd1e75e600b0c 100644
+index 31c07074512bbcc3bd0cbb0aa1ab2845da0928db..2f1efad32f520c2771a04c7735aa6424f7cc3ca6 100644
 --- a/common/private/system_server.te
 +++ b/common/private/system_server.te
 @@ -1,6 +1,6 @@
